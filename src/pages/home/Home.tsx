@@ -16,12 +16,22 @@ interface CoinData {
   market_cap: number;
   total_volume: number;
 }
+interface TrendingItem {
+  market_cap_rank: number;
+  name: string;
+  small: string;
+}
+
+interface TrendingCoins {
+  item: TrendingItem;
+}
 
 const Home: React.FC = () => {
   const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
   const [currency, setCurrency] = useState<string>('NZD');
+  const [trending, setTrending] = useState<TrendingCoins[]>([]);
 
   // options for the API
   const options = {
@@ -49,6 +59,14 @@ const Home: React.FC = () => {
       'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
     },
   };
+  const trendingOptions = {
+    method: 'GET',
+    url: 'https://api.coingecko.com/api/v3/search/trending',
+    headers: {
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+    },
+  };
 
   // fetching data from the API
   useEffect(() => {
@@ -58,7 +76,7 @@ const Home: React.FC = () => {
         // console.log(response.data);
         setData(response.data);
         const globalResponse = await axios.request(globalOptions);
-        console.log(globalResponse.data.data);
+        console.log(globalResponse.data);
         setTotalmarketcap(
           globalResponse.data.data.total_market_cap[
             currency.toLocaleLowerCase()
@@ -68,6 +86,12 @@ const Home: React.FC = () => {
           globalResponse.data.data.total_volume[currency.toLocaleLowerCase()]
         );
         console.log(totalmarketcap + ' ' + currency);
+        // fetching trending data from the API
+        const trendingResponse = await axios.get(
+          'https://api.coingecko.com/api/v3/search/trending'
+        );
+        console.log(trendingResponse.data.coins);
+        setTrending(trendingResponse.data.coins);
       } catch (error) {
         console.error(error);
       }
@@ -114,13 +138,42 @@ const Home: React.FC = () => {
               </div>
             </div>
             <p>Stay up to date in the ever changing world of Cryptocurrency!</p>
-            <div>
-              <h4>Total Crypto Marketcap</h4>
-              {totalmarketcap.toLocaleString('en-NZ')}
-              <h4>24 hour Trading Volume</h4>
-              {tradingVol.toLocaleString('en-NZ')}
-            </div>
+            <section className='flex marketInfo'>
+              <div className='totalMarketInfo'>
+                <h4>Total Crypto Marketcap</h4>
+                <p>{totalmarketcap.toLocaleString('en-NZ')}</p>
+                <h4>24 hour Trading Volume</h4>
+                <p>{tradingVol.toLocaleString('en-NZ')}</p>
+              </div>
+              <div className='trendingContainer'>
+                <h4>Trending Coins</h4>
+                {trending?.map((coin, index) => (
+                  <div key={index} className='trending'>
+                    <div className='flex'>
+                      <img
+                        src={coin.item.small}
+                        alt={coin.item.name}
+                        className='img'
+                      />
+                      <p className='name'>{coin.item.name}</p>
+                    </div>
+                    <p>#{coin.item.market_cap_rank}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
           </header>
+          <div className='coinsHeader'>
+            <p>#</p>
+            <p>Ticker</p>
+            <p>Coin</p>
+            <p>Price</p>
+            <p>1h</p>
+            <p>24h</p>
+            <p>7d</p>
+            <p>Market Cap</p>
+            <p>24h Volume</p>
+          </div>
           {data &&
             data?.map((coin, index) => (
               <div className='coins' key={index}>

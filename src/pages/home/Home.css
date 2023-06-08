@@ -49,6 +49,34 @@ header p {
 .headerH1 {
   font-size: 1.5rem;
 }
+.coinsHeader {
+  display: flex;
+  padding: 1.3rem 1rem;
+  background-color: var(--bgMain);
+}
+.coinsHeader p:first-child {
+  margin-right: 1.2rem;
+  width: 1.5%;
+}
+.coinsHeader p:nth-child(2) {
+  width: 7%;
+}
+.coinsHeader p:nth-child(3) {
+  width: 22%;
+  margin: 0 0.8rem;
+}
+.coinsHeader p:nth-child(4) {
+  width: 12%;
+}
+.coinsHeader p:nth-child(5),
+.coinsHeader p:nth-child(6),
+.coinsHeader p:nth-child(7) {
+  width: 9%;
+}
+.coinsHeader p:nth-child(8) {
+  width: 15%;
+  /* margin-left: 1.5rem; */
+}
 .coins {
   display: flex;
   padding: 1.3rem 1rem;
@@ -92,4 +120,40 @@ header p {
 }
 .coinVolume {
   width: auto;
+}
+.marketInfo {
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.totalMarketInfo {
+  background-color: var(--bgMain);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 65%;
+}
+.totalMarketInfo h4 {
+  font-size: 1.15rem;
+  margin: 0 0 1rem 0;
+}
+.totalMarketInfo p {
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+.trendingContainer {
+  width: 30%;
+  background-color: var(--bgMain);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+.trending {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.trending .img {
+  width: 1.5vw;
+  height: auto;
+  margin-right: 1rem;
 }
