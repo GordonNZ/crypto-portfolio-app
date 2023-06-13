@@ -3,6 +3,7 @@ import './Home.css';
 import Navbar from '../../components/navbar/Navbar';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 // interface for the data from the API
 interface CoinData {
@@ -16,6 +17,7 @@ interface CoinData {
   price_change_percentage_7d_in_currency: number;
   market_cap: number;
   total_volume: number;
+  id: string;
 }
 interface TrendingItem {
   market_cap_rank: number;
@@ -188,6 +190,7 @@ const Home: React.FC = () => {
               </div>
               <div className='trendingContainer'>
                 <h4>Trending Coins</h4>
+
                 {trendingCoin.data?.data?.coins.map(
                   (coin: TrendingCoins, index: number) => (
                     <div key={index} className='trending'>
@@ -230,9 +233,11 @@ const Home: React.FC = () => {
             <p>Market Cap</p>
             <p>24h Volume</p>
           </div>
+
           {coinData &&
             coinData?.map((coin: CoinData, index: number) => (
               <div className='coins' key={index}>
+                <Link to={`/coin/${coin.id}`}>Click</Link>
                 <p className='coinRank'>{coin.market_cap_rank}. </p>
                 <p className='coinTicker'>{coin.symbol}</p>
                 <img src={coin.image} alt={coin.name} className='coinImage' />
