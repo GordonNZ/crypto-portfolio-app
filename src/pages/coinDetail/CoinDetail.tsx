@@ -5,16 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Navbar from '../../components/navbar/Navbar';
 
-interface CoinInfo {
-  id: string;
-  symbol: string;
-  name: string;
-  image: string;
-}
+// interface CoinInfo {}
 
 const CoinDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
+  // Options for axios request to coingecko API for individual coin data
   const coinOptions = {
     method: 'GET',
     url: `https://coingecko.p.rapidapi.com/coins/${id}`,
@@ -31,9 +27,11 @@ const CoinDetail: React.FC = () => {
       'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
     },
   };
-
-  const { data, isLoading, error } = useQuery(['coin'], () =>
-    axios.request(coinOptions)
+  // React query hook to fetch coin data from coingecko API using axios
+  const { data, isLoading, error } = useQuery(
+    ['coin'],
+    () => axios.request(coinOptions),
+    { refetchInterval: 30000 }
   );
   const coinId = data?.data;
   console.log(coinId);
@@ -51,7 +49,8 @@ const CoinDetail: React.FC = () => {
       <h1>Market Cap: {coinId.market_cap_rank}</h1>
       <h1>{coinId.name}</h1>
       <img src={coinId?.image?.large} alt={coinId?.name} className='coinImg' />
-      <p className='desc'>{coinId?.description.en}</p>
+      <p className='desc'></p>
+      {coinId?.description.en}
       <p>genesis: {coinId?.genesis_date}</p>
       <h2>Links:</h2>
       <a
@@ -67,6 +66,42 @@ const CoinDetail: React.FC = () => {
           Discord
         </a>
       )}
+      <br />
+      <a href={coinId?.links.homepage[0]} target='_blank' rel='noreferrer'>
+        Website
+      </a>
+      <br />
+      <a href={coinId?.links.subreddit_url} target='_blank' rel='noreferrer'>
+        Subreddit
+      </a>
+      <br />
+      <h2>Market data:</h2>
+      <p>
+        Current Price: $
+        {coinId?.market_data.current_price.usd.toLocaleString('en-NZ')}
+      </p>
+      <p>
+        24 price change:
+        {coinId?.market_data.price_change_24h.toLocaleString('en-NZ')}
+      </p>
+      <p>
+        Fully Diluted Value: $
+        {coinId?.market_data.fully_diluted_valuation.usd.toLocaleString(
+          'en-NZ'
+        )}
+      </p>
+      <p>
+        Market Cap: $
+        {coinId?.market_data.market_cap.usd.toLocaleString('en-NZ')}
+      </p>
+      <p>
+        Total Supply:
+        {coinId?.market_data.total_supply.toLocaleString('en-NZ')}
+      </p>
+      <p>
+        Total Volume: $
+        {coinId?.market_data.total_volume.usd.toLocaleString('en-NZ')}
+      </p>
     </div>
   );
 };
