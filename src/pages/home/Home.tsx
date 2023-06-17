@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Home.css';
 import Navbar from '../../components/navbar/Navbar';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 // interface for the data from the API
 interface CoinData {
@@ -15,13 +17,25 @@ interface CoinData {
   price_change_percentage_7d_in_currency: number;
   market_cap: number;
   total_volume: number;
+  id: string;
+}
+interface TrendingItem {
+  market_cap_rank: number;
+  name: string;
+  small: string;
+}
+
+interface TrendingCoins {
+  item: TrendingItem;
 }
 
 const Home: React.FC = () => {
   const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
-  const [currency, setCurrency] = useState<string>('NZD');
+  const storedCurrency = localStorage.getItem('currency');
+  const [currency, setCurrency] = useState<any>(storedCurrency);
+  const [trending, setTrending] = useState<TrendingCoins[]>([]);
 
   // options for the API
   const options = {
@@ -50,30 +64,77 @@ const Home: React.FC = () => {
     },
   };
 
-  // fetching data from the API
+  const trendingCoin = useQuery(
+    ['trending'],
+    () => axios.get('https://api.coingecko.com/api/v3/search/trending'),
+    { refetchInterval: 30000 }
+  );
+  // console.log(trendingCoin.data?.data?.coins);
+
+  const coins = useQuery(['coins', currency], () => axios.request(options), {
+    refetchInterval: 30000,
+  });
+  // console.log(coins?.data?.data);
+  const coinData = coins?.data?.data;
+
+  const global = useQuery(
+    ['global', currency],
+    () => axios.request(globalOptions),
+    {
+      refetchInterval: 60000,
+    }
+  );
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.request(options);
-        // console.log(response.data);
-        setData(response.data);
-        const globalResponse = await axios.request(globalOptions);
-        console.log(globalResponse.data.data);
-        setTotalmarketcap(
-          globalResponse.data.data.total_market_cap[
-            currency.toLocaleLowerCase()
-          ]
-        );
-        setTradingVol(
-          globalResponse.data.data.total_volume[currency.toLocaleLowerCase()]
-        );
-        console.log(totalmarketcap + ' ' + currency);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
+    if (global?.data?.data?.data) {
+      setTotalmarketcap(
+        global.data.data.data.total_market_cap[currency.toLowerCase()]
+      );
+      setTradingVol(global.data.data.data.total_volume[currency.toLowerCase()]);
+    }
+  }, [global, currency]);
+
+  const handleSetCurrency = (currency: string) => {
+    setCurrency(currency);
+  };
+  useEffect(() => {
+    localStorage.setItem('currency', currency);
   }, [currency]);
+  // console.log(global?.data?.data.data);
+  // const globalData = global?.data?.data.data;
+  // setTotalmarketcap(
+  //   global?.data?.data.data.total_market_cap[currency.toLocaleLowerCase()]
+  // );
+
+  // fetching data from the API
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.request(options);
+  //       // console.log(response.data);
+  //       setData(response.data);
+  //       const globalResponse = await axios.request(globalOptions);
+  //       // console.log(globalResponse.data);
+  //       // setTotalmarketcap(
+  //       //   globalResponse.data.data.total_market_cap[
+  //       //     currency.toLocaleLowerCase()
+  //       //   ]
+  //       // );
+  //       setTradingVol(
+  //         globalResponse.data.data.total_volume[currency.toLocaleLowerCase()]
+  //       );
+  //       // console.log(totalmarketcap + ' ' + currency);
+  //       // fetching trending data from the API
+  //       const trendingResponse = await axios.get(
+  //         'https://api.coingecko.com/api/v3/search/trending'
+  //       );
+  //       // console.log(trendingResponse.data.coins);
+  //       setTrending(trendingResponse.data.coins);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [currency]);
 
   return (
     <main>
@@ -85,11 +146,15 @@ const Home: React.FC = () => {
               <h1 className='headerH1'>Cryptocurrency Prices by Market Cap</h1>
               <div className='flex currencySelect'>
                 <p>Currency: </p>
-                <select name='currency' className='currencyOptions'>
+                <select
+                  name='currency'
+                  className='currencyOptions'
+                  defaultValue={currency}
+                >
                   <option
                     value='NZD'
                     onClick={() => {
-                      setCurrency('NZD');
+                      handleSetCurrency('NZD');
                     }}
                   >
                     NZD
@@ -97,7 +162,7 @@ const Home: React.FC = () => {
                   <option
                     value='USD'
                     onClick={() => {
-                      setCurrency('USD');
+                      handleSetCurrency('USD');
                     }}
                   >
                     USD
@@ -105,7 +170,7 @@ const Home: React.FC = () => {
                   <option
                     value='AUD'
                     onClick={() => {
-                      setCurrency('AUD');
+                      handleSetCurrency('AUD');
                     }}
                   >
                     AUD
@@ -114,16 +179,65 @@ const Home: React.FC = () => {
               </div>
             </div>
             <p>Stay up to date in the ever changing world of Cryptocurrency!</p>
-            <div>
-              <h4>Total Crypto Marketcap</h4>
-              {totalmarketcap.toLocaleString('en-NZ')}
-              <h4>24 hour Trading Volume</h4>
-              {tradingVol.toLocaleString('en-NZ')}
-            </div>
+            <section className='flex marketInfo'>
+              <div className='totalMarketInfo'>
+                <h4>Total Crypto Marketcap</h4>
+
+                <p>${totalmarketcap?.toLocaleString('en-NZ')}</p>
+
+                <h4>24 hour Trading Volume</h4>
+                <p>${tradingVol?.toLocaleString('en-NZ')}</p>
+              </div>
+              <div className='trendingContainer'>
+                <h4>Trending Coins</h4>
+
+                {trendingCoin.data?.data?.coins.map(
+                  (coin: TrendingCoins, index: number) => (
+                    <div key={index} className='trending'>
+                      <div className='flex'>
+                        <img
+                          src={coin.item.small}
+                          alt={coin.item.name}
+                          className='img'
+                        />
+                        <p className='name'>{coin.item.name}</p>
+                      </div>
+                      <p>#{coin.item.market_cap_rank}</p>
+                    </div>
+                  )
+                )}
+                {/* {trending?.map((coin, index) => (
+                  <div key={index} className='trending'>
+                    <div className='flex'>
+                      <img
+                        src={coin.item.small}
+                        alt={coin.item.name}
+                        className='img'
+                      />
+                      <p className='name'>{coin.item.name}</p>
+                    </div>
+                    <p>#{coin.item.market_cap_rank}</p>
+                  </div>
+                ))} */}
+              </div>
+            </section>
           </header>
-          {data &&
-            data?.map((coin, index) => (
+          <div className='coinsHeader'>
+            <p>#</p>
+            <p>Ticker</p>
+            <p>Coin</p>
+            <p>Price</p>
+            <p>1h</p>
+            <p>24h</p>
+            <p>7d</p>
+            <p>Market Cap</p>
+            <p>24h Volume</p>
+          </div>
+
+          {coinData &&
+            coinData?.map((coin: CoinData, index: number) => (
               <div className='coins' key={index}>
+                <Link to={`/coin/${coin.id}`}>Click</Link>
                 <p className='coinRank'>{coin.market_cap_rank}. </p>
                 <p className='coinTicker'>{coin.symbol}</p>
                 <img src={coin.image} alt={coin.name} className='coinImage' />
