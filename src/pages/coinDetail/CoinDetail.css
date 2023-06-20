@@ -1,4 +1,22 @@
+.coinPage {
+  background-color: var(--bgLighter);
+  margin: 0 2rem;
+  padding: 1rem 5rem;
+}
 .coinImg {
-  width: 3rem;
+  width: 2rem;
   height: auto;
+  object-fit: contain;
+}
+.coinChart {
+  width: 60%;
+  height: auto;
+}
+.desc {
+  margin: 1rem 2rem;
+  width: 50%;
+  opacity: 0.9;
+}
+.marketData {
+  margin: 0 1rem;
 }

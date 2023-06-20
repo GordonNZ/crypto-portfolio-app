@@ -7,7 +7,7 @@ nav {
   padding: 0.5rem 2.5rem;
   align-items: center;
   margin: 0 auto;
-  width: 80%;
+  width: 90%;
 }
 .navbarTitle {
   color: var(--text);
@@ -16,7 +16,7 @@ nav {
 }
 .navbarLinks {
   display: flex;
-  margin: 1rem 2rem;
+  margin: 1rem 0;
 }
 .navbarLinks a {
   text-decoration: none;
@@ -49,6 +49,16 @@ nav {
 .navbarLinks a:hover {
   color: var(--primaryAccent);
   /* border-bottom: 2px solid var(--primaryAccent); */
-  border-bottom: 2px solid var(--primaryAccent);
   width: 100%;
+}
+.navbarLinks > .portfolio {
+  background-color: var(--primaryAccent);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(349, 58%, 70%);
+  transition: 0.18s ease-in-out;
+}
+.navbarLinks > .portfolio:hover {
+  color: var(--text);
+  background-color: hsla(349, 58%, 60%, 0);
 }

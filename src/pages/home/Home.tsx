@@ -23,18 +23,24 @@ interface TrendingItem {
   market_cap_rank: number;
   name: string;
   small: string;
+  id: string;
 }
 
 interface TrendingCoins {
   item: TrendingItem;
 }
 
-const Home: React.FC = () => {
+interface Props {
+  currency: string;
+  handleSetCurrency: (currency: string) => void;
+}
+
+const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
-  const storedCurrency = localStorage.getItem('currency');
-  const [currency, setCurrency] = useState<any>(storedCurrency);
+  // const storedCurrency = localStorage.getItem('currency');
+  // const [currency, setCurrency] = useState<any>(storedCurrency);
   const [trending, setTrending] = useState<TrendingCoins[]>([]);
 
   // options for the API
@@ -93,12 +99,6 @@ const Home: React.FC = () => {
     }
   }, [global, currency]);
 
-  const handleSetCurrency = (currency: string) => {
-    setCurrency(currency);
-  };
-  useEffect(() => {
-    localStorage.setItem('currency', currency);
-  }, [currency]);
   // console.log(global?.data?.data.data);
   // const globalData = global?.data?.data.data;
   // setTotalmarketcap(
@@ -175,6 +175,30 @@ const Home: React.FC = () => {
                   >
                     AUD
                   </option>
+                  <option
+                    value='EUR'
+                    onClick={() => {
+                      handleSetCurrency('EUR');
+                    }}
+                  >
+                    EUR
+                  </option>
+                  <option
+                    value='HKD'
+                    onClick={() => {
+                      handleSetCurrency('HKD');
+                    }}
+                  >
+                    HKD
+                  </option>
+                  <option
+                    value='GBP'
+                    onClick={() => {
+                      handleSetCurrency('GBP');
+                    }}
+                  >
+                    GBP
+                  </option>
                 </select>
               </div>
             </div>
@@ -193,17 +217,19 @@ const Home: React.FC = () => {
 
                 {trendingCoin.data?.data?.coins.map(
                   (coin: TrendingCoins, index: number) => (
-                    <div key={index} className='trending'>
-                      <div className='flex'>
-                        <img
-                          src={coin.item.small}
-                          alt={coin.item.name}
-                          className='img'
-                        />
-                        <p className='name'>{coin.item.name}</p>
+                    <Link to={`/coin/${coin.item.id}`} className='coinLinks'>
+                      <div key={index} className='trending'>
+                        <div className='flex'>
+                          <img
+                            src={coin.item.small}
+                            alt={coin.item.name}
+                            className='img'
+                          />
+                          <p className='name'>{coin.item.name}</p>
+                        </div>
+                        <p>#{coin.item.market_cap_rank}</p>
                       </div>
-                      <p>#{coin.item.market_cap_rank}</p>
-                    </div>
+                    </Link>
                   )
                 )}
                 {/* {trending?.map((coin, index) => (
@@ -236,77 +262,94 @@ const Home: React.FC = () => {
 
           {coinData &&
             coinData?.map((coin: CoinData, index: number) => (
-              <div className='coins' key={index}>
-                <Link to={`/coin/${coin.id}`}>Click</Link>
-                <p className='coinRank'>{coin.market_cap_rank}. </p>
-                <p className='coinTicker'>{coin.symbol}</p>
-                <img src={coin.image} alt={coin.name} className='coinImage' />
-                <p className='coinName'>{coin.name}</p>
-                <p className='coinPrice'>
-                  ${coin.current_price.toLocaleString('en-NZ')}
-                </p>
-                <div className='flex priceChanges'>
-                  {Number(
-                    coin.price_change_percentage_1h_in_currency?.toFixed(1)
-                  ) >= 0 ? (
-                    <p
-                      style={{ color: '#3cd656' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
-                    </p>
-                  ) : (
-                    <p
-                      style={{ color: '#ff2b2b' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
-                    </p>
-                  )}
-                  {Number(
-                    coin.price_change_percentage_24h_in_currency?.toFixed(1)
-                  ) >= 0 ? (
-                    <p
-                      style={{ color: '#3cd656' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_24h_in_currency?.toFixed(1)}
-                      %
-                    </p>
-                  ) : (
-                    <p
-                      style={{ color: '#ff2b2b' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_24h_in_currency?.toFixed(1)}
-                      %
-                    </p>
-                  )}
-                  {Number(
-                    coin.price_change_percentage_7d_in_currency?.toFixed(1)
-                  ) >= 0 ? (
-                    <p
-                      style={{ color: '#3cd656' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_7d_in_currency?.toFixed(1)}%
-                    </p>
-                  ) : (
-                    <p
-                      style={{ color: '#ff2b2b' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_7d_in_currency?.toFixed(1)}%
-                    </p>
-                  )}
+              <Link to={`/coin/${coin.id}`} className='coinLinks'>
+                <div className='coins' key={index}>
+                  <p className='coinRank'>{coin.market_cap_rank}. </p>
+                  <p className='coinTicker'>{coin.symbol}</p>
+                  <img src={coin.image} alt={coin.name} className='coinImage' />
+                  <p className='coinName'>{coin.name}</p>
+                  <p className='coinPrice'>
+                    ${coin.current_price.toLocaleString('en-NZ')}
+                  </p>
+                  <div className='flex priceChanges'>
+                    {Number(
+                      coin.price_change_percentage_1h_in_currency?.toFixed(1)
+                    ) >= 0 ? (
+                      <p
+                        style={{ color: '#3cd656' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_1h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    ) : (
+                      <p
+                        style={{ color: '#ff2b2b' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_1h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    )}
+                    {Number(
+                      coin.price_change_percentage_24h_in_currency?.toFixed(1)
+                    ) >= 0 ? (
+                      <p
+                        style={{ color: '#3cd656' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_24h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    ) : (
+                      <p
+                        style={{ color: '#ff2b2b' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_24h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    )}
+                    {Number(
+                      coin.price_change_percentage_7d_in_currency?.toFixed(1)
+                    ) >= 0 ? (
+                      <p
+                        style={{ color: '#3cd656' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_7d_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    ) : (
+                      <p
+                        style={{ color: '#ff2b2b' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_7d_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    )}
+                  </div>
+                  <p className='coinMarketcap'>
+                    ${coin.market_cap.toLocaleString('en-NZ')}
+                  </p>
+                  <p className='coinVolume'>
+                    ${coin.total_volume.toLocaleString('en-NZ')}
+                  </p>
                 </div>
-                <p className='coinMarketcap'>
-                  ${coin.market_cap.toLocaleString('en-NZ')}
-                </p>
-                <p className='coinVolume'>
-                  ${coin.total_volume.toLocaleString('en-NZ')}
-                </p>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

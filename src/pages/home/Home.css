@@ -157,3 +157,7 @@ header p {
   height: auto;
   margin-right: 1rem;
 }
+.coinLinks {
+  text-decoration: none;
+  color: var(--text);
+}
