@@ -142,7 +142,7 @@ const MarketChart: React.FC<Props> = ({ currency }: Props) => {
 
   return (
     <div>
-      <h2>Price Chart</h2>
+      <h2 className='price-chart-h2'>Price Chart</h2>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

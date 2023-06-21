@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './CoinDetail.css';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -51,62 +51,64 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
     <div className='home'>
       <Navbar />
       <div className='coinPage'>
-        <h1>Market Cap: #{coinId.market_cap_rank}</h1>
-        <div className='flex'>
+        <Link to='/'>
+          <button className='backButton'>Back</button>
+        </Link>
+        <h3 className='marketCap'>Market Cap: #{coinId.market_cap_rank}</h3>
+        <div className='flex title'>
           <img
             src={coinId?.image?.large}
             alt={coinId?.name}
             className='coinImg'
           />
-          <h1>{coinId.name}</h1>
+          <h1 className='coinName'>{coinId.name}</h1>
         </div>
 
-        <div className='flex'>
+        <div className='flex link-desc'>
           <p className='desc'>{coinId?.description.en}</p>
           {/* <p>genesis: {coinId?.genesis_date}</p> */}
-          <div>
+          <div className='links'>
             <h2>Links:</h2>
-            <div>
+            <a
+              href={coinId?.links.blockchain_site[0]}
+              target='_blank'
+              rel='noreferrer'
+            >
+              {coinId?.name} Explorer
+            </a>
+            <br />
+            <a
+              href={coinId?.links.homepage[0]}
+              target='_blank'
+              rel='noreferrer'
+            >
+              Website
+            </a>
+            <br />
+            {coinId?.links.chat_url[1] === '' ? null : (
               <a
-                href={coinId?.links.blockchain_site[0]}
+                href={coinId?.links.chat_url[1]}
                 target='_blank'
                 rel='noreferrer'
               >
-                {coinId?.name} Explorer
+                Discord
               </a>
-              <br />
-              {coinId?.links.chat_url[1] === '' ? null : (
-                <a
-                  href={coinId?.links.chat_url[1]}
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  Discord
-                </a>
-              )}
-              <br />
-              <a
-                href={coinId?.links.homepage[0]}
-                target='_blank'
-                rel='noreferrer'
-              >
-                Website
-              </a>
-              <br />
-              <a
-                href={coinId?.links.subreddit_url}
-                target='_blank'
-                rel='noreferrer'
-              >
-                Subreddit
-              </a>
-            </div>
+            )}
+
+            <br />
+            <a
+              href={coinId?.links.subreddit_url}
+              target='_blank'
+              rel='noreferrer'
+            >
+              Subreddit
+            </a>
           </div>
         </div>
 
-        <div className='flex'>
+        <div className='flex data-chart'>
           <div className='marketData'>
-            <h2>Market data:</h2>
+            <h2>Market Data:</h2>
             <p>
               {coinId.name} Price: $
               {coinId?.market_data.current_price[

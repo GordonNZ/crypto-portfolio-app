@@ -56,7 +56,7 @@ nav {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid hsl(349, 58%, 70%);
-  transition: 0.18s ease-in-out;
+  transition: 0.12s ease-in-out;
 }
 .navbarLinks > .portfolio:hover {
   color: var(--text);

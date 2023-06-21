@@ -1,22 +1,84 @@
+/* * {
+  border: 2px solid red;
+} */
 .coinPage {
   background-color: var(--bgLighter);
   margin: 0 2rem;
   padding: 1rem 5rem;
+  /* display: flex;
+  flex-direction: column; */
+}
+.backButton {
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.8rem;
+  background-color: var(--secondaryAccent);
+  border: 1px solid var(--bgMain);
+  border-radius: 0.2rem;
+  color: var(--text);
+  transition: 0.1s ease-in-out;
+}
+.backButton:hover {
+  cursor: pointer;
+  background-color: var(--bgMain);
+}
+.coinPage > .title {
+  margin: 1rem 0;
+}
+.title > .coinName {
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 .coinImg {
   width: 2rem;
   height: auto;
   object-fit: contain;
 }
+.coinPage > .link-desc {
+  justify-content: space-between;
+  margin: 0 0 1rem 0;
+}
+.desc {
+  margin: 1rem 0;
+  width: 60%;
+  opacity: 0.85;
+}
+.links {
+  margin: 0 2rem;
+  background-color: var(--bgMain);
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+.links > h2 {
+  margin-bottom: 0.7rem;
+}
+.links > * {
+  margin-bottom: 0.5rem;
+}
+.links > a {
+  color: var(--text);
+  transition: 0.1s ease-in-out;
+}
+.links > a:hover {
+  color: var(--secondaryAccent);
+}
+.marketData {
+  margin: 0;
+  background-color: var(--bgMain);
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+.marketData > h2 {
+  margin-bottom: 0.7rem;
+}
+.marketData > * {
+  margin-bottom: 0.5rem;
+}
+.data-chart {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+}
 .coinChart {
   width: 60%;
   height: auto;
-}
-.desc {
-  margin: 1rem 2rem;
-  width: 50%;
-  opacity: 0.9;
-}
-.marketData {
-  margin: 0 1rem;
 }
