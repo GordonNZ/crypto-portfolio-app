@@ -141,8 +141,12 @@ const MarketChart: React.FC<Props> = ({ currency }: Props) => {
   };
 
   return (
-    <div>
+    <div className='marketChart'>
       <h2 className='price-chart-h2'>Price Chart</h2>
+      <button>24h</button>
+      <button>7d</button>
+      <button>14d</button>
+      <button>30d</button>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

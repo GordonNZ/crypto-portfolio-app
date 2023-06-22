@@ -109,38 +109,52 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
         <div className='flex data-chart'>
           <div className='marketData'>
             <h2>Market Data:</h2>
-            <p>
-              {coinId.name} Price: $
-              {coinId?.market_data.current_price[
-                currency.toLowerCase()
-              ].toLocaleString('en-NZ')}
-            </p>
-            <p>
-              24 price change:
-              {coinId?.market_data.price_change_24h.toLocaleString('en-NZ')}
-            </p>
-            <p>
-              Fully Diluted Value: $
-              {coinId?.market_data.fully_diluted_valuation[
-                currency.toLowerCase()
-              ].toLocaleString('en-NZ')}
-            </p>
-            <p>
-              Market Cap: $
-              {coinId?.market_data.market_cap[
-                currency.toLowerCase()
-              ].toLocaleString('en-NZ')}
-            </p>
-            <p>
-              Total Supply:
-              {coinId?.market_data.total_supply.toLocaleString('en-NZ')}
-            </p>
-            <p>
-              Total Volume: $
-              {coinId?.market_data.total_volume[
-                currency.toLowerCase()
-              ].toLocaleString('en-NZ')}
-            </p>
+            <div className='dataContainer'>
+              <p>{coinId.name} Price:</p>
+              <p>
+                $
+                {coinId?.market_data.current_price[
+                  currency.toLowerCase()
+                ].toLocaleString('en-NZ')}
+              </p>
+            </div>
+            <div className='dataContainer'>
+              <p>24h Price Change:</p>
+              <p>
+                {coinId?.market_data.price_change_24h.toLocaleString('en-NZ')}
+              </p>
+            </div>
+            <div className='dataContainer'>
+              <p>Fully Diluted Value:</p>
+              <p>
+                $
+                {coinId?.market_data.fully_diluted_valuation[
+                  currency.toLowerCase()
+                ].toLocaleString('en-NZ')}
+              </p>
+            </div>
+            <div className='dataContainer'>
+              <p>Market Cap:</p>
+              <p>
+                $
+                {coinId?.market_data.market_cap[
+                  currency.toLowerCase()
+                ].toLocaleString('en-NZ')}
+              </p>
+            </div>
+            <div className='dataContainer'>
+              <p>Total Supply:</p>
+              <p>{coinId?.market_data.total_supply.toLocaleString('en-NZ')}</p>
+            </div>
+            <div className='dataContainer'>
+              <p>Total Volume:</p>
+              <p>
+                $
+                {coinId?.market_data.total_volume[
+                  currency.toLowerCase()
+                ].toLocaleString('en-NZ')}
+              </p>
+            </div>
           </div>
           <div className='coinChart'>
             <MarketChart currency={currency} />
