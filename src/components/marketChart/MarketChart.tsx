@@ -52,7 +52,7 @@ const MarketChart: React.FC<Props> = ({ currency }: Props) => {
     },
   };
   const { data: market } = useQuery(
-    ['market'],
+    ['market', days],
     () => axios.request(marketOptions),
     { refetchInterval: 30000 }
   );
@@ -72,7 +72,7 @@ const MarketChart: React.FC<Props> = ({ currency }: Props) => {
     // console.log('Time', formattedTime);
     // console.log('Date', formattedDate);
     // });
-  }, [market?.data?.prices]);
+  }, [market?.data?.prices, days]);
   // console.log('Formatted Date', marketTime);
   // const marketDate = new Date(marketTime[]);
   // const formattedTime = marketDate?.toLocaleTimeString();
@@ -142,11 +142,15 @@ const MarketChart: React.FC<Props> = ({ currency }: Props) => {
 
   return (
     <div className='marketChart'>
-      <h2 className='price-chart-h2'>Price Chart</h2>
-      <button>24h</button>
-      <button>7d</button>
-      <button>14d</button>
-      <button>30d</button>
+      <div className='chartContainer'>
+        <h2 className='price-chart-h2'>Price Chart</h2>
+        <div className='chartDays'>
+          <button onClick={() => setDays(1)}>24h</button>
+          <button onClick={() => setDays(7)}>7d</button>
+          <button onClick={() => setDays(14)}>14d</button>
+          <button onClick={() => setDays(30)}>30d</button>
+        </div>
+      </div>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

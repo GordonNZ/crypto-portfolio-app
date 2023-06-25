@@ -1,7 +1,7 @@
 .price-chart-h2 {
   margin-bottom: 1rem;
 }
-.marketChart > button {
+.chartDays > button {
   padding: 0.5rem 1.2rem;
   /* border-radius: 0.5rem; */
   border: none;
@@ -10,6 +10,10 @@
   cursor: pointer;
   transition: 0.1s ease-in-out;
 }
-.marketChart > button:hover {
+.chartDays > button:hover {
   background-color: var(--secondaryAccent);
+}
+.chartContainer {
+  display: flex;
+  justify-content: space-between;
 }
