@@ -121,7 +121,7 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
             <div className='dataContainer'>
               <p>24h Price Change:</p>
               <p>
-                {coinId?.market_data.price_change_24h.toLocaleString('en-NZ')}
+                ${coinId?.market_data.price_change_24h.toLocaleString('en-NZ')}
               </p>
             </div>
             <div className='dataContainer'>

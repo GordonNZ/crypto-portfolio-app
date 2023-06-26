@@ -42,6 +42,7 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   // const storedCurrency = localStorage.getItem('currency');
   // const [currency, setCurrency] = useState<any>(storedCurrency);
   const [trending, setTrending] = useState<TrendingCoins[]>([]);
+  const [page, setPage] = useState<number>(1);
 
   // options for the API
   const options = {
@@ -51,7 +52,7 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
       vs_currency: currency,
       order: 'market_cap_desc',
       per_page: '100',
-      page: '1',
+      page: page,
       price_change_percentage: '1h,24h,7d',
       sparkline: 'true',
     },
@@ -70,18 +71,38 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
     },
   };
 
+  const coinList = {
+    method: 'GET',
+    url: 'https://coingecko.p.rapidapi.com/coins/list',
+    headers: {
+      'X-RapidAPI-Key': '06cf801108msh9d3307ef2efc03cp1e20eajsnaf80bce61260',
+      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+    },
+  };
+
+  const coinListData = useQuery(['coinList'], () => axios.request(coinList));
+
+  const totalCoins = coinListData?.data?.data;
+
+  const marketPages = Math.ceil(totalCoins?.length / 100);
+
   const trendingCoin = useQuery(
     ['trending'],
     () => axios.get('https://api.coingecko.com/api/v3/search/trending'),
-    { refetchInterval: 30000 }
+    { refetchInterval: 60000 }
   );
   // console.log(trendingCoin.data?.data?.coins);
 
-  const coins = useQuery(['coins', currency], () => axios.request(options), {
-    refetchInterval: 30000,
-  });
+  const coins = useQuery(
+    ['coins', currency, page],
+    () => axios.request(options),
+    {
+      refetchInterval: 60000,
+    }
+  );
   // console.log(coins?.data?.data);
   const coinData = coins?.data?.data;
+  // console.log(coins?.data);
 
   const global = useQuery(
     ['global', currency],
@@ -90,6 +111,7 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
       refetchInterval: 60000,
     }
   );
+
   useEffect(() => {
     if (global?.data?.data?.data) {
       setTotalmarketcap(
@@ -135,6 +157,24 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   //   };
   //   fetchData();
   // }, [currency]);
+
+  const buttonArray = [];
+  const maxPages = 3;
+
+  const startPage = Math.max(page - Math.floor(maxPages / 2), 1);
+  const endPage = Math.min(startPage + maxPages - 1, marketPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    buttonArray.push(
+      <button
+        key={i}
+        onClick={() => setPage(i)}
+        className={i === page ? 'pageButton active' : 'pageButton'}
+      >
+        {i}
+      </button>
+    );
+  }
 
   return (
     <main>
@@ -264,12 +304,12 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
             coinData?.map((coin: CoinData, index: number) => (
               <Link to={`/coin/${coin.id}`} className='coinLinks'>
                 <div className='coins' key={index}>
-                  <p className='coinRank'>{coin.market_cap_rank}. </p>
+                  <p className='coinRank'>{coin?.market_cap_rank}. </p>
                   <p className='coinTicker'>{coin.symbol}</p>
                   <img src={coin.image} alt={coin.name} className='coinImage' />
                   <p className='coinName'>{coin.name}</p>
                   <p className='coinPrice'>
-                    ${coin.current_price.toLocaleString('en-NZ')}
+                    ${coin?.current_price?.toLocaleString('en-NZ')}
                   </p>
                   <div className='flex priceChanges'>
                     {Number(
@@ -343,14 +383,27 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
                     )}
                   </div>
                   <p className='coinMarketcap'>
-                    ${coin.market_cap.toLocaleString('en-NZ')}
+                    ${coin?.market_cap?.toLocaleString('en-NZ')}
                   </p>
                   <p className='coinVolume'>
-                    ${coin.total_volume.toLocaleString('en-NZ')}
+                    ${coin.total_volume?.toLocaleString('en-NZ')}
                   </p>
                 </div>
               </Link>
             ))}
+          <div className='pages'>
+            <button className='pageButton' onClick={() => setPage(page - 1)}>
+              ❮
+            </button>
+            {buttonArray}
+            <button className='pageButton'>...</button>
+            <button className='pageButton' onClick={() => setPage(100)}>
+              100
+            </button>
+            <button className='pageButton' onClick={() => setPage(page + 1)}>
+              ❯
+            </button>
+          </div>
         </div>
       </div>
     </main>
