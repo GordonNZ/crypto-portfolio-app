@@ -75,7 +75,7 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
     method: 'GET',
     url: 'https://coingecko.p.rapidapi.com/coins/list',
     headers: {
-      'X-RapidAPI-Key': '06cf801108msh9d3307ef2efc03cp1e20eajsnaf80bce61260',
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
       'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
     },
   };
