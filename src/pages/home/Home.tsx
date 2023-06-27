@@ -121,43 +121,6 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
     }
   }, [global, currency]);
 
-  // console.log(global?.data?.data.data);
-  // const globalData = global?.data?.data.data;
-  // setTotalmarketcap(
-  //   global?.data?.data.data.total_market_cap[currency.toLocaleLowerCase()]
-  // );
-
-  // fetching data from the API
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.request(options);
-  //       // console.log(response.data);
-  //       setData(response.data);
-  //       const globalResponse = await axios.request(globalOptions);
-  //       // console.log(globalResponse.data);
-  //       // setTotalmarketcap(
-  //       //   globalResponse.data.data.total_market_cap[
-  //       //     currency.toLocaleLowerCase()
-  //       //   ]
-  //       // );
-  //       setTradingVol(
-  //         globalResponse.data.data.total_volume[currency.toLocaleLowerCase()]
-  //       );
-  //       // console.log(totalmarketcap + ' ' + currency);
-  //       // fetching trending data from the API
-  //       const trendingResponse = await axios.get(
-  //         'https://api.coingecko.com/api/v3/search/trending'
-  //       );
-  //       // console.log(trendingResponse.data.coins);
-  //       setTrending(trendingResponse.data.coins);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [currency]);
-
   const buttonArray = [];
   const maxPages = 3;
 
