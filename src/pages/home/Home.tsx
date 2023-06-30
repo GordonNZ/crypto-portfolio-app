@@ -23,19 +23,26 @@ interface TrendingItem {
   market_cap_rank: number;
   name: string;
   small: string;
+  id: string;
 }
 
 interface TrendingCoins {
   item: TrendingItem;
 }
 
-const Home: React.FC = () => {
+interface Props {
+  currency: string;
+  handleSetCurrency: (currency: string) => void;
+}
+
+const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
-  const storedCurrency = localStorage.getItem('currency');
-  const [currency, setCurrency] = useState<any>(storedCurrency);
+  // const storedCurrency = localStorage.getItem('currency');
+  // const [currency, setCurrency] = useState<any>(storedCurrency);
   const [trending, setTrending] = useState<TrendingCoins[]>([]);
+  const [page, setPage] = useState<number>(1);
 
   // options for the API
   const options = {
@@ -45,7 +52,7 @@ const Home: React.FC = () => {
       vs_currency: currency,
       order: 'market_cap_desc',
       per_page: '100',
-      page: '1',
+      page: page,
       price_change_percentage: '1h,24h,7d',
       sparkline: 'true',
     },
@@ -64,18 +71,38 @@ const Home: React.FC = () => {
     },
   };
 
+  const coinList = {
+    method: 'GET',
+    url: 'https://coingecko.p.rapidapi.com/coins/list',
+    headers: {
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+    },
+  };
+
+  const coinListData = useQuery(['coinList'], () => axios.request(coinList));
+
+  const totalCoins = coinListData?.data?.data;
+
+  const marketPages = Math.ceil(totalCoins?.length / 100);
+
   const trendingCoin = useQuery(
     ['trending'],
     () => axios.get('https://api.coingecko.com/api/v3/search/trending'),
-    { refetchInterval: 30000 }
+    { refetchInterval: 60000 }
   );
   // console.log(trendingCoin.data?.data?.coins);
 
-  const coins = useQuery(['coins', currency], () => axios.request(options), {
-    refetchInterval: 30000,
-  });
+  const coins = useQuery(
+    ['coins', currency, page],
+    () => axios.request(options),
+    {
+      refetchInterval: 60000,
+    }
+  );
   // console.log(coins?.data?.data);
   const coinData = coins?.data?.data;
+  // console.log(coins?.data);
 
   const global = useQuery(
     ['global', currency],
@@ -84,6 +111,7 @@ const Home: React.FC = () => {
       refetchInterval: 60000,
     }
   );
+
   useEffect(() => {
     if (global?.data?.data?.data) {
       setTotalmarketcap(
@@ -93,48 +121,23 @@ const Home: React.FC = () => {
     }
   }, [global, currency]);
 
-  const handleSetCurrency = (currency: string) => {
-    setCurrency(currency);
-  };
-  useEffect(() => {
-    localStorage.setItem('currency', currency);
-  }, [currency]);
-  // console.log(global?.data?.data.data);
-  // const globalData = global?.data?.data.data;
-  // setTotalmarketcap(
-  //   global?.data?.data.data.total_market_cap[currency.toLocaleLowerCase()]
-  // );
+  const buttonArray = [];
+  const maxPages = 3;
 
-  // fetching data from the API
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.request(options);
-  //       // console.log(response.data);
-  //       setData(response.data);
-  //       const globalResponse = await axios.request(globalOptions);
-  //       // console.log(globalResponse.data);
-  //       // setTotalmarketcap(
-  //       //   globalResponse.data.data.total_market_cap[
-  //       //     currency.toLocaleLowerCase()
-  //       //   ]
-  //       // );
-  //       setTradingVol(
-  //         globalResponse.data.data.total_volume[currency.toLocaleLowerCase()]
-  //       );
-  //       // console.log(totalmarketcap + ' ' + currency);
-  //       // fetching trending data from the API
-  //       const trendingResponse = await axios.get(
-  //         'https://api.coingecko.com/api/v3/search/trending'
-  //       );
-  //       // console.log(trendingResponse.data.coins);
-  //       setTrending(trendingResponse.data.coins);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [currency]);
+  const startPage = Math.max(page - Math.floor(maxPages / 2), 1);
+  const endPage = Math.min(startPage + maxPages - 1, marketPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    buttonArray.push(
+      <button
+        key={i}
+        onClick={() => setPage(i)}
+        className={i === page ? 'pageButton active' : 'pageButton'}
+      >
+        {i}
+      </button>
+    );
+  }
 
   return (
     <main>
@@ -175,6 +178,30 @@ const Home: React.FC = () => {
                   >
                     AUD
                   </option>
+                  <option
+                    value='EUR'
+                    onClick={() => {
+                      handleSetCurrency('EUR');
+                    }}
+                  >
+                    EUR
+                  </option>
+                  <option
+                    value='HKD'
+                    onClick={() => {
+                      handleSetCurrency('HKD');
+                    }}
+                  >
+                    HKD
+                  </option>
+                  <option
+                    value='GBP'
+                    onClick={() => {
+                      handleSetCurrency('GBP');
+                    }}
+                  >
+                    GBP
+                  </option>
                 </select>
               </div>
             </div>
@@ -193,17 +220,19 @@ const Home: React.FC = () => {
 
                 {trendingCoin.data?.data?.coins.map(
                   (coin: TrendingCoins, index: number) => (
-                    <div key={index} className='trending'>
-                      <div className='flex'>
-                        <img
-                          src={coin.item.small}
-                          alt={coin.item.name}
-                          className='img'
-                        />
-                        <p className='name'>{coin.item.name}</p>
+                    <Link to={`/coin/${coin.item.id}`} className='coinLinks'>
+                      <div key={index} className='trending'>
+                        <div className='flex'>
+                          <img
+                            src={coin.item.small}
+                            alt={coin.item.name}
+                            className='img'
+                          />
+                          <p className='name'>{coin.item.name}</p>
+                        </div>
+                        <p>#{coin.item.market_cap_rank}</p>
                       </div>
-                      <p>#{coin.item.market_cap_rank}</p>
-                    </div>
+                    </Link>
                   )
                 )}
                 {/* {trending?.map((coin, index) => (
@@ -236,78 +265,108 @@ const Home: React.FC = () => {
 
           {coinData &&
             coinData?.map((coin: CoinData, index: number) => (
-              <div className='coins' key={index}>
-                <Link to={`/coin/${coin.id}`}>Click</Link>
-                <p className='coinRank'>{coin.market_cap_rank}. </p>
-                <p className='coinTicker'>{coin.symbol}</p>
-                <img src={coin.image} alt={coin.name} className='coinImage' />
-                <p className='coinName'>{coin.name}</p>
-                <p className='coinPrice'>
-                  ${coin.current_price.toLocaleString('en-NZ')}
-                </p>
-                <div className='flex priceChanges'>
-                  {Number(
-                    coin.price_change_percentage_1h_in_currency?.toFixed(1)
-                  ) >= 0 ? (
-                    <p
-                      style={{ color: '#3cd656' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
-                    </p>
-                  ) : (
-                    <p
-                      style={{ color: '#ff2b2b' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
-                    </p>
-                  )}
-                  {Number(
-                    coin.price_change_percentage_24h_in_currency?.toFixed(1)
-                  ) >= 0 ? (
-                    <p
-                      style={{ color: '#3cd656' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_24h_in_currency?.toFixed(1)}
-                      %
-                    </p>
-                  ) : (
-                    <p
-                      style={{ color: '#ff2b2b' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_24h_in_currency?.toFixed(1)}
-                      %
-                    </p>
-                  )}
-                  {Number(
-                    coin.price_change_percentage_7d_in_currency?.toFixed(1)
-                  ) >= 0 ? (
-                    <p
-                      style={{ color: '#3cd656' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_7d_in_currency?.toFixed(1)}%
-                    </p>
-                  ) : (
-                    <p
-                      style={{ color: '#ff2b2b' }}
-                      className='coinPercentageChange'
-                    >
-                      {coin.price_change_percentage_7d_in_currency?.toFixed(1)}%
-                    </p>
-                  )}
+              <Link to={`/coin/${coin.id}`} className='coinLinks'>
+                <div className='coins' key={index}>
+                  <p className='coinRank'>{coin?.market_cap_rank}. </p>
+                  <p className='coinTicker'>{coin.symbol}</p>
+                  <img src={coin.image} alt={coin.name} className='coinImage' />
+                  <p className='coinName'>{coin.name}</p>
+                  <p className='coinPrice'>
+                    ${coin?.current_price?.toLocaleString('en-NZ')}
+                  </p>
+                  <div className='flex priceChanges'>
+                    {Number(
+                      coin.price_change_percentage_1h_in_currency?.toFixed(1)
+                    ) >= 0 ? (
+                      <p
+                        style={{ color: '#3cd656' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_1h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    ) : (
+                      <p
+                        style={{ color: '#ff2b2b' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_1h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    )}
+                    {Number(
+                      coin.price_change_percentage_24h_in_currency?.toFixed(1)
+                    ) >= 0 ? (
+                      <p
+                        style={{ color: '#3cd656' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_24h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    ) : (
+                      <p
+                        style={{ color: '#ff2b2b' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_24h_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    )}
+                    {Number(
+                      coin.price_change_percentage_7d_in_currency?.toFixed(1)
+                    ) >= 0 ? (
+                      <p
+                        style={{ color: '#3cd656' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_7d_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    ) : (
+                      <p
+                        style={{ color: '#ff2b2b' }}
+                        className='coinPercentageChange'
+                      >
+                        {coin.price_change_percentage_7d_in_currency?.toFixed(
+                          1
+                        )}
+                        %
+                      </p>
+                    )}
+                  </div>
+                  <p className='coinMarketcap'>
+                    ${coin?.market_cap?.toLocaleString('en-NZ')}
+                  </p>
+                  <p className='coinVolume'>
+                    ${coin.total_volume?.toLocaleString('en-NZ')}
+                  </p>
                 </div>
-                <p className='coinMarketcap'>
-                  ${coin.market_cap.toLocaleString('en-NZ')}
-                </p>
-                <p className='coinVolume'>
-                  ${coin.total_volume.toLocaleString('en-NZ')}
-                </p>
-              </div>
+              </Link>
             ))}
+          <div className='pages'>
+            <button className='pageButton' onClick={() => setPage(page - 1)}>
+              ❮
+            </button>
+            {buttonArray}
+            <button className='pageButton'>...</button>
+            <button className='pageButton' onClick={() => setPage(100)}>
+              100
+            </button>
+            <button className='pageButton' onClick={() => setPage(page + 1)}>
+              ❯
+            </button>
+          </div>
         </div>
       </div>
     </main>

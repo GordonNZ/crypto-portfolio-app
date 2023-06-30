@@ -56,10 +56,10 @@ header p {
 }
 .coinsHeader p:first-child {
   margin-right: 1.2rem;
-  width: 1.5%;
+  width: 3%;
 }
 .coinsHeader p:nth-child(2) {
-  width: 7%;
+  width: 8%;
 }
 .coinsHeader p:nth-child(3) {
   width: 22%;
@@ -88,11 +88,13 @@ header p {
 }
 .coinRank {
   margin-right: 1.2rem;
-  width: 1.5%;
+  width: 3%;
+  opacity: 0.8;
+  font-size: 0.95rem;
 }
 .coinTicker {
   text-transform: uppercase;
-  width: 7%;
+  width: 8%;
 }
 .coinImage {
   width: 1.5rem;
@@ -156,4 +158,28 @@ header p {
   width: 1.5vw;
   height: auto;
   margin-right: 1rem;
+}
+.coinLinks {
+  text-decoration: none;
+  color: var(--text);
+}
+.pages {
+  display: flex;
+  justify-content: end;
+  margin-top: 1rem;
+}
+.pageButton {
+  width: 1.8rem;
+  padding: 0.4rem 0;
+  border: none;
+  background-color: var(--bgMain);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+.active {
+  background-color: var(--secondaryAccent);
+}
+.pageButton:hover {
+  background-color: var(--secondaryAccent);
 }
