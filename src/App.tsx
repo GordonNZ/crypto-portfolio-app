@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home currency={currency} />} />
         <Route path='/coin/:id' element={<CoinDetail currency={currency} />} />
-        <Route path='/portfolio' element={<Portfolio />} />
+        <Route path='/portfolio' element={<Portfolio currency={currency} />} />
       </Routes>
     </div>
   );

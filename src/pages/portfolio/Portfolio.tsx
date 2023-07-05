@@ -3,9 +3,11 @@ import './Portfolio.css';
 import Navbar from '../../components/navbar/Navbar';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
 
-type Props = {};
+type Props = {
+  currency: string;
+};
 
-const Portfolio = (props: Props) => {
+const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const portfolio = [
     {
       id: 1,
@@ -75,7 +77,7 @@ const Portfolio = (props: Props) => {
           </table>
         </div>
         <button className='addCoin'>Add Transaction</button>
-        <AddTransaction />
+        <AddTransaction currency={currency} />
       </main>
     </div>
   );

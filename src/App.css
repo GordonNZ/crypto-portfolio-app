@@ -4,8 +4,8 @@
   box-sizing: border-box;
 }
 :root {
-  --bgMain: #1c1b23;
-  --bgLighter: hsl(226, 18%, 17%);
+  --bgMain: #0c131f;
+  --bgLighter: #212939;
   --primaryAccent: #ca3550;
   --secondaryAccent: #442fd7;
   --white: #ffffff;

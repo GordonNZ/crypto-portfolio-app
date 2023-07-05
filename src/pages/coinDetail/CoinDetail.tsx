@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import './CoinDetail.css';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import Navbar from '../../components/navbar/Navbar';
 import MarketChart from '../../components/marketChart/MarketChart';
 
 // interface CoinInfo {}

@@ -1,0 +1,29 @@
+.searchInput {
+  width: 80%;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin: 1rem 0;
+  background-color: var(--bgLighter);
+  color: var(--text);
+}
+.searchBtn {
+  width: 20%;
+  padding: 0.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--secondaryAccent);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.searchBtn:hover {
+  background-color: var(--bgMain);
+}
+.searchBtn:active {
+  background-color: var(--secondaryAccent);
+}

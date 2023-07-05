@@ -1,29 +1,16 @@
 import React, { useState } from 'react';
 import './AddTransaction.css';
+import Search from '../search/Search';
 
-type Props = {};
+interface Props {
+  currency: string;
+}
 
-const AddTransaction = (props: Props) => {
-  const [searchInput, setSearchInput] = useState<string>('');
-
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSearchInput(e.target.value);
-  };
-  if (searchInput.length > 0) {
-    console.log(searchInput);
-  }
-
+const AddTransaction: React.FC<Props> = ({ currency }: Props) => {
   return (
     <div className='addTxn'>
       <h2>Add Transaction</h2>
-      <input
-        type='text'
-        placeholder='Search'
-        onChange={handleSearchInput}
-        value={searchInput}
-        className='searchInput'
-      />
+      <Search currency={currency} />
       <table>
         <thead>
           <tr>

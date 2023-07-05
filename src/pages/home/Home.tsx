@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import Navbar from '../../components/navbar/Navbar';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
@@ -39,8 +38,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
   const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
-  // const storedCurrency = localStorage.getItem('currency');
-  // const [currency, setCurrency] = useState<any>(storedCurrency);
   const [trending, setTrending] = useState<TrendingCoins[]>([]);
   const [page, setPage] = useState<number>(1);
 
