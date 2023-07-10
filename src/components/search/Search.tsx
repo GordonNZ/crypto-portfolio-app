@@ -33,8 +33,33 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
     },
   };
 
+  // const coinList = {
+  //   method: 'GET',
+  //   url: 'https://coingecko.p.rapidapi.com/coins/list',
+  //   headers: {
+  //     'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+  //     'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+  //   },
+  // };
+
+  // options for the API
+  const coinList = {
+    method: 'GET',
+    url: 'https://coingecko.p.rapidapi.com/coins/markets',
+    params: {
+      vs_currency: currency,
+      order: 'market_cap_desc',
+      per_page: '250',
+      page: '1',
+    },
+    headers: {
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+    },
+  };
+
   const handleClick = () => {
-    if (searchInput === '') {
+    if (searchInput.length === 0) {
       return;
     } else {
       // manually refetch
@@ -54,46 +79,65 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
   const coinId = data?.data;
   console.log(coinId);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  } else if (error) {
-    console.error(error);
-  }
+  const coinListData = useQuery(['coinList'], () => axios.request(coinList));
+
+  const totalCoins = coinListData?.data?.data;
+  // console.log(totalCoins);
 
   return (
     <div className='search'>
       <input
+        list='cryptocurrencies'
         type='text'
         placeholder='Search'
         onChange={handleSearchInput}
         value={searchInput}
         className='searchInput'
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleClick();
+          }
+        }}
       />
+      <datalist id='cryptocurrencies'>
+        {totalCoins?.map((coin: any) => (
+          <option key={coin.id} value={coin.id}>
+            {coin.name}
+          </option>
+        ))}
+      </datalist>
       <button onClick={handleClick} className='searchBtn'>
         Search
       </button>
       <div>
         {coinId ? (
-          <div className='coinInfo'>
-            <img
-              src={coinId?.image?.large}
-              alt={coinId?.name}
-              className='coinImg'
-            />
-            <h3 className='coinName'>{coinId?.name}</h3>
-            <h3 className='coinSymbol'>{coinId?.symbol.toUpperCase()}</h3>
-            <h3 className='coinPrice'>
-              $
-              {coinId?.market_data?.current_price[
-                currency.toLowerCase()
-              ].toFixed(2)}
-            </h3>
-            <h3 className='coinRank'>Rank: {coinId?.market_cap_rank}</h3>
+          <div>
+            <div className='search-coinInfo'>
+              <img
+                src={coinId?.image?.large}
+                alt={coinId?.name}
+                className='coinImg'
+              />
+              <p className='search-coinName'>{coinId?.name}</p>
+              <p className='search-coinSymbol'>
+                {coinId?.symbol.toUpperCase()}
+              </p>
+              <p className='search-coinPrice'>
+                $
+                {coinId?.market_data?.current_price[
+                  currency.toLowerCase()
+                ].toFixed(2)}
+              </p>
+              <p className='search-coinRank'>#{coinId?.market_cap_rank}</p>
+            </div>
+            <div className='search-coinStats'>
+              <label htmlFor='amount'>Amount: </label>
+              <input type='number' placeholder='Amount' />
+            </div>
+            <button>Add</button>
           </div>
         ) : (
-          <div className='coinInfo'>
-            <h3 className='coinName'>Search for a coin</h3>
-          </div>
+          <div className='search-coinInfo'></div>
         )}
       </div>
     </div>

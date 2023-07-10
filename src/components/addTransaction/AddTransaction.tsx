@@ -11,7 +11,7 @@ const AddTransaction: React.FC<Props> = ({ currency }: Props) => {
     <div className='addTxn'>
       <h2>Add Transaction</h2>
       <Search currency={currency} />
-      <table>
+      {/* <table>
         <thead>
           <tr>
             <th>Coin</th>
@@ -19,17 +19,11 @@ const AddTransaction: React.FC<Props> = ({ currency }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {/* {coins.map((coin) => (
-            <tr key={coin.id}>
-              <td>{coin.name}</td>
-              <td>{coin.price</td>
-              </tr>
-              ))} */}
           <tr>
             <td></td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 };
