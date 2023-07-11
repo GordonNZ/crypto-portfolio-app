@@ -1,0 +1,61 @@
+.searchInput {
+  width: 80%;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin: 1rem 0;
+  background-color: var(--bgLighter);
+  color: var(--text);
+}
+.searchBtn {
+  width: 15%;
+  padding: 0.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--secondaryAccent);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.searchBtn:hover {
+  background-color: var(--bgMain);
+}
+.searchBtn:active {
+  background-color: var(--secondaryAccent);
+}
+.search-coinInfo {
+  display: flex;
+  margin-top: 0.4rem;
+  align-items: center;
+  opacity: 0.85;
+  padding: 0.4rem;
+  border-bottom: 1px solid var(--bgLighter);
+}
+.search-coinInfo:hover {
+  opacity: 1;
+  cursor: pointer;
+  background-color: var(--bgLighter);
+}
+.search-coinRank,
+.search-coinSymbol {
+  opacity: 0.75;
+}
+.search-coinName,
+.search-coinSymbol {
+  margin-left: 0.6rem;
+}
+.search-coinName {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.search-coinSymbol {
+  margin-right: 5rem;
+}
+.search-coinPrice {
+  font-weight: 600;
+  margin-right: 1rem;
+}

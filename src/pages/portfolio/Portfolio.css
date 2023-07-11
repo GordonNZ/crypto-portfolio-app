@@ -1,0 +1,41 @@
+.portfolio-main {
+  background-color: var(--bgLighter);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 3rem;
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+}
+.portfolio-main > button {
+  margin: 1rem auto;
+  padding: 0.6rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--secondaryAccent);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.portfolio-main > button:hover {
+  background-color: var(--bgMain);
+}
+.portfolio-table {
+  width: 90%;
+  margin: 2rem auto;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+}
+.portfolio-table-head > tr > th {
+  width: 25%;
+  padding: 0.5rem 0;
+  text-align: left;
+  border-bottom: 1px solid var(--bgMain);
+  opacity: 0.85;
+}
+.portfolio-coin-image {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: contain;
+  margin-right: 0.5rem;
+}

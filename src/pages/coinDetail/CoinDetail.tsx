@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import './CoinDetail.css';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import Navbar from '../../components/navbar/Navbar';
 import MarketChart from '../../components/marketChart/MarketChart';
 
 // interface CoinInfo {}
@@ -49,7 +48,6 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
 
   return (
     <div className='home'>
-      <Navbar />
       <div className='coinPage'>
         <Link to='/'>
           <button className='backButton'>Back</button>

@@ -10,7 +10,7 @@
   flex-direction: column;
   padding: 2rem 3rem;
   width: 85%;
-  margin: 2rem auto;
+  margin: 0 auto;
   border-radius: 0.5rem;
 }
 header {
@@ -31,19 +31,6 @@ header p {
 }
 .flex {
   display: flex;
-}
-.currencySelect {
-  align-items: center;
-}
-.currencyOptions {
-  margin: 0 0 0 0.5rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  background-color: var(--bgMain);
-  color: var(--text);
-  font-weight: 500;
-  cursor: pointer;
 }
 
 .headerH1 {

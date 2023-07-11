@@ -2,9 +2,12 @@ import './Navbar.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-type Props = {};
+type Props = {
+  currency: string;
+  handleSetCurrency: (currency: string) => void;
+};
 
-const Navbar = (props: Props) => {
+const Navbar: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   return (
     <nav>
       <div className='nav'>
@@ -16,6 +19,63 @@ const Navbar = (props: Props) => {
           <Link to='/portfolio' className='portfolio'>
             Portfolio
           </Link>
+          <div className='flex currencySelect'>
+            <p>Currency: </p>
+            <select
+              name='currency'
+              className='currencyOptions'
+              defaultValue={currency}
+            >
+              <option
+                value='NZD'
+                onClick={() => {
+                  handleSetCurrency('NZD');
+                }}
+              >
+                NZD
+              </option>
+              <option
+                value='USD'
+                onClick={() => {
+                  handleSetCurrency('USD');
+                }}
+              >
+                USD
+              </option>
+              <option
+                value='AUD'
+                onClick={() => {
+                  handleSetCurrency('AUD');
+                }}
+              >
+                AUD
+              </option>
+              <option
+                value='EUR'
+                onClick={() => {
+                  handleSetCurrency('EUR');
+                }}
+              >
+                EUR
+              </option>
+              <option
+                value='HKD'
+                onClick={() => {
+                  handleSetCurrency('HKD');
+                }}
+              >
+                HKD
+              </option>
+              <option
+                value='GBP'
+                onClick={() => {
+                  handleSetCurrency('GBP');
+                }}
+              >
+                GBP
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     </nav>

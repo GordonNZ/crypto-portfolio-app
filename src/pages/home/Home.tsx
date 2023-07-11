@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import Navbar from '../../components/navbar/Navbar';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 // interface for the data from the API
 interface CoinData {
@@ -32,17 +32,16 @@ interface TrendingCoins {
 
 interface Props {
   currency: string;
-  handleSetCurrency: (currency: string) => void;
 }
 
-const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
+const Home: React.FC<Props> = ({ currency }: Props) => {
   const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
-  // const storedCurrency = localStorage.getItem('currency');
-  // const [currency, setCurrency] = useState<any>(storedCurrency);
   const [trending, setTrending] = useState<TrendingCoins[]>([]);
   const [page, setPage] = useState<number>(1);
+
+  const { pageid } = useParams<{ pageid: string }>();
 
   // options for the API
   const options = {
@@ -122,7 +121,7 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   }, [global, currency]);
 
   const buttonArray = [];
-  const maxPages = 3;
+  const maxPages = 4;
 
   const startPage = Math.max(page - Math.floor(maxPages / 2), 1);
   const endPage = Math.min(startPage + maxPages - 1, marketPages);
@@ -142,68 +141,10 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
   return (
     <main>
       <div className='home'>
-        <Navbar />
         <div className='cryptoMarketContainer'>
           <header>
             <div className='flex topHeader'>
               <h1 className='headerH1'>Cryptocurrency Prices by Market Cap</h1>
-              <div className='flex currencySelect'>
-                <p>Currency: </p>
-                <select
-                  name='currency'
-                  className='currencyOptions'
-                  defaultValue={currency}
-                >
-                  <option
-                    value='NZD'
-                    onClick={() => {
-                      handleSetCurrency('NZD');
-                    }}
-                  >
-                    NZD
-                  </option>
-                  <option
-                    value='USD'
-                    onClick={() => {
-                      handleSetCurrency('USD');
-                    }}
-                  >
-                    USD
-                  </option>
-                  <option
-                    value='AUD'
-                    onClick={() => {
-                      handleSetCurrency('AUD');
-                    }}
-                  >
-                    AUD
-                  </option>
-                  <option
-                    value='EUR'
-                    onClick={() => {
-                      handleSetCurrency('EUR');
-                    }}
-                  >
-                    EUR
-                  </option>
-                  <option
-                    value='HKD'
-                    onClick={() => {
-                      handleSetCurrency('HKD');
-                    }}
-                  >
-                    HKD
-                  </option>
-                  <option
-                    value='GBP'
-                    onClick={() => {
-                      handleSetCurrency('GBP');
-                    }}
-                  >
-                    GBP
-                  </option>
-                </select>
-              </div>
             </div>
             <p>Stay up to date in the ever changing world of Cryptocurrency!</p>
             <section className='flex marketInfo'>
@@ -358,7 +299,9 @@ const Home: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
             <button className='pageButton' onClick={() => setPage(page - 1)}>
               ❮
             </button>
+
             {buttonArray}
+
             <button className='pageButton'>...</button>
             <button className='pageButton' onClick={() => setPage(100)}>
               100

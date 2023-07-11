@@ -62,3 +62,17 @@ nav {
   color: var(--text);
   background-color: hsla(349, 58%, 60%, 0);
 }
+.currencySelect {
+  align-items: center;
+  color: var(--text);
+}
+.currencyOptions {
+  margin: 0 0 0 0.1rem;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--bgMain);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+}
