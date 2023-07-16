@@ -10,7 +10,7 @@
   color: var(--text);
 }
 .searchBtn {
-  width: 15%;
+  width: 20%;
   padding: 0.5rem 0;
   border-radius: 0 0.5rem 0.5rem 0;
   border: none;
@@ -58,4 +58,57 @@
 .search-coinPrice {
   font-weight: 600;
   margin-right: 1rem;
+}
+.search-coinAmountContainer {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+.search-coinAmountContainer > input {
+  margin: 1rem auto;
+  text-align: center;
+  font-size: 2rem;
+}
+.search-amountInput {
+  width: 50%;
+  padding: 2rem 0.6rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin: 1rem 0;
+  background-color: var(--bgLighter);
+  color: var(--text);
+}
+.search-addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  margin: 0 auto 1rem auto;
+  padding: 1rem 0;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--secondaryAccent);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.search-addBtn:hover {
+  background-color: var(--bgMain);
+}
+/* Hide Arrows From Input Number */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
 }

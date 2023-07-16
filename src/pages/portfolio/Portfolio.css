@@ -1,3 +1,6 @@
+.portfolio-home {
+  min-height: 100vh;
+}
 .portfolio-main {
   background-color: var(--bgLighter);
   display: flex;

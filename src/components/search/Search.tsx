@@ -5,10 +5,21 @@ import { useQuery } from '@tanstack/react-query';
 
 type Props = {
   currency: string;
+  portfolio: {
+    id: number;
+    name: string;
+    symbol: string;
+    image: string;
+    price: number;
+    price_change_percentage_24h: number;
+    holding: number;
+  }[];
 };
 
-const Search: React.FC<Props> = ({ currency }: Props) => {
+const Search: React.FC<Props> = ({ currency, portfolio }: Props) => {
   const [searchInput, setSearchInput] = useState<string>('');
+  const [val, setVal] = useState<number>(0);
+  // console.log(val);
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -59,11 +70,13 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
   };
 
   const handleClick = () => {
-    if (searchInput.length === 0) {
+    if (searchInput.length < 1) {
       return;
     } else {
       // manually refetch
       refetch();
+      console.log('fetched');
+      setSearchInput('');
     }
   };
 
@@ -79,10 +92,35 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
   const coinId = data?.data;
   console.log(coinId);
 
+  // React query hook to fetch coin list from coingecko API using axios for datalist
   const coinListData = useQuery(['coinList'], () => axios.request(coinList));
-
   const totalCoins = coinListData?.data?.data;
   // console.log(totalCoins);
+
+  // validatiing input and adding coin to portfolio
+  const handleAdd = () => {
+    const validNumberRegex = /^\d+(\.\d+)?$/;
+    if (val === 0) {
+      alert('Please enter a valid number');
+    } else if (!validNumberRegex.test(val.toString())) {
+      alert('Entered value is not a number');
+      setVal(0);
+    } else {
+      console.log('added');
+      console.log(val, coinId.id);
+      portfolio.push({
+        id: coinId.id,
+        name: coinId.name,
+        symbol: coinId.symbol,
+        image: coinId.image.large,
+        price: coinId.market_data.current_price[currency.toLowerCase()],
+        price_change_percentage_24h:
+          coinId.market_data.price_change_percentage_24h,
+        holding: val,
+      });
+      //setVal(0);}
+    }
+  };
 
   return (
     <div className='search'>
@@ -130,11 +168,21 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
               </p>
               <p className='search-coinRank'>#{coinId?.market_cap_rank}</p>
             </div>
-            <div className='search-coinStats'>
-              <label htmlFor='amount'>Amount: </label>
-              <input type='number' placeholder='Amount' />
+            <div className='search-coinAmountContainer'>
+              <input
+                type='number'
+                inputMode='numeric'
+                placeholder='Amount'
+                className='search-amountInput'
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
+                  setVal(parseFloat(sanitizedValue));
+                }}
+              />
             </div>
-            <button>Add</button>
+            <button className='search-addBtn' onClick={handleAdd}>
+              Add
+            </button>
           </div>
         ) : (
           <div className='search-coinInfo'></div>

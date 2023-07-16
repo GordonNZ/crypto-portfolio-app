@@ -37,7 +37,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   );
 
   return (
-    <div className='home'>
+    <div className='portfolio-home home'>
       <main className='portfolio-main'>
         <h2>Portfolio</h2>
         <h2>Total Value: ${totalValue.toLocaleString('en-NZ')}</h2>
@@ -64,9 +64,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                     <p>{coin.name}</p>
                   </td>
                   <td>${coin.price.toLocaleString('en-NZ')}</td>
-                  <td>
-                    ${coin.price_change_percentage_24h.toLocaleString('en-NZ')}
-                  </td>
+                  <td>${coin.price_change_percentage_24h.toFixed(2)}</td>
                   <td>{coin.holding}</td>
                   <td>
                     ${(coin.holding * coin.price).toLocaleString('en-NZ')}
@@ -77,7 +75,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           </table>
         </div>
         <button className='addCoin'>Add Transaction</button>
-        <AddTransaction currency={currency} />
+        <AddTransaction currency={currency} portfolio={portfolio} />
       </main>
     </div>
   );
