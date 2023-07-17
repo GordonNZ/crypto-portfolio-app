@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Portfolio.css';
-import Navbar from '../../components/navbar/Navbar';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
+
+type Coin = {
+  id: number;
+  name: string;
+  symbol: string;
+  image: string;
+  price: number;
+  price_change_percentage_24h: number;
+  holding: number;
+};
 
 type Props = {
   currency: string;
 };
 
 const Portfolio: React.FC<Props> = ({ currency }: Props) => {
-  const portfolio = [
+  const [portfolio, setPortfolio] = useState<Coin[]>([
     {
       id: 1,
       name: 'Bitcoin',
@@ -29,12 +38,18 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
       price_change_percentage_24h: 2.1,
       holding: 5.238,
     },
-  ];
+  ]);
 
-  const totalValue = portfolio.reduce(
+  //finding the total value of the portfolio
+  let totalValue = portfolio.reduce(
     (total, coin) => total + coin.holding * coin.price,
     0
   );
+
+  const refreshMap = () => {
+    // Use the setPortfolio function with the current state to trigger a refresh
+    setPortfolio([...portfolio]);
+  };
 
   return (
     <div className='portfolio-home home'>
@@ -75,6 +90,9 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           </table>
         </div>
         <button className='addCoin'>Add Transaction</button>
+        <button className='addCoin' onClick={refreshMap}>
+          Refresh
+        </button>
         <AddTransaction currency={currency} portfolio={portfolio} />
       </main>
     </div>

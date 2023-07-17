@@ -119,6 +119,7 @@ const Search: React.FC<Props> = ({ currency, portfolio }: Props) => {
         holding: val,
       });
       //setVal(0);}
+      console.log(portfolio);
     }
   };
 
