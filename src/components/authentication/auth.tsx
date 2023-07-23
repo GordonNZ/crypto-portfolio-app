@@ -5,10 +5,13 @@ import {
   signOut,
 } from 'firebase/auth';
 import { useState } from 'react';
+import './Auth.css';
+import GoogleButton from 'react-google-button';
 
 export const Auth = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [user, setUser] = useState<string>('');
 
   //using firebase authentification to create a user
   const handleSignIn = async () => {
@@ -34,24 +37,40 @@ export const Auth = () => {
       console.log(err);
     }
   };
-  const user = auth?.currentUser?.email;
+  //Get current user
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setUser(auth?.currentUser?.email!);
+    } else {
+      setUser('');
+    }
+  });
 
   return (
-    <div>
+    <div className='auth'>
       <input
+        className='auth-input'
         placeholder='Email'
         onChange={(e) => setEmail(e.target.value)}
       ></input>
       <input
+        className='auth-input'
         type='password'
         placeholder='Password'
         onChange={(e) => setPassword(e.target.value)}
       ></input>
-      <button onClick={handleSignIn}>Sign In</button>
-
-      <button onClick={handleGoogleSignIn}>Sign In With Google</button>
-
-      <button onClick={handleSignOut}>Sign out</button>
+      <button onClick={handleSignIn} className='auth-btn'>
+        Sign In
+      </button>
+      <p>or</p>
+      {/* <button onClick={handleGoogleSignIn}>Sign In With Google</button> */}
+      <GoogleButton
+        onClick={handleGoogleSignIn}
+        style={{ transform: 'scale(0.85)' }}
+      />
+      <button onClick={handleSignOut} className='auth-btn'>
+        Sign out
+      </button>
       <p>User: {user}</p>
     </div>
   );

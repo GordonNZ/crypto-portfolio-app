@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Auth } from '../../components/authentication/auth';
 
 // interface for the data from the API
 interface CoinData {
@@ -141,7 +140,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
 
   return (
     <main>
-      <Auth />
       <div className='home'>
         <div className='cryptoMarketContainer'>
           <header>
