@@ -47,7 +47,7 @@ export const Auth = () => {
   });
 
   return (
-    <div className='auth'>
+    <form className='auth'>
       <input
         className='auth-input'
         placeholder='Email'
@@ -72,6 +72,6 @@ export const Auth = () => {
         Sign out
       </button>
       <p>User: {user}</p>
-    </div>
+    </form>
   );
 };

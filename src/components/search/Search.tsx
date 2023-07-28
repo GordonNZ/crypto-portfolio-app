@@ -5,18 +5,18 @@ import { useQuery } from '@tanstack/react-query';
 
 type Props = {
   currency: string;
-  portfolio: {
-    id: number;
-    name: string;
-    symbol: string;
-    image: string;
-    price: number;
-    price_change_percentage_24h: number;
-    holding: number;
-  }[];
+  // portfolio: {
+  //   id: number;
+  //   name: string;
+  //   symbol: string;
+  //   image: string;
+  //   price: number;
+  //   price_change_percentage_24h: number;
+  //   holding: number;
+  // }[];
 };
 
-const Search: React.FC<Props> = ({ currency, portfolio }: Props) => {
+const Search: React.FC<Props> = ({ currency }: Props) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [val, setVal] = useState<number>(0);
   // console.log(val);
@@ -108,18 +108,18 @@ const Search: React.FC<Props> = ({ currency, portfolio }: Props) => {
     } else {
       console.log('added');
       console.log(val, coinId.id);
-      portfolio.push({
-        id: coinId.id,
-        name: coinId.name,
-        symbol: coinId.symbol,
-        image: coinId.image.large,
-        price: coinId.market_data.current_price[currency.toLowerCase()],
-        price_change_percentage_24h:
-          coinId.market_data.price_change_percentage_24h,
-        holding: val,
-      });
-      //setVal(0);}
-      console.log(portfolio);
+      // portfolio.push({
+      //   id: coinId.id,
+      //   name: coinId.name,
+      //   symbol: coinId.symbol,
+      //   image: coinId.image.large,
+      //   price: coinId.market_data.current_price[currency.toLowerCase()],
+      //   price_change_percentage_24h:
+      //     coinId.market_data.price_change_percentage_24h,
+      //   holding: val,
+      // });
+      // //setVal(0);}
+      // console.log(portfolio);
     }
   };
 
