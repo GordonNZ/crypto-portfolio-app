@@ -3,6 +3,9 @@ import './Portfolio.css';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
 import { db } from './../../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import FetchCoinData from '../../components/fetchCoinData/FetchCoinData';
 
 type Coin = {
   id: string;
@@ -19,6 +22,46 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
 
   const portfolioRef = collection(db, 'portfolio');
 
+  // const getCoinPrice = async (coinName: string): Promise<number> => {
+  //   try {
+  //     const options = {
+  //       method: 'GET',
+  //       url: `https://coingecko.p.rapidapi.com/coins/${coinName.toLowerCase()}`,
+  //       params: {
+  //         sparkline: 'false',
+  //         developer_data: 'true',
+  //         community_data: 'true',
+  //         market_data: 'true',
+  //         tickers: 'true',
+  //         localization: 'true',
+  //       },
+  //       headers: {
+  //         'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+  //         'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
+  //       },
+  //     };
+
+  //     // React query hook to fetch coin data from coingecko API using axios
+  //     const { data, isLoading, error } = useQuery(
+  //       ['coinportfolio'],
+  //       () => axios.request(options)
+  //       // { refetchInterval: 30000 }
+  //     );
+  //     const coinId = data?.data;
+  //     console.log(coinId);
+
+  //     // const response = await axios.get(
+  //     //   `https://api.coingecko.com/api/v3/simple/price?ids=${coinName}&vs_currencies=usd`
+  //     // );
+
+  //     const price = coinId?.market_data?.current_price[currency.toLowerCase()];
+  //     return price || 0;
+  //   } catch (error) {
+  //     console.error('Error fetching coin price:', error);
+  //     return 0;
+  //   }
+  // };
+
   useEffect(() => {
     const getPortfolio = async () => {
       //READ THE DATA FROM THE DATABASE
@@ -30,8 +73,17 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           coin: doc.data().coin,
           holding: doc.data().holding,
         }));
-        console.log(portfolioData);
+        // console.log(portfolioData);
         setPortfoliodb(portfolioData);
+        // Fetch real-time prices for each coin and update the portfolio
+        // const updatedPortfolioData = await Promise.all(
+        //   portfolioData.map(async (coin) => ({
+        //     ...coin,
+        //     price: await FetchCoinData(coin.coin),
+        //   }))
+        // );
+
+        // setPortfoliodb(updatedPortfolioData);
       } catch (err) {
         console.log(err);
       }
@@ -40,15 +92,14 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   }, []);
 
   //finding the total value of the portfolio
-  // let totalValue = portfolio.reduce(
-  //   (total, coin) => total + coin.holding * coin.price,
-  //   0
-  // );
+  // let totalValue =
+  //   <FetchCoinData coinName={coin.coin} currency={currency} /> * coin.holding;
 
   // const refreshMap = () => {
   //   // Use the setPortfolio function with the current state to trigger a refresh
   //   setPortfolio([...portfolio]);
   // };
+  console.log(<FetchCoinData coinName={'ethereum'} currency={currency} />);
 
   return (
     <div className='portfolio-home home'>
@@ -71,6 +122,16 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                 <tr key={coin.id}>
                   <td>{coin.coin}</td>
                   <td>{coin.holding}</td>
+                  <td>
+                    $<FetchCoinData coinName={coin.coin} currency={currency} />
+                  </td>
+                  <td>{}</td>
+                  {/* <td>
+                    $
+                    {coinId?.market_data?.current_price[
+                      currency.toLowerCase()
+                    ].toFixed(2)}
+                  </td> */}
                 </tr>
               ))}
               {/* {portfolio.map((coin) => (
@@ -98,7 +159,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
         {/* <button className='addCoin' onClick={refreshMap}> */}
         {/* Refresh */}
         {/* </button> */}
-        <AddTransaction currency={currency} />
+        {/* <AddTransaction currency={currency} /> */}
       </main>
     </div>
   );

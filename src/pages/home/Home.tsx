@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { coinList, globalOptions } from '../../config/API_Options';
 
 // interface for the data from the API
 interface CoinData {
@@ -43,7 +44,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
 
   const { pageid } = useParams<{ pageid: string }>();
 
-  // options for the API
   const options = {
     method: 'GET',
     url: 'https://coingecko.p.rapidapi.com/coins/markets',
@@ -55,24 +55,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
       price_change_percentage: '1h,24h,7d',
       sparkline: 'true',
     },
-    headers: {
-      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
-      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
-    },
-  };
-
-  const globalOptions = {
-    method: 'GET',
-    url: 'https://coingecko.p.rapidapi.com/global',
-    headers: {
-      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
-      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
-    },
-  };
-
-  const coinList = {
-    method: 'GET',
-    url: 'https://coingecko.p.rapidapi.com/coins/list',
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
       'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
