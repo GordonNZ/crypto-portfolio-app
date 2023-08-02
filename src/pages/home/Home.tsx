@@ -83,7 +83,7 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
   );
   // console.log(coins?.data?.data);
   const coinData = coins?.data?.data;
-  // console.log(coins?.data);
+  console.log(coins?.data);
 
   const global = useQuery(
     ['global', currency],
@@ -215,7 +215,7 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
                         style={{ color: '#ff2b2b' }}
                         className='coinPercentageChange'
                       >
-                        {coin.price_change_percentage_1h_in_currency?.toFixed(
+                        {coin?.price_change_percentage_1h_in_currency?.toFixed(
                           1
                         )}
                         %
@@ -239,20 +239,20 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
                         className='coinPercentageChange'
                       >
                         {coin.price_change_percentage_24h_in_currency?.toFixed(
-                          1
+                          2
                         )}
                         %
                       </p>
                     )}
                     {Number(
-                      coin.price_change_percentage_7d_in_currency?.toFixed(1)
+                      coin.price_change_percentage_7d_in_currency?.toFixed(2)
                     ) >= 0 ? (
                       <p
                         style={{ color: '#3cd656' }}
                         className='coinPercentageChange'
                       >
                         {coin.price_change_percentage_7d_in_currency?.toFixed(
-                          1
+                          2
                         )}
                         %
                       </p>

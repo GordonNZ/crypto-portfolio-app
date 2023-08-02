@@ -5,9 +5,14 @@ import axios from 'axios';
 interface CoinPriceProps {
   coinName: string;
   currency: string;
+  holding: number | null;
 }
 
-const FetchCoinData: React.FC<CoinPriceProps> = ({ coinName, currency }) => {
+const FetchCoinPrice: React.FC<CoinPriceProps> = ({
+  coinName,
+  currency,
+  holding = null,
+}) => {
   const options = {
     method: 'GET',
     url: `https://coingecko.p.rapidapi.com/coins/${coinName.toLowerCase()}`,
@@ -29,9 +34,6 @@ const FetchCoinData: React.FC<CoinPriceProps> = ({ coinName, currency }) => {
     axios.request(options)
   );
 
-  const price =
-    data?.data?.market_data?.current_price[currency.toLowerCase()] || 0;
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -41,7 +43,15 @@ const FetchCoinData: React.FC<CoinPriceProps> = ({ coinName, currency }) => {
     return 0;
   }
 
-  return price;
+  const price =
+    data?.data?.market_data?.current_price[currency.toLowerCase()] || 0;
+
+  const calculatedValue = holding === null ? price : price * holding;
+  return calculatedValue.toLocaleString('en-NZ', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+  // return price;
 };
 
-export default FetchCoinData;
+export default FetchCoinPrice;

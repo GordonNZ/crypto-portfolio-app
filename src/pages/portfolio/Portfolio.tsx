@@ -5,7 +5,7 @@ import { db } from './../../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import FetchCoinData from '../../components/fetchCoinData/FetchCoinData';
+import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
 
 type Coin = {
   id: string;
@@ -99,7 +99,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   //   // Use the setPortfolio function with the current state to trigger a refresh
   //   setPortfolio([...portfolio]);
   // };
-  console.log(<FetchCoinData coinName={'ethereum'} currency={currency} />);
+  // console.log(<FetchCoinData coinName={'ethereum'} currency={currency} />);
 
   return (
     <div className='portfolio-home home'>
@@ -123,15 +123,21 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                   <td>{coin.coin}</td>
                   <td>{coin.holding}</td>
                   <td>
-                    $<FetchCoinData coinName={coin.coin} currency={currency} />
-                  </td>
-                  <td>{}</td>
-                  {/* <td>
                     $
-                    {coinId?.market_data?.current_price[
-                      currency.toLowerCase()
-                    ].toFixed(2)}
-                  </td> */}
+                    <FetchCoinPrice
+                      coinName={coin.coin}
+                      currency={currency}
+                      holding={null}
+                    />
+                  </td>
+                  <td>
+                    Value: $
+                    <FetchCoinPrice
+                      coinName={coin.coin}
+                      currency={currency}
+                      holding={coin.holding}
+                    />
+                  </td>
                 </tr>
               ))}
               {/* {portfolio.map((coin) => (
