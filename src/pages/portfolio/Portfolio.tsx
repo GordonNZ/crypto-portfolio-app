@@ -1,46 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Portfolio.css';
-import Navbar from '../../components/navbar/Navbar';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
+import { db } from './../../config/firebase';
+import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
+
+type Coin = {
+  id: string;
+  coin: string;
+  holding: number;
+};
 
 type Props = {
   currency: string;
 };
 
 const Portfolio: React.FC<Props> = ({ currency }: Props) => {
-  const portfolio = [
-    {
-      id: 1,
-      name: 'Bitcoin',
-      symbol: 'BTC',
-      image:
-        'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579',
-      price: 30240,
-      price_change_percentage_24h: 0.1,
-      holding: 0.521,
-    },
-    {
-      id: 1,
-      name: 'Ethereum',
-      symbol: 'ETH',
-      image:
-        'https://cloudfront-us-east-1.images.arcpublishing.com/coindesk/ZJZZK5B2ZNF25LYQHMUTBTOMLU.png',
-      price: 1950,
-      price_change_percentage_24h: 2.1,
-      holding: 5.238,
-    },
-  ];
+  const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
 
-  const totalValue = portfolio.reduce(
-    (total, coin) => total + coin.holding * coin.price,
-    0
-  );
+  const portfolioRef = collection(db, 'portfolio');
+
+  const getPortfolio = async () => {
+    //READ THE DATA FROM THE DATABASE
+    //SET THE DATA TO THE PORTFOLIO STATE
+    try {
+      const data = await getDocs(portfolioRef);
+      const portfolioData: Coin[] = data.docs.map((doc) => ({
+        id: doc.id,
+        coin: doc.data().coin,
+        holding: doc.data().holding,
+      }));
+      // console.log(portfolioData);
+      setPortfoliodb(portfolioData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getPortfolio();
+  }, []);
+
+  //deleting coin from firebase database portfolio
+  const deleteCoin = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, 'portfolio', id));
+      getPortfolio();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <div className='home'>
+    <div className='portfolio-home home'>
       <main className='portfolio-main'>
         <h2>Portfolio</h2>
-        <h2>Total Value: ${totalValue.toLocaleString('en-NZ')}</h2>
+        {/* <h2>Total Value: ${totalValue.toLocaleString('en-NZ')}</h2> */}
         <div className='portfolio'>
           <table className='portfolio-table'>
             <thead className='portfolio-table-head'>
@@ -53,23 +67,33 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
               </tr>
             </thead>
             <tbody>
-              {portfolio.map((coin) => (
+              {portfoliodb.map((coin, index) => (
                 <tr key={coin.id}>
-                  <td className='flex'>
-                    <img
-                      src={coin.image}
-                      alt='coin icon'
-                      className='portfolio-coin-image'
-                    />
-                    <p>{coin.name}</p>
-                  </td>
-                  <td>${coin.price.toLocaleString('en-NZ')}</td>
-                  <td>
-                    ${coin.price_change_percentage_24h.toLocaleString('en-NZ')}
-                  </td>
+                  <td>{coin.coin}</td>
                   <td>{coin.holding}</td>
                   <td>
-                    ${(coin.holding * coin.price).toLocaleString('en-NZ')}
+                    $
+                    <FetchCoinPrice
+                      coinName={coin.coin}
+                      currency={currency}
+                      holding={null}
+                    />
+                  </td>
+                  <td>
+                    Value: $
+                    <FetchCoinPrice
+                      coinName={coin.coin}
+                      currency={currency}
+                      holding={coin.holding}
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => deleteCoin(coin.id)}
+                      className='portfolio-deleteBtn'
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -77,7 +101,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           </table>
         </div>
         <button className='addCoin'>Add Transaction</button>
-        <AddTransaction currency={currency} />
+        <AddTransaction currency={currency} getPortfolio={getPortfolio} />
       </main>
     </div>
   );

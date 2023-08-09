@@ -110,17 +110,12 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
             <div className='dataContainer'>
               <p>{coinId.name} Price:</p>
               <p>
-                $
-                {coinId?.market_data.current_price[
-                  currency.toLowerCase()
-                ].toLocaleString('en-NZ')}
+                ${coinId?.market_data.current_price[currency.toLowerCase()]}
               </p>
             </div>
             <div className='dataContainer'>
               <p>24h Price Change:</p>
-              <p>
-                ${coinId?.market_data.price_change_24h.toLocaleString('en-NZ')}
-              </p>
+              <p>${coinId?.market_data.price_change_24h}</p>
             </div>
             <div className='dataContainer'>
               <p>Fully Diluted Value:</p>

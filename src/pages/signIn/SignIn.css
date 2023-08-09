@@ -1,0 +1,15 @@
+.signIn {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.signIn > main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bgLighter);
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  padding: 2rem;
+}

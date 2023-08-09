@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { coinList, globalOptions } from '../../config/API_Options';
 
 // interface for the data from the API
 interface CoinData {
@@ -43,7 +44,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
 
   const { pageid } = useParams<{ pageid: string }>();
 
-  // options for the API
   const options = {
     method: 'GET',
     url: 'https://coingecko.p.rapidapi.com/coins/markets',
@@ -55,24 +55,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
       price_change_percentage: '1h,24h,7d',
       sparkline: 'true',
     },
-    headers: {
-      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
-      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
-    },
-  };
-
-  const globalOptions = {
-    method: 'GET',
-    url: 'https://coingecko.p.rapidapi.com/global',
-    headers: {
-      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
-      'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
-    },
-  };
-
-  const coinList = {
-    method: 'GET',
-    url: 'https://coingecko.p.rapidapi.com/coins/list',
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
       'X-RapidAPI-Host': 'coingecko.p.rapidapi.com',
@@ -101,7 +83,7 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
   );
   // console.log(coins?.data?.data);
   const coinData = coins?.data?.data;
-  // console.log(coins?.data);
+  console.log(coins?.data);
 
   const global = useQuery(
     ['global', currency],
@@ -233,7 +215,7 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
                         style={{ color: '#ff2b2b' }}
                         className='coinPercentageChange'
                       >
-                        {coin.price_change_percentage_1h_in_currency?.toFixed(
+                        {coin?.price_change_percentage_1h_in_currency?.toFixed(
                           1
                         )}
                         %
@@ -257,20 +239,20 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
                         className='coinPercentageChange'
                       >
                         {coin.price_change_percentage_24h_in_currency?.toFixed(
-                          1
+                          2
                         )}
                         %
                       </p>
                     )}
                     {Number(
-                      coin.price_change_percentage_7d_in_currency?.toFixed(1)
+                      coin.price_change_percentage_7d_in_currency?.toFixed(2)
                     ) >= 0 ? (
                       <p
                         style={{ color: '#3cd656' }}
                         className='coinPercentageChange'
                       >
                         {coin.price_change_percentage_7d_in_currency?.toFixed(
-                          1
+                          2
                         )}
                         %
                       </p>

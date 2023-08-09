@@ -5,6 +5,7 @@ import Home from './pages/home/Home';
 import CoinDetail from './pages/coinDetail/CoinDetail';
 import Portfolio from './pages/portfolio/Portfolio';
 import Navbar from './components/navbar/Navbar';
+import SignIn from './pages/signIn/SignIn';
 
 function App() {
   const storedCurrency = localStorage.getItem('currency');
@@ -24,6 +25,7 @@ function App() {
         <Route path='/' element={<Home currency={currency} />} />
         <Route path='/coin/:id' element={<CoinDetail currency={currency} />} />
         <Route path='/portfolio' element={<Portfolio currency={currency} />} />
+        <Route path='/signin' element={<SignIn />} />
       </Routes>
     </div>
   );

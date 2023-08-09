@@ -1,3 +1,6 @@
+.portfolio-home {
+  min-height: 100vh;
+}
 .portfolio-main {
   background-color: var(--bgLighter);
   display: flex;
@@ -38,4 +41,16 @@
   height: 1.5rem;
   object-fit: contain;
   margin-right: 0.5rem;
+}
+.portfolio-deleteBtn {
+  background-color: var(--primaryAccent);
+  color: var(--text);
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.portfolio-deleteBtn:hover {
+  background-color: var(--bgMain);
 }
