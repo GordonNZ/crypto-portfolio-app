@@ -4,35 +4,14 @@ import Search from '../search/Search';
 
 interface Props {
   currency: string;
-  // portfolio: {
-  //   id: number;
-  //   name: string;
-  //   symbol: string;
-  //   image: string;
-  //   price: number;
-  //   price_change_percentage_24h: number;
-  //   holding: number;
-  // }[];
+  getPortfolio: () => void;
 }
 
-const AddTransaction: React.FC<Props> = ({ currency }: Props) => {
+const AddTransaction: React.FC<Props> = ({ currency, getPortfolio }: Props) => {
   return (
     <div className='addTxn'>
       <h2>Add Transaction</h2>
-      <Search currency={currency} />
-      {/* <table>
-        <thead>
-          <tr>
-            <th>Coin</th>
-            <th>Current Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-          </tr>
-        </tbody>
-      </table> */}
+      <Search currency={currency} getPortfolio={getPortfolio} />
     </div>
   );
 };

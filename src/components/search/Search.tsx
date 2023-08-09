@@ -2,29 +2,23 @@ import React, { useState } from 'react';
 import './Search.css';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { db } from './../../config/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 type Props = {
   currency: string;
-  // portfolio: {
-  //   id: number;
-  //   name: string;
-  //   symbol: string;
-  //   image: string;
-  //   price: number;
-  //   price_change_percentage_24h: number;
-  //   holding: number;
-  // }[];
+  getPortfolio: () => void;
 };
 
-const Search: React.FC<Props> = ({ currency }: Props) => {
+const Search: React.FC<Props> = ({ currency, getPortfolio }: Props) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [val, setVal] = useState<number>(0);
   // console.log(val);
 
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSearchInput(e.target.value);
-  };
+  // const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setSearchInput(e.target.value);
+  // };
 
   // Options for axios request to coingecko API for individual coin data
   const coinOptions = {
@@ -98,28 +92,47 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
   // console.log(totalCoins);
 
   // validatiing input and adding coin to portfolio
-  const handleAdd = () => {
-    const validNumberRegex = /^\d+(\.\d+)?$/;
+  // const handleAdd = () => {
+  //   const validNumberRegex = /^\d+(\.\d+)?$/;
+  //   if (val === 0) {
+  //     alert('Please enter a valid number');
+  //   } else if (!validNumberRegex.test(val.toString())) {
+  //     alert('Entered value is not a number');
+  //     setVal(0);
+  //   } else {
+  //     console.log('added');
+  //     console.log(val, coinId.id);
+  //     // portfolio.push({
+  //     //   id: coinId.id,
+  //     //   name: coinId.name,
+  //     //   symbol: coinId.symbol,
+  //     //   image: coinId.image.large,
+  //     //   price: coinId.market_data.current_price[currency.toLowerCase()],
+  //     //   price_change_percentage_24h:
+  //     //     coinId.market_data.price_change_percentage_24h,
+  //     //   holding: val,
+  //     // });
+  //     // //setVal(0);}
+  //     // console.log(portfolio);
+  //   }
+  // };
+
+  const portfolioRef = collection(db, 'portfolio');
+
+  //adding coin to firebase database portfolio
+  const onSubmitAdd = async () => {
     if (val === 0) {
       alert('Please enter a valid number');
-    } else if (!validNumberRegex.test(val.toString())) {
-      alert('Entered value is not a number');
-      setVal(0);
     } else {
-      console.log('added');
-      console.log(val, coinId.id);
-      // portfolio.push({
-      //   id: coinId.id,
-      //   name: coinId.name,
-      //   symbol: coinId.symbol,
-      //   image: coinId.image.large,
-      //   price: coinId.market_data.current_price[currency.toLowerCase()],
-      //   price_change_percentage_24h:
-      //     coinId.market_data.price_change_percentage_24h,
-      //   holding: val,
-      // });
-      // //setVal(0);}
-      // console.log(portfolio);
+      try {
+        await addDoc(portfolioRef, { coin: coinId.id, holding: val });
+
+        getPortfolio();
+        setSearchInput('');
+        setVal(0);
+      } catch (err) {
+        console.log(`caught an error: ${err}}`);
+      }
     }
   };
 
@@ -129,7 +142,7 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
         list='cryptocurrencies'
         type='text'
         placeholder='Search'
-        onChange={handleSearchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
         value={searchInput}
         className='searchInput'
         onKeyDown={(e) => {
@@ -181,7 +194,7 @@ const Search: React.FC<Props> = ({ currency }: Props) => {
                 }}
               />
             </div>
-            <button className='search-addBtn' onClick={handleAdd}>
+            <button className='search-addBtn' onClick={onSubmitAdd}>
               Add
             </button>
           </div>
