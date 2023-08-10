@@ -17,11 +17,12 @@ nav {
 .navbarLinks {
   display: flex;
   margin: 1rem 0;
+  align-items: center;
 }
 .navbarLinks a {
   text-decoration: none;
   color: var(--text);
-  margin: 0 1.5rem;
+  margin: 0 1.5rem 0 0;
   border-bottom: 2px solid #ffffff00;
   transition: 0.1s ease-in-out;
   position: relative;
@@ -49,7 +50,7 @@ nav {
 .navbarLinks a:hover {
   color: var(--primaryAccent);
   /* border-bottom: 2px solid var(--primaryAccent); */
-  width: 100%;
+  /* width: 100%; */
 }
 .navbarLinks > .portfolio {
   background-color: var(--primaryAccent);

@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './Portfolio.css';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
 import { db } from './../../config/firebase';
-import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
 
 type Coin = {
@@ -17,6 +23,8 @@ type Props = {
 
 const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
+  const [edit, setEdit] = useState(false);
+  const [updatedHolding, setUpdatedHolding] = useState(0);
 
   const portfolioRef = collection(db, 'portfolio');
 
@@ -44,6 +52,15 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const deleteCoin = async (id: string) => {
     try {
       await deleteDoc(doc(db, 'portfolio', id));
+      getPortfolio();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateHolding = async (id: string) => {
+    try {
+      await updateDoc(doc(db, 'portfolio', id), { holding: updatedHolding });
       getPortfolio();
     } catch (err) {
       console.log(err);
@@ -80,14 +97,32 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                     />
                   </td>
                   <td>
-                    Value: $
-                    <FetchCoinPrice
-                      coinName={coin.coin}
-                      currency={currency}
-                      holding={coin.holding}
-                    />
+                    {edit ? (
+                      <input
+                        type='number'
+                        inputMode='numeric'
+                        placeholder='Amount'
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setUpdatedHolding(Number(e.target.value))
+                        }
+                      />
+                    ) : (
+                      <FetchCoinPrice
+                        coinName={coin.coin}
+                        currency={currency}
+                        holding={coin.holding}
+                      />
+                    )}
                   </td>
                   <td>
+                    <button
+                      onClick={() => {
+                        updateHolding(coin.id);
+                        setEdit(!edit);
+                      }}
+                    >
+                      Edit
+                    </button>
                     <button
                       onClick={() => deleteCoin(coin.id)}
                       className='portfolio-deleteBtn'
