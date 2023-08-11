@@ -42,7 +42,8 @@
   object-fit: contain;
   margin-right: 0.5rem;
 }
-.portfolio-deleteBtn {
+.portfolio-deleteBtn,
+.portfolio-editBtn {
   background-color: var(--primaryAccent);
   color: var(--text);
   padding: 0.4rem;
@@ -51,6 +52,10 @@
   cursor: pointer;
   transition: 0.15s ease;
 }
-.portfolio-deleteBtn:hover {
+.portfolio-editBtn {
+  background-color: var(--secondaryAccent);
+}
+.portfolio-deleteBtn:hover,
+.portfolio-editBtn:hover {
   background-color: var(--bgMain);
 }

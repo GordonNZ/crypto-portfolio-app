@@ -9,7 +9,7 @@ import {
   deleteDoc,
   updateDoc,
 } from 'firebase/firestore';
-import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
+import { PortfolioLayout } from '../../components/portfolioLayout/PortfolioLayout';
 
 type Coin = {
   id: string;
@@ -23,7 +23,6 @@ type Props = {
 
 const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
-  const [edit, setEdit] = useState(false);
   const [updatedHolding, setUpdatedHolding] = useState(0);
 
   const portfolioRef = collection(db, 'portfolio');
@@ -85,52 +84,14 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
             </thead>
             <tbody>
               {portfoliodb.map((coin, index) => (
-                <tr key={coin.id}>
-                  <td>{coin.coin}</td>
-                  <td>{coin.holding}</td>
-                  <td>
-                    $
-                    <FetchCoinPrice
-                      coinName={coin.coin}
-                      currency={currency}
-                      holding={null}
-                    />
-                  </td>
-                  <td>
-                    {edit ? (
-                      <input
-                        type='number'
-                        inputMode='numeric'
-                        placeholder='Amount'
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          setUpdatedHolding(Number(e.target.value))
-                        }
-                      />
-                    ) : (
-                      <FetchCoinPrice
-                        coinName={coin.coin}
-                        currency={currency}
-                        holding={coin.holding}
-                      />
-                    )}
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        updateHolding(coin.id);
-                        setEdit(!edit);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteCoin(coin.id)}
-                      className='portfolio-deleteBtn'
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                <PortfolioLayout
+                  coin={coin}
+                  currency={currency}
+                  updatedHolding={updatedHolding}
+                  setUpdatedHolding={setUpdatedHolding}
+                  deleteCoin={deleteCoin}
+                  updateHolding={updateHolding}
+                />
               ))}
             </tbody>
           </table>
