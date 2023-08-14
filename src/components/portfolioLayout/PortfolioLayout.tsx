@@ -47,9 +47,13 @@ export const PortfolioLayout = ({
             }
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                updateHolding(coin.id);
-                setEdit(!edit);
-                setUpdatedHolding(0);
+                if (updatedHolding === 0) {
+                  setEdit(!edit);
+                } else {
+                  updateHolding(coin.id);
+                  setUpdatedHolding(0);
+                  setEdit(!edit);
+                }
               }
             }}
           />
@@ -64,9 +68,13 @@ export const PortfolioLayout = ({
       <td>
         <button
           onClick={() => {
-            updateHolding(coin.id);
-            setEdit(!edit);
-            setUpdatedHolding(0);
+            if (updatedHolding === 0) {
+              setEdit(!edit);
+            } else {
+              updateHolding(coin.id);
+              setUpdatedHolding(0);
+              setEdit(!edit);
+            }
           }}
           className='portfolio-editBtn'
         >
