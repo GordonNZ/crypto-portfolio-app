@@ -65,7 +65,7 @@ export const PortfolioLayout = ({
           />
         )}
       </td>
-      <td>
+      <td className='portfolio-btns'>
         <button
           onClick={() => {
             if (updatedHolding === 0) {

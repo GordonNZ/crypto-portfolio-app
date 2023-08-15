@@ -24,6 +24,7 @@ type Props = {
 const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
   const [updatedHolding, setUpdatedHolding] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   const portfolioRef = collection(db, 'portfolio');
 
@@ -85,6 +86,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
             <tbody>
               {portfoliodb.map((coin, index) => (
                 <PortfolioLayout
+                  key={index}
                   coin={coin}
                   currency={currency}
                   updatedHolding={updatedHolding}
@@ -96,8 +98,15 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
             </tbody>
           </table>
         </div>
-        <button className='addCoin'>Add Transaction</button>
-        <AddTransaction currency={currency} getPortfolio={getPortfolio} />
+        <button className='addCoin' onClick={() => setShowModal(true)}>
+          + Add Transaction
+        </button>
+        <AddTransaction
+          currency={currency}
+          getPortfolio={getPortfolio}
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+        />
       </main>
     </div>
   );

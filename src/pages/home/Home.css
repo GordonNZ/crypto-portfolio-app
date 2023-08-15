@@ -1,5 +1,11 @@
 .home {
-  background-color: var(--bgMain);
+  /* background-color: var(--bgMain);
+  background: rgb(254, 254, 254);
+  background: radial-gradient(
+    circle,
+    rgba(254, 254, 254, 1) -50%,
+    rgba(41, 79, 114, 1) 100%
+  ); */
   color: var(--text);
   height: 100%;
   padding-bottom: 1rem;

@@ -2,4 +2,24 @@
   width: 60%;
   background-color: var(--bgMain);
   padding: 1rem 2rem;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+  margin: 2rem auto;
+}
+.addTxnContainer {
+  justify-content: space-between;
+}
+.exitBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  background-color: var(--secondaryAccent);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.exitBtn:hover {
+  background-color: var(--bgMain);
 }

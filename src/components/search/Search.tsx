@@ -8,9 +8,14 @@ import { collection, addDoc } from 'firebase/firestore';
 type Props = {
   currency: string;
   getPortfolio: () => void;
+  onClose: () => void;
 };
 
-const Search: React.FC<Props> = ({ currency, getPortfolio }: Props) => {
+const Search: React.FC<Props> = ({
+  currency,
+  getPortfolio,
+  onClose,
+}: Props) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [val, setVal] = useState<number>(0);
 
@@ -101,6 +106,7 @@ const Search: React.FC<Props> = ({ currency, getPortfolio }: Props) => {
         getPortfolio();
         setSearchInput('');
         setVal(0);
+        onClose();
       } catch (err) {
         console.log(`caught an error: ${err}}`);
       }

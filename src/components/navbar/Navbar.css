@@ -1,5 +1,5 @@
 nav {
-  background-color: var(--bgMain);
+  background-color: transparent;
 }
 .nav {
   display: flex;

@@ -12,8 +12,9 @@
 }
 .portfolio-main > button {
   margin: 1rem auto;
-  padding: 0.6rem 2rem;
+  padding: 1rem 3rem;
   border-radius: 0.5rem;
+  font-size: clamp(1rem, 1.25rem, 1.4rem);
   border: none;
   background-color: var(--secondaryAccent);
   color: var(--text);
@@ -58,4 +59,10 @@
 .portfolio-deleteBtn:hover,
 .portfolio-editBtn:hover {
   background-color: var(--bgMain);
+}
+.portfolio-btns {
+  display: flex;
+}
+.portfolio-btns > button {
+  margin-right: 0.5rem;
 }

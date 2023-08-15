@@ -11,3 +11,10 @@
   --white: #ffffff;
   --text: #f7f5fa;
 }
+.App {
+  background: radial-gradient(
+    60vw at 22% 20px,
+    rgba(254, 254, 254, 1) -50%,
+    rgba(25, 59, 88, 1) 100%
+  );
+}
