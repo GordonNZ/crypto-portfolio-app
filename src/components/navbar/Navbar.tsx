@@ -20,9 +20,12 @@ const Navbar: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
           <Link to='/portfolio' className='portfolio'>
             Portfolio
           </Link>
-          <Link to='/signin' className='signin'>
-            Sign In
-          </Link>
+          <div>
+            {}
+            <Link to='/signin' className='signin'>
+              Sign In
+            </Link>
+          </div>
           <Currency currency={currency} handleSetCurrency={handleSetCurrency} />
         </div>
       </div>

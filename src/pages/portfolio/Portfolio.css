@@ -66,3 +66,13 @@
 .portfolio-btns > button {
   margin-right: 0.5rem;
 }
+.portfolio-holdingInput {
+  padding: 0.3rem 0.6rem;
+  width: 60%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--bgMain);
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--bgLighter);
+  color: var(--text);
+}

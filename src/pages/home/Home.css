@@ -155,6 +155,10 @@ header p {
 .coinLinks {
   text-decoration: none;
   color: var(--text);
+  transition: all 0.15s;
+}
+.trendingContainer .coinLinks:hover {
+  color: var(--secondaryAccent);
 }
 .pages {
   display: flex;

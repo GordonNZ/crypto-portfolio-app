@@ -28,7 +28,7 @@ const AddTransaction: React.FC<Props> = ({
           <div className='addTxnContainer flex'>
             <h2>Add Transaction</h2>
             <button onClick={onClose} className='exitBtn'>
-              x
+              ✖
             </button>
           </div>
           <Search

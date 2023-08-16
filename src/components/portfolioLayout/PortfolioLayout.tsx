@@ -56,6 +56,7 @@ export const PortfolioLayout = ({
                 }
               }
             }}
+            className='portfolio-holdingInput'
           />
         ) : (
           <FetchCoinPrice

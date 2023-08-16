@@ -4,17 +4,28 @@
   box-sizing: border-box;
 }
 :root {
-  --bgMain: #0c131f;
-  --bgLighter: #212939;
+  --bgMain: rgb(11, 18, 29);
+  --bgLighter: rgb(33, 41, 57);
   --primaryAccent: #ca3550;
   --secondaryAccent: #442fd7;
   --white: #ffffff;
   --text: #f7f5fa;
 }
+@font-face {
+  font-family: 'Satoshi-Variable';
+  src: url('/src/fonts/Satoshi-Variable.woff2') format('woff2'),
+    url('/src/fonts/Satoshi-Variable.woff') format('woff'),
+    url('/src/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
 .App {
   background: radial-gradient(
     60vw at 22% 20px,
-    rgba(254, 254, 254, 1) -50%,
-    rgba(25, 59, 88, 1) 100%
+    rgb(164, 164, 164) -80%,
+    rgb(33, 48, 77) 150%
   );
+  font-family: 'Satoshi-Variable', Arial;
 }
