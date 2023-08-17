@@ -24,10 +24,20 @@ export const PortfolioLayout = ({
 }: Props) => {
   const [edit, setEdit] = useState(false);
 
+  //displaying numbers rounded to 5 decimals, but removing unneeded tailing zeros of other numbers
+  const roundNumber = (num: number) => {
+    if (Number.isInteger(num)) {
+      return num;
+    } else {
+      const rounded = num.toFixed(5);
+      return parseFloat(rounded).toString(); // Remove trailing zeros
+    }
+  };
+
   return (
     <tr key={coin.id}>
       <td>{coin.coin}</td>
-      <td>{coin.holding}</td>
+
       <td>
         $
         <FetchCoinPrice
@@ -36,6 +46,7 @@ export const PortfolioLayout = ({
           holding={null}
         />
       </td>
+      <td>24 hour price</td>
       <td>
         {edit ? (
           <input
@@ -59,12 +70,15 @@ export const PortfolioLayout = ({
             className='portfolio-holdingInput'
           />
         ) : (
-          <FetchCoinPrice
-            coinName={coin.coin}
-            currency={currency}
-            holding={coin.holding}
-          />
+          roundNumber(coin.holding)
         )}
+      </td>
+      <td>
+        <FetchCoinPrice
+          coinName={coin.coin}
+          currency={currency}
+          holding={coin.holding}
+        />
       </td>
       <td className='portfolio-btns'>
         <button

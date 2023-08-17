@@ -46,6 +46,7 @@ const FetchCoinPrice: React.FC<CoinPriceProps> = ({
   const price =
     data?.data?.market_data?.current_price[currency.toLowerCase()] || 0;
 
+  //returns price if holding is empty, or value if holding is provided
   const calculatedValue = holding === null ? price : price * holding;
   return calculatedValue.toLocaleString('en-NZ', {
     maximumFractionDigits: 2,

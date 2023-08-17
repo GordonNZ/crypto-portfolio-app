@@ -24,8 +24,8 @@
 .App {
   background: radial-gradient(
     60vw at 22% 20px,
-    rgb(164, 164, 164) -80%,
-    rgb(33, 48, 77) 150%
+    rgb(180, 181, 185) -80%,
+    rgb(33, 48, 77) 160%
   );
   font-family: 'Satoshi-Variable', Arial;
 }

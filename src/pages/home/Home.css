@@ -33,15 +33,20 @@ header {
   margin-bottom: 1rem;
 }
 header p {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 .flex {
   display: flex;
 }
-
 .headerH1 {
   font-size: 1.5rem;
 }
+.marketImg {
+  display: flex;
+  width: 40%;
+  margin: 0 0 0 auto;
+}
+
 .coinsHeader {
   display: flex;
   padding: 1.3rem 1rem;
