@@ -102,6 +102,8 @@ const Search: React.FC<Props> = ({
           coin: coinId.id,
           holding: val,
           userId: auth?.currentUser?.uid,
+          icon: coinId.image.small,
+          name: coinId.name,
         });
         getPortfolio();
         setSearchInput('');

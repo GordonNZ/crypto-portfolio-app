@@ -6,12 +6,15 @@ type Props = {
     id: string;
     coin: string;
     holding: number;
+    icon: string;
+    name: string;
   };
   currency: string;
   updatedHolding: number;
   setUpdatedHolding: React.Dispatch<React.SetStateAction<number>>;
   updateHolding: (id: string) => void;
   deleteCoin: (id: string) => void;
+  showEdit: boolean;
 };
 
 export const PortfolioLayout = ({
@@ -21,6 +24,7 @@ export const PortfolioLayout = ({
   setUpdatedHolding,
   updateHolding,
   deleteCoin,
+  showEdit,
 }: Props) => {
   const [edit, setEdit] = useState(false);
 
@@ -36,7 +40,12 @@ export const PortfolioLayout = ({
 
   return (
     <tr key={coin.id}>
-      <td>{coin.coin}</td>
+      <td>
+        <div className='portfolio-coin'>
+          <img src={coin.icon} alt={coin.name} className='portfolio-coinImg' />
+          <p>{coin.name}</p>
+        </div>
+      </td>
 
       <td>
         $
@@ -74,34 +83,39 @@ export const PortfolioLayout = ({
         )}
       </td>
       <td>
+        $
         <FetchCoinPrice
           coinName={coin.coin}
           currency={currency}
           holding={coin.holding}
         />
       </td>
-      <td className='portfolio-btns'>
-        <button
-          onClick={() => {
-            if (updatedHolding === 0) {
-              setEdit(!edit);
-            } else {
-              updateHolding(coin.id);
-              setUpdatedHolding(0);
-              setEdit(!edit);
-            }
-          }}
-          className='portfolio-editBtn'
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => deleteCoin(coin.id)}
-          className='portfolio-deleteBtn'
-        >
-          Delete
-        </button>
-      </td>
+      {showEdit ? (
+        <td className='portfolio-btns'>
+          <button
+            onClick={() => {
+              if (updatedHolding === 0) {
+                setEdit(!edit);
+              } else {
+                updateHolding(coin.id);
+                setUpdatedHolding(0);
+                setEdit(!edit);
+              }
+            }}
+            className='portfolio-editBtn'
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => deleteCoin(coin.id)}
+            className='portfolio-deleteBtn'
+          >
+            Delete
+          </button>
+        </td>
+      ) : (
+        ''
+      )}
     </tr>
   );
 };

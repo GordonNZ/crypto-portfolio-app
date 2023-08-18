@@ -8,6 +8,8 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  orderBy,
+  query,
 } from 'firebase/firestore';
 import { PortfolioLayout } from '../../components/portfolioLayout/PortfolioLayout';
 
@@ -15,6 +17,8 @@ type Coin = {
   id: string;
   coin: string;
   holding: number;
+  icon: string;
+  name: string;
 };
 
 type Props = {
@@ -25,8 +29,9 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
   const [updatedHolding, setUpdatedHolding] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
-  const portfolioRef = collection(db, 'portfolio');
+  const portfolioRef = query(collection(db, 'portfolio'), orderBy('holding'));
 
   const getPortfolio = async () => {
     //READ THE DATA FROM THE DATABASE
@@ -37,6 +42,8 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
         id: doc.id,
         coin: doc.data().coin,
         holding: doc.data().holding,
+        icon: doc.data().icon,
+        name: doc.data().name,
       }));
       // console.log(portfolioData);
       setPortfoliodb(portfolioData);
@@ -72,6 +79,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
       <main className='portfolio-main'>
         <h2>Portfolio</h2>
         {/* <h2>Total Value: ${totalValue.toLocaleString('en-NZ')}</h2> */}
+        <button onClick={() => setShowEdit(!showEdit)}>Edit</button>
         <div className='portfolio'>
           <table className='portfolio-table'>
             <thead className='portfolio-table-head'>
@@ -93,13 +101,14 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                   setUpdatedHolding={setUpdatedHolding}
                   deleteCoin={deleteCoin}
                   updateHolding={updateHolding}
+                  showEdit={showEdit}
                 />
               ))}
             </tbody>
           </table>
         </div>
         <button className='addCoin' onClick={() => setShowModal(true)}>
-          + Add Transaction
+          Add Transaction
         </button>
         <AddTransaction
           currency={currency}
