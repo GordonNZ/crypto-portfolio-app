@@ -12,8 +12,9 @@
 }
 .portfolio-main > button {
   margin: 1rem auto;
-  padding: 0.6rem 2rem;
+  padding: 1rem 3rem;
   border-radius: 0.5rem;
+  font-size: clamp(1rem, 1.25rem, 1.4rem);
   border: none;
   background-color: var(--secondaryAccent);
   color: var(--text);
@@ -24,7 +25,7 @@
   background-color: var(--bgMain);
 }
 .portfolio-table {
-  width: 90%;
+  width: 96%;
   margin: 2rem auto;
   border-collapse: separate;
   border-spacing: 0 1rem;
@@ -36,13 +37,14 @@
   border-bottom: 1px solid var(--bgMain);
   opacity: 0.85;
 }
-.portfolio-coin-image {
+/* .portfolio-coin-image {
   width: 1.5rem;
   height: 1.5rem;
   object-fit: contain;
   margin-right: 0.5rem;
-}
-.portfolio-deleteBtn {
+} */
+.portfolio-deleteBtn,
+.portfolio-editBtn {
   background-color: var(--primaryAccent);
   color: var(--text);
   padding: 0.4rem;
@@ -51,6 +53,35 @@
   cursor: pointer;
   transition: 0.15s ease;
 }
-.portfolio-deleteBtn:hover {
+.portfolio-editBtn {
+  background-color: var(--secondaryAccent);
+}
+.portfolio-deleteBtn:hover,
+.portfolio-editBtn:hover {
   background-color: var(--bgMain);
+}
+.portfolio-btns {
+  display: flex;
+  margin-left: 2rem;
+}
+.portfolio-btns > button {
+  margin-right: 0.5rem;
+}
+.portfolio-holdingInput {
+  padding: 0.3rem 0.6rem;
+  width: 60%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--bgMain);
+  outline: none;
+  font-size: 1rem;
+  background-color: var(--bgLighter);
+  color: var(--text);
+}
+.portfolio-coin {
+  display: flex;
+  align-items: center;
+}
+.portfolio-coinImg {
+  width: 1.6rem;
+  margin-right: 0.4rem;
 }

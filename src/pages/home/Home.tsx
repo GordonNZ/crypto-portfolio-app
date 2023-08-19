@@ -131,13 +131,20 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
             <p>Stay up to date in the ever changing world of Cryptocurrency!</p>
             <section className='flex marketInfo'>
               <div className='totalMarketInfo'>
-                <h4>Total Crypto Marketcap</h4>
+                <h4>Total Crypto Market Capitalization </h4>
 
                 <p>${totalmarketcap?.toLocaleString('en-NZ')}</p>
 
                 <h4>24 hour Trading Volume</h4>
                 <p>${tradingVol?.toLocaleString('en-NZ')}</p>
+
+                <img
+                  src='/assets/image.svg'
+                  alt='man with wheelbarrow full of bitcoin'
+                  className='marketImg'
+                />
               </div>
+
               <div className='trendingContainer'>
                 <h4>Trending Coins</h4>
 
