@@ -19,6 +19,7 @@ type Coin = {
   holding: number;
   icon: string;
   name: string;
+  timestamp: number;
 };
 
 type Props = {
@@ -31,7 +32,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
-  const portfolioRef = query(collection(db, 'portfolio'), orderBy('holding'));
+  const portfolioRef = query(collection(db, 'portfolio'), orderBy('timestamp'));
 
   const getPortfolio = async () => {
     //READ THE DATA FROM THE DATABASE
@@ -44,6 +45,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
         holding: doc.data().holding,
         icon: doc.data().icon,
         name: doc.data().name,
+        timestamp: doc.data().timestamp,
       }));
       // console.log(portfolioData);
       setPortfoliodb(portfolioData);
@@ -77,9 +79,16 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   return (
     <div className='portfolio-home home'>
       <main className='portfolio-main'>
-        <h2>Portfolio</h2>
-        {/* <h2>Total Value: ${totalValue.toLocaleString('en-NZ')}</h2> */}
-        <button onClick={() => setShowEdit(!showEdit)}>Edit</button>
+        <div className='portfolio-header flex'>
+          <h1>Portfolio</h1>
+          <h2>Total Value: $</h2>
+          <button
+            onClick={() => setShowEdit(!showEdit)}
+            className='portfolio-showEditBtn'
+          >
+            Edit
+          </button>
+        </div>
         <div className='portfolio'>
           <table className='portfolio-table'>
             <thead className='portfolio-table-head'>

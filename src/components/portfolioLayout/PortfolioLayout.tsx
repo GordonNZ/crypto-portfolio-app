@@ -27,6 +27,7 @@ export const PortfolioLayout = ({
   showEdit,
 }: Props) => {
   const [edit, setEdit] = useState(false);
+  const [value, setValue] = useState([]);
 
   //displaying numbers rounded to 5 decimals, but removing unneeded tailing zeros of other numbers
   const roundNumber = (num: number) => {
@@ -91,7 +92,7 @@ export const PortfolioLayout = ({
         />
       </td>
       {showEdit ? (
-        <td className='portfolio-btns'>
+        <td className={'portfolio-btns'}>
           <button
             onClick={() => {
               if (updatedHolding === 0) {

@@ -10,7 +10,8 @@
   margin: 0 auto;
   border-radius: 0.5rem;
 }
-.portfolio-main > button {
+.portfolio-main > button,
+.portfolio-showEditBtn {
   margin: 1rem auto;
   padding: 1rem 3rem;
   border-radius: 0.5rem;
@@ -21,7 +22,13 @@
   cursor: pointer;
   transition: 0.15s ease;
 }
-.portfolio-main > button:hover {
+.portfolio-showEditBtn {
+  margin: 0;
+  padding: 0.6rem 1rem;
+  font-size: clamp(0.8rem, 1rem, 1.2rem);
+}
+.portfolio-main > button:hover,
+.portfolio-showEditBtn:hover {
   background-color: var(--bgMain);
 }
 .portfolio-table {
@@ -63,9 +70,14 @@
 .portfolio-btns {
   display: flex;
   margin-left: 2rem;
+  transition: opacity 0.5s;
+  opacity: 1;
 }
 .portfolio-btns > button {
   margin-right: 0.5rem;
+}
+.hide {
+  opacity: 0;
 }
 .portfolio-holdingInput {
   padding: 0.3rem 0.6rem;
@@ -84,4 +96,8 @@
 .portfolio-coinImg {
   width: 1.6rem;
   margin-right: 0.4rem;
+}
+.portfolio-header {
+  justify-content: space-between;
+  align-content: center;
 }
