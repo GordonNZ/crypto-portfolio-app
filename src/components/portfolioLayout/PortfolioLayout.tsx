@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
 
 type Props = {
@@ -27,7 +27,6 @@ export const PortfolioLayout = ({
   showEdit,
 }: Props) => {
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState([]);
 
   //displaying numbers rounded to 5 decimals, but removing unneeded tailing zeros of other numbers
   const roundNumber = (num: number) => {
@@ -38,6 +37,27 @@ export const PortfolioLayout = ({
       return parseFloat(rounded).toString(); // Remove trailing zeros
     }
   };
+
+  const [coinPrice, setCoinPrice] = useState(0);
+
+  const handlePriceUpdate = (price: number) => {
+    setCoinPrice(price);
+    console.log(coinPrice);
+  };
+
+  // const [totalValue, setTotalValue] = useState(0); // Add this line
+
+  // useEffect(() => {
+  //   const coinHolding = edit ? updatedHolding : coin.holding;
+  //   const coinPrice = (
+  //     <FetchCoinPrice coinName={coin.coin} currency={currency} holding={null} />
+  //   ); // You need to get the price from the FetchCoinPrice component
+
+  //   console.log(coinPrice);
+  //   // Calculate the total value by multiplying the holding with the price
+  //   // const value = coinHolding * coinPrice;
+  //   // setTotalValue(value);
+  // }, [coin.holding, coin.coin, currency, edit, updatedHolding]);
 
   return (
     <tr key={coin.id}>
@@ -54,6 +74,7 @@ export const PortfolioLayout = ({
           coinName={coin.coin}
           currency={currency}
           holding={null}
+          onPriceUpdate={handlePriceUpdate}
         />
       </td>
       <td>24 hour price</td>

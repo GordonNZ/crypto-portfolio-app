@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 interface CoinPriceProps {
   coinName: string;
   currency: string;
-  holding: number | null;
+  holding?: number | null;
+  onPriceUpdate?: (price: number) => void;
 }
 
 const FetchCoinPrice: React.FC<CoinPriceProps> = ({
   coinName,
   currency,
   holding = null,
+  onPriceUpdate,
 }) => {
   const options = {
     method: 'GET',
@@ -45,6 +47,10 @@ const FetchCoinPrice: React.FC<CoinPriceProps> = ({
 
   const price =
     data?.data?.market_data?.current_price[currency.toLowerCase()] || 0;
+
+  if (onPriceUpdate) {
+    onPriceUpdate(price);
+  }
 
   //returns price if holding is empty, or value if holding is provided
   const calculatedValue = holding === null ? price : price * holding;
