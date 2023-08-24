@@ -76,12 +76,32 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
     }
   };
 
+  const [coinPrice, setCoinPrice] = useState<number[]>([]);
+  const [totalSum, setTotalSum] = useState<number>(0);
+
+  const handlePriceUpdate = (price: number) => {
+    if (!coinPrice.includes(price)) {
+      setCoinPrice([...coinPrice, price]);
+      console.log(coinPrice);
+    }
+    const total = coinPrice?.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue;
+    }, 0);
+    setTotalSum(total);
+  };
+
   return (
     <div className='portfolio-home home'>
       <main className='portfolio-main'>
         <div className='portfolio-header flex'>
           <h1>Portfolio</h1>
-          <h2>Total Value: $</h2>
+          <h2>
+            Total Value: $
+            {totalSum.toLocaleString('en-NZ', {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2,
+            })}
+          </h2>
           <button
             onClick={() => setShowEdit(!showEdit)}
             className='portfolio-showEditBtn'
@@ -111,6 +131,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                   deleteCoin={deleteCoin}
                   updateHolding={updateHolding}
                   showEdit={showEdit}
+                  handlePriceUpdate={handlePriceUpdate}
                 />
               ))}
             </tbody>

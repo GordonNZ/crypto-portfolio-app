@@ -15,6 +15,7 @@ type Props = {
   updateHolding: (id: string) => void;
   deleteCoin: (id: string) => void;
   showEdit: boolean;
+  handlePriceUpdate: (price: number) => void;
 };
 
 export const PortfolioLayout = ({
@@ -25,6 +26,7 @@ export const PortfolioLayout = ({
   updateHolding,
   deleteCoin,
   showEdit,
+  handlePriceUpdate,
 }: Props) => {
   const [edit, setEdit] = useState(false);
 
@@ -36,13 +38,6 @@ export const PortfolioLayout = ({
       const rounded = num.toFixed(5);
       return parseFloat(rounded).toString(); // Remove trailing zeros
     }
-  };
-
-  const [coinPrice, setCoinPrice] = useState(0);
-
-  const handlePriceUpdate = (price: number) => {
-    setCoinPrice(price);
-    console.log(coinPrice);
   };
 
   // const [totalValue, setTotalValue] = useState(0); // Add this line
@@ -74,7 +69,6 @@ export const PortfolioLayout = ({
           coinName={coin.coin}
           currency={currency}
           holding={null}
-          onPriceUpdate={handlePriceUpdate}
         />
       </td>
       <td>24 hour price</td>
@@ -110,6 +104,7 @@ export const PortfolioLayout = ({
           coinName={coin.coin}
           currency={currency}
           holding={coin.holding}
+          onPriceUpdate={handlePriceUpdate}
         />
       </td>
       {showEdit ? (
