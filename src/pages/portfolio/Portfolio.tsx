@@ -12,6 +12,7 @@ import {
   query,
 } from 'firebase/firestore';
 import { PortfolioLayout } from '../../components/portfolioLayout/PortfolioLayout';
+import { PortfolioSortBy } from '../../components/portfolioSortBy/PortfolioSortBy';
 
 type Coin = {
   id: string;
@@ -31,8 +32,9 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [updatedHolding, setUpdatedHolding] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [sortBy, setSortBy] = useState('timestamp');
 
-  const portfolioRef = query(collection(db, 'portfolio'), orderBy('timestamp'));
+  const portfolioRef = query(collection(db, 'portfolio'), orderBy(sortBy));
 
   const getPortfolio = async () => {
     //READ THE DATA FROM THE DATABASE
@@ -82,12 +84,17 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const handlePriceUpdate = (price: number) => {
     if (!coinPrice.includes(price)) {
       setCoinPrice([...coinPrice, price]);
-      console.log(coinPrice);
+      // console.log(coinPrice);
     }
-    const total = coinPrice?.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue;
-    }, 0);
-    setTotalSum(total);
+    //empties coinPrice array when prices are updated, which updates total.
+    if (coinPrice.length > portfoliodb.length) {
+      setCoinPrice([]);
+    } else {
+      const total = coinPrice?.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+      setTotalSum(total);
+    }
   };
 
   return (
@@ -108,6 +115,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           >
             Edit
           </button>
+          <PortfolioSortBy sortBy={sortBy} setSortBy={setSortBy} />
         </div>
         <div className='portfolio'>
           <table className='portfolio-table'>

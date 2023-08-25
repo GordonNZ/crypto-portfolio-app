@@ -101,3 +101,15 @@
   justify-content: space-between;
   align-content: center;
 }
+
+.portfolio-sortBy {
+  align-items: center;
+}
+.portfolio-sortBy select {
+  margin-left: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0.4rem;
+  background-color: var(--bgMain);
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--text);
+}
