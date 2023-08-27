@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
 
 type Props = {
@@ -15,6 +15,7 @@ type Props = {
   updateHolding: (id: string) => void;
   deleteCoin: (id: string) => void;
   showEdit: boolean;
+  handlePriceUpdate: (price: number) => void;
 };
 
 export const PortfolioLayout = ({
@@ -25,6 +26,7 @@ export const PortfolioLayout = ({
   updateHolding,
   deleteCoin,
   showEdit,
+  handlePriceUpdate,
 }: Props) => {
   const [edit, setEdit] = useState(false);
 
@@ -37,6 +39,20 @@ export const PortfolioLayout = ({
       return parseFloat(rounded).toString(); // Remove trailing zeros
     }
   };
+
+  // const [totalValue, setTotalValue] = useState(0); // Add this line
+
+  // useEffect(() => {
+  //   const coinHolding = edit ? updatedHolding : coin.holding;
+  //   const coinPrice = (
+  //     <FetchCoinPrice coinName={coin.coin} currency={currency} holding={null} />
+  //   ); // You need to get the price from the FetchCoinPrice component
+
+  //   console.log(coinPrice);
+  //   // Calculate the total value by multiplying the holding with the price
+  //   // const value = coinHolding * coinPrice;
+  //   // setTotalValue(value);
+  // }, [coin.holding, coin.coin, currency, edit, updatedHolding]);
 
   return (
     <tr key={coin.id}>
@@ -88,10 +104,11 @@ export const PortfolioLayout = ({
           coinName={coin.coin}
           currency={currency}
           holding={coin.holding}
+          onPriceUpdate={handlePriceUpdate}
         />
       </td>
       {showEdit ? (
-        <td className='portfolio-btns'>
+        <td className={'portfolio-btns'}>
           <button
             onClick={() => {
               if (updatedHolding === 0) {

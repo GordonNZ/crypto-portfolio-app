@@ -12,6 +12,7 @@ import {
   query,
 } from 'firebase/firestore';
 import { PortfolioLayout } from '../../components/portfolioLayout/PortfolioLayout';
+import { PortfolioSortBy } from '../../components/portfolioSortBy/PortfolioSortBy';
 
 type Coin = {
   id: string;
@@ -19,6 +20,7 @@ type Coin = {
   holding: number;
   icon: string;
   name: string;
+  timestamp: number;
 };
 
 type Props = {
@@ -30,8 +32,9 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [updatedHolding, setUpdatedHolding] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [sortBy, setSortBy] = useState('timestamp');
 
-  const portfolioRef = query(collection(db, 'portfolio'), orderBy('holding'));
+  const portfolioRef = query(collection(db, 'portfolio'), orderBy(sortBy));
 
   const getPortfolio = async () => {
     //READ THE DATA FROM THE DATABASE
@@ -44,6 +47,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
         holding: doc.data().holding,
         icon: doc.data().icon,
         name: doc.data().name,
+        timestamp: doc.data().timestamp,
       }));
       // console.log(portfolioData);
       setPortfoliodb(portfolioData);
@@ -74,12 +78,45 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
     }
   };
 
+  const [coinPrice, setCoinPrice] = useState<number[]>([]);
+  const [totalSum, setTotalSum] = useState<number>(0);
+
+  const handlePriceUpdate = (price: number) => {
+    if (!coinPrice.includes(price)) {
+      setCoinPrice([...coinPrice, price]);
+      // console.log(coinPrice);
+    }
+    //empties coinPrice array when prices are updated, which updates total.
+    if (coinPrice.length > portfoliodb.length) {
+      setCoinPrice([]);
+    } else {
+      const total = coinPrice?.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue;
+      }, 0);
+      setTotalSum(total);
+    }
+  };
+
   return (
     <div className='portfolio-home home'>
       <main className='portfolio-main'>
-        <h2>Portfolio</h2>
-        {/* <h2>Total Value: ${totalValue.toLocaleString('en-NZ')}</h2> */}
-        <button onClick={() => setShowEdit(!showEdit)}>Edit</button>
+        <div className='portfolio-header flex'>
+          <h1>Portfolio</h1>
+          <h2>
+            Total Value: $
+            {totalSum.toLocaleString('en-NZ', {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2,
+            })}
+          </h2>
+          <button
+            onClick={() => setShowEdit(!showEdit)}
+            className='portfolio-showEditBtn'
+          >
+            Edit
+          </button>
+          <PortfolioSortBy sortBy={sortBy} setSortBy={setSortBy} />
+        </div>
         <div className='portfolio'>
           <table className='portfolio-table'>
             <thead className='portfolio-table-head'>
@@ -102,6 +139,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
                   deleteCoin={deleteCoin}
                   updateHolding={updateHolding}
                   showEdit={showEdit}
+                  handlePriceUpdate={handlePriceUpdate}
                 />
               ))}
             </tbody>
