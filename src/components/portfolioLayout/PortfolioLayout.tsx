@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
+import { Link } from 'react-router-dom';
 
 type Props = {
   coin: {
@@ -40,27 +41,19 @@ export const PortfolioLayout = ({
     }
   };
 
-  // const [totalValue, setTotalValue] = useState(0); // Add this line
-
-  // useEffect(() => {
-  //   const coinHolding = edit ? updatedHolding : coin.holding;
-  //   const coinPrice = (
-  //     <FetchCoinPrice coinName={coin.coin} currency={currency} holding={null} />
-  //   ); // You need to get the price from the FetchCoinPrice component
-
-  //   console.log(coinPrice);
-  //   // Calculate the total value by multiplying the holding with the price
-  //   // const value = coinHolding * coinPrice;
-  //   // setTotalValue(value);
-  // }, [coin.holding, coin.coin, currency, edit, updatedHolding]);
-
   return (
     <tr key={coin.id}>
       <td>
-        <div className='portfolio-coin'>
-          <img src={coin.icon} alt={coin.name} className='portfolio-coinImg' />
-          <p>{coin.name}</p>
-        </div>
+        <Link to={`/coin/${coin.coin}`} className='coinLinks'>
+          <div className='portfolio-coin'>
+            <img
+              src={coin.icon}
+              alt={coin.name}
+              className='portfolio-coinImg'
+            />
+            <p>{coin.name}</p>
+          </div>
+        </Link>
       </td>
 
       <td>

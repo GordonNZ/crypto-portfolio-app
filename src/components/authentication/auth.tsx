@@ -8,10 +8,14 @@ import { useState } from 'react';
 import './Auth.css';
 import GoogleButton from 'react-google-button';
 
-export const Auth = () => {
+type Props = {
+  user: string;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export const Auth = ({ user, setUser }: Props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [user, setUser] = useState<string>('');
 
   //using firebase authentification to create a user
   const handleSignIn = async () => {

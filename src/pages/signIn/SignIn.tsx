@@ -2,14 +2,17 @@ import React from 'react';
 import './SignIn.css';
 import { Auth } from '../../components/authentication/Auth';
 
-type Props = {};
+type Props = {
+  user: string;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
+};
 
-const SignIn = (props: Props) => {
+const SignIn = ({ user, setUser }: Props) => {
   return (
     <div className='signIn home'>
       <main>
         <h2>Sign In</h2>
-        <Auth />
+        <Auth user={user} setUser={setUser} />
       </main>
     </div>
   );

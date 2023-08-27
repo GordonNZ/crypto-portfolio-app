@@ -57,7 +57,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   };
   useEffect(() => {
     getPortfolio();
-  }, []);
+  }, [sortBy]);
 
   //deleting coin from firebase database portfolio
   const deleteCoin = async (id: string) => {
@@ -100,21 +100,23 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   return (
     <div className='portfolio-home home'>
       <main className='portfolio-main'>
-        <div className='portfolio-header flex'>
-          <h1>Portfolio</h1>
-          <h2>
-            Total Value: $
-            {totalSum.toLocaleString('en-NZ', {
-              maximumFractionDigits: 2,
-              minimumFractionDigits: 2,
-            })}
-          </h2>
-          <button
-            onClick={() => setShowEdit(!showEdit)}
-            className='portfolio-showEditBtn'
-          >
-            Edit
-          </button>
+        <div>
+          <div className='portfolio-header flex'>
+            <h1>Portfolio</h1>
+            <h2>
+              Total Value: $
+              {totalSum.toLocaleString('en-NZ', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
+            </h2>
+            <button
+              onClick={() => setShowEdit(!showEdit)}
+              className='portfolio-showEditBtn'
+            >
+              Edit
+            </button>
+          </div>
           <PortfolioSortBy sortBy={sortBy} setSortBy={setSortBy} />
         </div>
         <div className='portfolio'>

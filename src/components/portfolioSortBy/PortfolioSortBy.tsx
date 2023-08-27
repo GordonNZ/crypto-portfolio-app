@@ -12,6 +12,7 @@ export const PortfolioSortBy = ({ sortBy, setSortBy }: Props) => {
           value='holding'
           onClick={() => {
             setSortBy('holding');
+            console.log(sortBy);
           }}
         >
           Holding

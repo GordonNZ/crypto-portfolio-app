@@ -10,6 +10,7 @@ import SignIn from './pages/signIn/SignIn';
 function App() {
   const storedCurrency = localStorage.getItem('currency');
   const [currency, setCurrency] = useState<any>(storedCurrency);
+  const [user, setUser] = useState<string>('');
 
   const handleSetCurrency = (currency: string) => {
     setCurrency(currency);
@@ -20,12 +21,19 @@ function App() {
 
   return (
     <div className='App'>
-      <Navbar currency={currency} handleSetCurrency={handleSetCurrency} />
+      <Navbar
+        currency={currency}
+        handleSetCurrency={handleSetCurrency}
+        user={user}
+      />
       <Routes>
         <Route path='/' element={<Home currency={currency} />} />
         <Route path='/coin/:id' element={<CoinDetail currency={currency} />} />
         <Route path='/portfolio' element={<Portfolio currency={currency} />} />
-        <Route path='/signin' element={<SignIn />} />
+        <Route
+          path='/signin'
+          element={<SignIn user={user} setUser={setUser} />}
+        />
       </Routes>
     </div>
   );
