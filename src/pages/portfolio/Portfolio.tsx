@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Portfolio.css';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
-import { db } from './../../config/firebase';
+import { db, auth } from './../../config/firebase';
 import {
   collection,
   getDocs,
@@ -34,7 +34,16 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   const [showEdit, setShowEdit] = useState(false);
   const [sortBy, setSortBy] = useState('timestamp');
 
-  const portfolioRef = query(collection(db, 'portfolio'), orderBy(sortBy));
+  const userID = auth.currentUser?.uid;
+  console.log(userID);
+
+  const portfolioRef = query(collection(db, userID), orderBy(sortBy));
+
+  const createCollection = async () => {
+    try {
+      await portfolioRef.add({});
+    } catch {}
+  };
 
   const getPortfolio = async () => {
     //READ THE DATA FROM THE DATABASE
@@ -49,6 +58,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
         name: doc.data().name,
         timestamp: doc.data().timestamp,
       }));
+
       // console.log(portfolioData);
       setPortfoliodb(portfolioData);
     } catch (err) {
