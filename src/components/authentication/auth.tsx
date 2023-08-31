@@ -41,14 +41,6 @@ export const Auth = ({ user, setUser }: Props) => {
       console.log(err);
     }
   };
-  //Get current user
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      setUser(auth?.currentUser?.email!);
-    } else {
-      setUser('');
-    }
-  });
 
   return (
     <form className='auth'>

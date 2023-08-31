@@ -9,12 +9,14 @@ type Props = {
   currency: string;
   getPortfolio: () => void;
   onClose: () => void;
+  userId: string;
 };
 
 const Search: React.FC<Props> = ({
   currency,
   getPortfolio,
   onClose,
+  userId,
 }: Props) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [val, setVal] = useState<number>(0);
@@ -90,7 +92,9 @@ const Search: React.FC<Props> = ({
   const totalCoins = coinListData?.data?.data;
   // console.log(totalCoins);
 
-  const portfolioRef = collection(db, 'portfolio');
+  // const portfolioRef = collection(db, 'portfolio');
+  // Create a dynamic reference to the user's portfolio collection
+  const portfolioCollectionRef = collection(db, 'users', userId, 'portfolio');
 
   //adding coin to firebase database portfolio
   const onSubmitAdd = async () => {
@@ -98,7 +102,7 @@ const Search: React.FC<Props> = ({
       alert('Please enter a valid number');
     } else {
       try {
-        await addDoc(portfolioRef, {
+        await addDoc(portfolioCollectionRef, {
           coin: coinId.id,
           holding: val,
           userId: auth?.currentUser?.uid,

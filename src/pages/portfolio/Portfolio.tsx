@@ -25,31 +25,30 @@ type Coin = {
 
 type Props = {
   currency: string;
+  userId: string;
 };
 
-const Portfolio: React.FC<Props> = ({ currency }: Props) => {
+const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
   const [updatedHolding, setUpdatedHolding] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [sortBy, setSortBy] = useState('timestamp');
 
-  const userID = auth.currentUser?.uid;
-  console.log(userID);
-
-  const portfolioRef = query(collection(db, userID), orderBy(sortBy));
-
-  const createCollection = async () => {
-    try {
-      await portfolioRef.add({});
-    } catch {}
-  };
+  // const portfolioRef = query(
+  //   collection(db, 'users', userId, 'portfolio'),
+  //   orderBy(sortBy)
+  // );
 
   const getPortfolio = async () => {
     //READ THE DATA FROM THE DATABASE
     //SET THE DATA TO THE PORTFOLIO STATE
     try {
-      const data = await getDocs(portfolioRef);
+      const portfolioRef = collection(db, 'users', userId, 'portfolio');
+
+      const portfolioQuery = query(portfolioRef, orderBy(sortBy)); // Create a query for ordering
+
+      const data = await getDocs(portfolioQuery);
       const portfolioData: Coin[] = data.docs.map((doc) => ({
         id: doc.id,
         coin: doc.data().coin,
@@ -66,8 +65,11 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
     }
   };
   useEffect(() => {
-    getPortfolio();
-  }, [sortBy]);
+    console.log(`user ID here: ${userId}`);
+    if (userId.length !== 0) {
+      getPortfolio();
+    }
+  }, [sortBy, userId]);
 
   //deleting coin from firebase database portfolio
   const deleteCoin = async (id: string) => {
@@ -165,6 +167,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           getPortfolio={getPortfolio}
           showModal={showModal}
           onClose={() => setShowModal(false)}
+          userId={userId}
         />
       </main>
     </div>
