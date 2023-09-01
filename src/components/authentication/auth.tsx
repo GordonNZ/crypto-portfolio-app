@@ -1,19 +1,12 @@
 import { auth, gooogleProvider } from '../../config/firebase';
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useState } from 'react';
 import './Auth.css';
 import GoogleButton from 'react-google-button';
 
-type Props = {
-  user: string;
-  setUser: React.Dispatch<React.SetStateAction<string>>;
-};
+type Props = {};
 
-export const Auth = ({ user, setUser }: Props) => {
+export const Auth = ({}: Props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -29,14 +22,6 @@ export const Auth = ({ user, setUser }: Props) => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithPopup(auth, gooogleProvider);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  //Sign out
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
     } catch (err) {
       console.log(err);
     }
@@ -59,15 +44,10 @@ export const Auth = ({ user, setUser }: Props) => {
         Sign In
       </button>
       <p>or</p>
-      {/* <button onClick={handleGoogleSignIn}>Sign In With Google</button> */}
       <GoogleButton
         onClick={handleGoogleSignIn}
         style={{ transform: 'scale(0.85)' }}
       />
-      <button onClick={handleSignOut} className='auth-btn'>
-        Sign out
-      </button>
-      <p>User: {user}</p>
     </form>
   );
 };

@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore';
 import { PortfolioLayout } from '../../components/portfolioLayout/PortfolioLayout';
 import { PortfolioSortBy } from '../../components/portfolioSortBy/PortfolioSortBy';
+import SignInRedirect from '../../components/signInRedirect/SignInRedirect';
 
 type Coin = {
   id: string;
@@ -41,13 +42,11 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
   // );
 
   const getPortfolio = async () => {
+    const portfolioRef = collection(db, 'users', userId, 'portfolio');
+    const portfolioQuery = query(portfolioRef, orderBy(sortBy)); // Create a query for ordering
     //READ THE DATA FROM THE DATABASE
     //SET THE DATA TO THE PORTFOLIO STATE
     try {
-      const portfolioRef = collection(db, 'users', userId, 'portfolio');
-
-      const portfolioQuery = query(portfolioRef, orderBy(sortBy)); // Create a query for ordering
-
       const data = await getDocs(portfolioQuery);
       const portfolioData: Coin[] = data.docs.map((doc) => ({
         id: doc.id,
@@ -65,8 +64,8 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
     }
   };
   useEffect(() => {
-    console.log(`user ID here: ${userId}`);
     if (userId.length !== 0) {
+      console.log(`user ID here: ${userId}`);
       getPortfolio();
     }
   }, [sortBy, userId]);
@@ -74,7 +73,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
   //deleting coin from firebase database portfolio
   const deleteCoin = async (id: string) => {
     try {
-      await deleteDoc(doc(db, 'portfolio', id));
+      await deleteDoc(doc(db, 'users', userId, 'portfolio', id));
       getPortfolio();
     } catch (err) {
       console.log(err);
@@ -83,7 +82,9 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
 
   const updateHolding = async (id: string) => {
     try {
-      await updateDoc(doc(db, 'portfolio', id), { holding: updatedHolding });
+      await updateDoc(doc(db, 'users', userId, 'portfolio', id), {
+        holding: updatedHolding,
+      });
       getPortfolio();
     } catch (err) {
       console.log(err);
@@ -170,6 +171,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
           userId={userId}
         />
       </main>
+      {!userId ? <SignInRedirect /> : ''}
     </div>
   );
 };
