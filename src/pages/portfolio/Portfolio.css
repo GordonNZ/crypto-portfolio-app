@@ -24,8 +24,8 @@
 }
 .portfolio-showEditBtn {
   margin: 0;
-  padding: 0.6rem 1rem;
-  font-size: clamp(0.8rem, 1rem, 1.2rem);
+  padding: 0 0.6rem;
+  font-size: clamp(0.8rem, 0.9rem, 1.1rem);
 }
 .portfolio-main > button:hover,
 .portfolio-showEditBtn:hover {
@@ -33,7 +33,7 @@
 }
 .portfolio-table {
   width: 96%;
-  margin: 2rem auto;
+  margin: 0.5rem auto;
   border-collapse: separate;
   border-spacing: 0 1rem;
 }
@@ -100,6 +100,7 @@
 .portfolio-header {
   justify-content: space-between;
   align-content: center;
+  margin-bottom: 1rem;
 }
 
 .portfolio-sortBy {

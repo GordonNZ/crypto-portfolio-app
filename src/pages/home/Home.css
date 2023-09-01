@@ -162,7 +162,8 @@ header p {
   color: var(--text);
   transition: all 0.15s;
 }
-.trendingContainer .coinLinks:hover {
+.trendingContainer .coinLinks:hover,
+td .coinLinks:hover {
   color: var(--secondaryAccent);
 }
 .pages {

@@ -1,14 +1,19 @@
 import './Navbar.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Currency } from '../currency/Currency';
 
 type Props = {
   currency: string;
   handleSetCurrency: (currency: string) => void;
+  user: string;
 };
 
-const Navbar: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
+const Navbar: React.FC<Props> = ({
+  currency,
+  handleSetCurrency,
+  user,
+}: Props) => {
   return (
     <nav>
       <div className='nav'>
@@ -21,10 +26,15 @@ const Navbar: React.FC<Props> = ({ currency, handleSetCurrency }: Props) => {
             Portfolio
           </Link>
           <div>
-            {}
-            <Link to='/signin' className='signin'>
-              Sign In
-            </Link>
+            {user ? (
+              <Link to='/signin' className='signin'>
+                {user}
+              </Link>
+            ) : (
+              <Link to='/signin' className='signin'>
+                Sign In
+              </Link>
+            )}
           </div>
           <Currency currency={currency} handleSetCurrency={handleSetCurrency} />
         </div>

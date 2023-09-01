@@ -1,5 +1,7 @@
 nav {
   background-color: transparent;
+  z-index: 3;
+  position: relative;
 }
 .nav {
   display: flex;
@@ -76,4 +78,7 @@ nav {
   color: var(--text);
   font-weight: 500;
   cursor: pointer;
+}
+.currencySelect > p {
+  margin-right: 0.25rem;
 }

@@ -83,7 +83,7 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
   );
   // console.log(coins?.data?.data);
   const coinData = coins?.data?.data;
-  console.log(coins?.data);
+  // console.log(coins?.data);
 
   const global = useQuery(
     ['global', currency],

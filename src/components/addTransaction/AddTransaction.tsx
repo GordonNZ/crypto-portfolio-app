@@ -9,6 +9,7 @@ interface Props {
   getPortfolio: () => void;
   showModal: boolean;
   onClose: () => void;
+  userId: string;
 }
 
 const AddTransaction: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const AddTransaction: React.FC<Props> = ({
   getPortfolio,
   showModal,
   onClose,
+  userId,
 }: Props) => {
   return (
     <CSSTransition
@@ -35,6 +37,7 @@ const AddTransaction: React.FC<Props> = ({
             currency={currency}
             getPortfolio={getPortfolio}
             onClose={onClose}
+            userId={userId}
           />
         </div>
       </div>

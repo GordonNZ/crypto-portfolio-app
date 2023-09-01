@@ -1,0 +1,23 @@
+.signInRedirect-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 50vh;
+  width: 50vw;
+  background-color: var(--bgLighter);
+  position: absolute;
+  top: 25%;
+  left: 25%;
+}
+.signInRedirect-main .signin {
+  text-decoration: none;
+  color: var(--text);
+  margin: 1rem 0;
+}
+.signInRedirect-main .signin:hover {
+  color: var(--secondaryAccent);
+}
+.signInRe-modal {
+  z-index: 2;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Portfolio.css';
 import AddTransaction from '../../components/addTransaction/AddTransaction';
-import { db } from './../../config/firebase';
+import { db, auth } from './../../config/firebase';
 import {
   collection,
   getDocs,
@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore';
 import { PortfolioLayout } from '../../components/portfolioLayout/PortfolioLayout';
 import { PortfolioSortBy } from '../../components/portfolioSortBy/PortfolioSortBy';
+import SignInRedirect from '../../components/signInRedirect/SignInRedirect';
 
 type Coin = {
   id: string;
@@ -25,22 +26,28 @@ type Coin = {
 
 type Props = {
   currency: string;
+  userId: string;
 };
 
-const Portfolio: React.FC<Props> = ({ currency }: Props) => {
+const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
   const [updatedHolding, setUpdatedHolding] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [sortBy, setSortBy] = useState('timestamp');
 
-  const portfolioRef = query(collection(db, 'portfolio'), orderBy(sortBy));
+  // const portfolioRef = query(
+  //   collection(db, 'users', userId, 'portfolio'),
+  //   orderBy(sortBy)
+  // );
 
   const getPortfolio = async () => {
+    const portfolioRef = collection(db, 'users', userId, 'portfolio');
+    const portfolioQuery = query(portfolioRef, orderBy(sortBy)); // Create a query for ordering
     //READ THE DATA FROM THE DATABASE
     //SET THE DATA TO THE PORTFOLIO STATE
     try {
-      const data = await getDocs(portfolioRef);
+      const data = await getDocs(portfolioQuery);
       const portfolioData: Coin[] = data.docs.map((doc) => ({
         id: doc.id,
         coin: doc.data().coin,
@@ -49,6 +56,7 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
         name: doc.data().name,
         timestamp: doc.data().timestamp,
       }));
+
       // console.log(portfolioData);
       setPortfoliodb(portfolioData);
     } catch (err) {
@@ -56,13 +64,16 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
     }
   };
   useEffect(() => {
-    getPortfolio();
-  }, []);
+    if (userId.length !== 0) {
+      console.log(`user ID here: ${userId}`);
+      getPortfolio();
+    }
+  }, [sortBy, userId]);
 
   //deleting coin from firebase database portfolio
   const deleteCoin = async (id: string) => {
     try {
-      await deleteDoc(doc(db, 'portfolio', id));
+      await deleteDoc(doc(db, 'users', userId, 'portfolio', id));
       getPortfolio();
     } catch (err) {
       console.log(err);
@@ -71,7 +82,9 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
 
   const updateHolding = async (id: string) => {
     try {
-      await updateDoc(doc(db, 'portfolio', id), { holding: updatedHolding });
+      await updateDoc(doc(db, 'users', userId, 'portfolio', id), {
+        holding: updatedHolding,
+      });
       getPortfolio();
     } catch (err) {
       console.log(err);
@@ -100,21 +113,23 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
   return (
     <div className='portfolio-home home'>
       <main className='portfolio-main'>
-        <div className='portfolio-header flex'>
-          <h1>Portfolio</h1>
-          <h2>
-            Total Value: $
-            {totalSum.toLocaleString('en-NZ', {
-              maximumFractionDigits: 2,
-              minimumFractionDigits: 2,
-            })}
-          </h2>
-          <button
-            onClick={() => setShowEdit(!showEdit)}
-            className='portfolio-showEditBtn'
-          >
-            Edit
-          </button>
+        <div>
+          <div className='portfolio-header flex'>
+            <h1>Portfolio</h1>
+            <h2>
+              Total Value: $
+              {totalSum.toLocaleString('en-NZ', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
+            </h2>
+            <button
+              onClick={() => setShowEdit(!showEdit)}
+              className='portfolio-showEditBtn'
+            >
+              Edit
+            </button>
+          </div>
           <PortfolioSortBy sortBy={sortBy} setSortBy={setSortBy} />
         </div>
         <div className='portfolio'>
@@ -153,8 +168,10 @@ const Portfolio: React.FC<Props> = ({ currency }: Props) => {
           getPortfolio={getPortfolio}
           showModal={showModal}
           onClose={() => setShowModal(false)}
+          userId={userId}
         />
       </main>
+      {!userId ? <SignInRedirect /> : ''}
     </div>
   );
 };
