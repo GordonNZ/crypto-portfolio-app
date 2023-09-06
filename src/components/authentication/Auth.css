@@ -18,6 +18,14 @@
   background-color: var(--bgLighter);
   color: var(--text);
 }
+#Light .auth-input {
+  background-color: var(--bgLightSecond);
+  border: 2px solid var(--bgLightMain);
+  color: var(--bgMain);
+}
+#Light .auth-btn:hover {
+  background-color: var(--bgLightSecond);
+}
 .auth-btn {
   /* width: 60%; */
   /* height: 2rem; */

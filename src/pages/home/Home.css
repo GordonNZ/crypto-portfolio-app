@@ -10,6 +10,35 @@
   height: 100%;
   padding-bottom: 1rem;
 }
+#Light .home,
+#Light .trending,
+#Light .coinLinks {
+  color: var(--bgMain);
+}
+#Light .trending:hover {
+  color: var(--secondaryAccent);
+}
+#Light .coins:hover {
+  background-color: var(--bgLightSecond);
+}
+#Light .cryptoMarketContainer {
+  background-color: var(--bgLightMain);
+}
+
+#Light .coinsHeader,
+#Light .totalMarketInfo,
+#Light .trendingContainer {
+  background-color: var(--bgLightSecond);
+}
+#Light .pageButton {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
+#Light .pageButton:hover,
+#Light .active {
+  background-color: var(--secondaryAccent);
+  color: var(--text);
+}
 .cryptoMarketContainer {
   background-color: var(--bgLighter);
   display: flex;
@@ -52,6 +81,7 @@ header p {
   padding: 1.3rem 1rem;
   background-color: var(--bgMain);
 }
+
 .coinsHeader p:first-child {
   margin-right: 1.2rem;
   width: 3%;

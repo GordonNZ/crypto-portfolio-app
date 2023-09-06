@@ -9,6 +9,20 @@
   background-color: var(--bgLighter);
   color: var(--text);
 }
+#Light .searchInput {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
+#Light .search-amountInput {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
+#Light .searchBtn:hover,
+#Light .search-addBtn:hover,
+#Light .search-coinInfo:hover {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
 .searchBtn {
   width: 20%;
   padding: 0.5rem 0;

@@ -10,6 +10,16 @@
   margin: 0 auto;
   border-radius: 0.5rem;
 }
+
+#Light .portfolio-main {
+  background-color: var(--bgLightMain);
+}
+#Light .portfolio-sortBy select,
+#Light .portfolio-main > button:hover,
+#Light .portfolio-showEditBtn:hover {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
 .portfolio-main > button,
 .portfolio-showEditBtn {
   margin: 1rem auto;

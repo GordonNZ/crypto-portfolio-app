@@ -10,6 +10,8 @@
   --secondaryAccent: #442fd7;
   --white: #ffffff;
   --text: #f7f5fa;
+  --bgLightMain: #e3e6f0;
+  --bgLightSecond: #c4c9d8;
 }
 @font-face {
   font-family: 'Satoshi-Variable';
@@ -22,10 +24,19 @@
 }
 
 .App {
+  font-family: 'Satoshi-Variable', Arial;
+}
+#Light {
+  background: radial-gradient(
+    60vw at 22% 20px,
+    rgb(139, 154, 183) -80%,
+    rgb(254, 254, 254) 200%
+  );
+}
+#Dark {
   background: radial-gradient(
     60vw at 22% 20px,
     rgb(180, 181, 185) -80%,
     rgb(33, 48, 77) 160%
   );
-  font-family: 'Satoshi-Variable', Arial;
 }

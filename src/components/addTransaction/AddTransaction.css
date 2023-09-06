@@ -7,6 +7,13 @@
   justify-content: space-between; */
   margin: 4rem auto;
 }
+#Light .addTxn {
+  background-color: var(--bgLightMain);
+}
+#Light .exitBtn:hover {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
 .addTxnContainer {
   justify-content: space-between;
 }

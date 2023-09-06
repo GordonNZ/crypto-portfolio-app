@@ -10,6 +10,15 @@
   top: 25%;
   left: 25%;
 }
+#Light .signInRedirect-main {
+  background-color: var(--bgLightMain);
+}
+#Light .signInRedirect-main .signin {
+  color: var(--bgMain);
+}
+#Light .signInRedirect-main .signin:hover {
+  color: var(--secondaryAccent);
+}
 .signInRedirect-main .signin {
   text-decoration: none;
   color: var(--text);

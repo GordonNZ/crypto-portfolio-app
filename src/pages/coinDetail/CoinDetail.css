@@ -9,6 +9,16 @@
   /* display: flex;
   flex-direction: column; */
 }
+#Light .coinPage {
+  background-color: var(--bgLightMain);
+}
+#Light .marketData,
+#Light .links {
+  background-color: var(--bgLightSecond);
+}
+#Light .links > a {
+  color: var(--bgMain);
+}
 .backButton {
   margin-bottom: 1rem;
   padding: 0.25rem 0.8rem;

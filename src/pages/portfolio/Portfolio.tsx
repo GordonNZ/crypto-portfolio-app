@@ -31,10 +31,10 @@ type Props = {
 
 const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
-  const [updatedHolding, setUpdatedHolding] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [sortBy, setSortBy] = useState('timestamp');
+  const [updatedHolding, setUpdatedHolding] = useState<number>(0);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showEdit, setShowEdit] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<string>('timestamp');
 
   // const portfolioRef = query(
   //   collection(db, 'users', userId, 'portfolio'),

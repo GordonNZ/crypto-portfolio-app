@@ -3,6 +3,9 @@ nav {
   z-index: 3;
   position: relative;
 }
+#Light nav * {
+  color: var(--bgMain);
+}
 .nav {
   display: flex;
   justify-content: space-between;
@@ -65,9 +68,13 @@ nav {
   color: var(--text);
   background-color: hsla(349, 58%, 60%, 0);
 }
+
 .currencySelect {
   align-items: center;
   color: var(--text);
+}
+#Light .currencyOptions {
+  background-color: var(--bgLightSecond);
 }
 .currencyOptions {
   margin: 0 0 0 0.1rem;
@@ -79,6 +86,7 @@ nav {
   font-weight: 500;
   cursor: pointer;
 }
+
 .currencySelect > p {
   margin-right: 0.25rem;
 }
