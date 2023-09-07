@@ -1,5 +1,5 @@
 import './Navbar.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Currency } from '../currency/Currency';
 import SwitchComp from '../switch/SwitchComp';

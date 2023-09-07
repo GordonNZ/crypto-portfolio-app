@@ -1,74 +1,55 @@
-nav {
-  background-color: transparent;
-  z-index: 3;
-  position: relative;
-}
-#Light nav * {
+#Light nav *,
+#Light .navbarLinks > .portfolio:hover {
   color: var(--bgMain);
 }
+#Light .navbarLinks a:hover {
+  color: var(--primaryAccent);
+}
+nav {
+  position: relative;
+  z-index: 3;
+  background-color: transparent;
+}
 .nav {
+  width: 90%;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 2.5rem;
   align-items: center;
+  padding: 0.5rem 2.5rem;
   margin: 0 auto;
-  width: 90%;
 }
 .navbarTitle {
   color: var(--text);
-  text-decoration: none;
   font-size: 1.2rem;
+  text-decoration: none;
 }
 .navbarLinks {
   display: flex;
-  margin: 1rem 0;
   align-items: center;
+  margin: 1rem 0;
 }
 .navbarLinks a {
-  text-decoration: none;
-  color: var(--text);
+  position: relative;
   margin: 0 1.5rem 0 0;
   border-bottom: 2px solid #ffffff00;
+  color: var(--text);
+  text-decoration: none;
   transition: 0.1s ease-in-out;
-  position: relative;
 }
-/* .navbarLinks a::after {
-  content: '';
-  border-bottom: 2px solid var(--primaryAccent);
-  background: black;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 50%;
-  width: 1px;
-} */
-/* .navbarLinks a::after:hover {
-  content: '';
-  background: black;
-  border-bottom: 2px solid var(--primaryAccent);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 50%;
-  width: 100%;
-} */
 .navbarLinks a:hover {
   color: var(--primaryAccent);
-  /* border-bottom: 2px solid var(--primaryAccent); */
-  /* width: 100%; */
 }
 .navbarLinks > .portfolio {
-  background-color: var(--primaryAccent);
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
   border: 1px solid hsl(349, 58%, 70%);
+  border-radius: 0.5rem;
+  background-color: var(--primaryAccent);
   transition: 0.12s ease-in-out;
 }
 .navbarLinks > .portfolio:hover {
   color: var(--text);
   background-color: hsla(349, 58%, 60%, 0);
 }
-
 .currencySelect {
   align-items: center;
   color: var(--text);
@@ -86,7 +67,6 @@ nav {
   font-weight: 500;
   cursor: pointer;
 }
-
 .currencySelect > p {
   margin-right: 0.25rem;
 }

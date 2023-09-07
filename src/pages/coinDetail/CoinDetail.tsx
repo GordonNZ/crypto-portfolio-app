@@ -64,7 +64,6 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
         <h4 className='marketCap'>Market Cap: #{coinId.market_cap_rank}</h4>
         <div className='flex link-desc'>
           <p className='desc'>{coinId?.description.en}</p>
-          {/* <p>genesis: {coinId?.genesis_date}</p> */}
           <div className='links'>
             <h2>Links:</h2>
             <a
