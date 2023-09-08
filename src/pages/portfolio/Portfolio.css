@@ -1,24 +1,49 @@
+#Light .portfolio-main {
+  background-color: var(--bgLightMain);
+}
+#Light .portfolio-sortBy select,
+#Light .portfolio-main > button:hover,
+#Light .portfolio-showEditBtn:hover {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
 .portfolio-home {
   min-height: 100vh;
 }
 .portfolio-main {
-  background-color: var(--bgLighter);
+  width: 85%;
   display: flex;
   flex-direction: column;
-  padding: 2rem 3rem;
-  width: 85%;
   margin: 0 auto;
+  padding: 2rem 3rem;
   border-radius: 0.5rem;
+  background-color: var(--bgLighter);
+}
+.portfolio-header {
+  justify-content: space-between;
+  align-content: center;
+  margin-bottom: 1rem;
+}
+.portfolio-sortBy {
+  align-items: center;
+}
+.portfolio-sortBy select {
+  margin-left: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0.4rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: var(--text);
+  background-color: var(--bgMain);
 }
 .portfolio-main > button,
 .portfolio-showEditBtn {
   margin: 1rem auto;
   padding: 1rem 3rem;
+  border: none;
   border-radius: 0.5rem;
   font-size: clamp(1rem, 1.25rem, 1.4rem);
-  border: none;
-  background-color: var(--secondaryAccent);
   color: var(--text);
+  background-color: var(--secondaryAccent);
   cursor: pointer;
   transition: 0.15s ease;
 }
@@ -40,23 +65,17 @@
 .portfolio-table-head > tr > th {
   width: 25%;
   padding: 0.5rem 0;
-  text-align: left;
   border-bottom: 1px solid var(--bgMain);
+  text-align: left;
   opacity: 0.85;
 }
-/* .portfolio-coin-image {
-  width: 1.5rem;
-  height: 1.5rem;
-  object-fit: contain;
-  margin-right: 0.5rem;
-} */
 .portfolio-deleteBtn,
 .portfolio-editBtn {
-  background-color: var(--primaryAccent);
-  color: var(--text);
   padding: 0.4rem;
   border-radius: 0.5rem;
   border: none;
+  background-color: var(--primaryAccent);
+  color: var(--text);
   cursor: pointer;
   transition: 0.15s ease;
 }
@@ -70,8 +89,8 @@
 .portfolio-btns {
   display: flex;
   margin-left: 2rem;
-  transition: opacity 0.5s;
   opacity: 1;
+  transition: opacity 0.5s;
 }
 .portfolio-btns > button {
   margin-right: 0.5rem;
@@ -80,14 +99,14 @@
   opacity: 0;
 }
 .portfolio-holdingInput {
-  padding: 0.3rem 0.6rem;
   width: 60%;
-  border-radius: 0.5rem;
+  padding: 0.3rem 0.6rem;
   border: 1px solid var(--bgMain);
+  border-radius: 0.5rem;
   outline: none;
   font-size: 1rem;
-  background-color: var(--bgLighter);
   color: var(--text);
+  background-color: var(--bgLighter);
 }
 .portfolio-coin {
   display: flex;
@@ -96,21 +115,4 @@
 .portfolio-coinImg {
   width: 1.6rem;
   margin-right: 0.4rem;
-}
-.portfolio-header {
-  justify-content: space-between;
-  align-content: center;
-  margin-bottom: 1rem;
-}
-
-.portfolio-sortBy {
-  align-items: center;
-}
-.portfolio-sortBy select {
-  margin-left: 0.5rem;
-  padding: 0.5rem 0 0.5rem 0.4rem;
-  background-color: var(--bgMain);
-  border: none;
-  border-radius: 0.5rem;
-  color: var(--text);
 }

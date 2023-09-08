@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { coinList, globalOptions } from '../../config/API_Options';
+import CoinDataLayout from '../../components/coinDataLayout/CoinDataLayout';
 
 // interface for the data from the API
 interface CoinData {
@@ -36,13 +37,11 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({ currency }: Props) => {
-  const [data, setData] = useState<CoinData[]>([]);
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
-  const [trending, setTrending] = useState<TrendingCoins[]>([]);
   const [page, setPage] = useState<number>(1);
 
-  const { pageid } = useParams<{ pageid: string }>();
+  // const { pageid } = useParams<{ pageid: string }>();
 
   const options = {
     method: 'GET',
@@ -102,6 +101,7 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
     }
   }, [global, currency]);
 
+  //pages component to diplay which pages show
   const buttonArray = [];
   const maxPages = 4;
 
@@ -141,13 +141,12 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
                 <img
                   src='/assets/image.svg'
                   alt='man with wheelbarrow full of bitcoin'
-                  className='marketImg'
+                  className='marketImg flex'
                 />
               </div>
-
+              {/* TRENDING CONTAINER */}
               <div className='trendingContainer'>
                 <h4>Trending Coins</h4>
-
                 {trendingCoin.data?.data?.coins.map(
                   (coin: TrendingCoins, index: number) => (
                     <Link to={`/coin/${coin.item.id}`} className='coinLinks'>
@@ -165,19 +164,6 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
                     </Link>
                   )
                 )}
-                {/* {trending?.map((coin, index) => (
-                  <div key={index} className='trending'>
-                    <div className='flex'>
-                      <img
-                        src={coin.item.small}
-                        alt={coin.item.name}
-                        className='img'
-                      />
-                      <p className='name'>{coin.item.name}</p>
-                    </div>
-                    <p>#{coin.item.market_cap_rank}</p>
-                  </div>
-                ))} */}
               </div>
             </section>
           </header>
@@ -192,97 +178,9 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
             <p>Market Cap</p>
             <p>24h Volume</p>
           </div>
-
           {coinData &&
             coinData?.map((coin: CoinData, index: number) => (
-              <Link to={`/coin/${coin.id}`} className='coinLinks'>
-                <div className='coins' key={index}>
-                  <p className='coinRank'>{coin?.market_cap_rank}. </p>
-                  <p className='coinTicker'>{coin.symbol}</p>
-                  <img src={coin.image} alt={coin.name} className='coinImage' />
-                  <p className='coinName'>{coin.name}</p>
-                  <p className='coinPrice'>
-                    ${coin?.current_price?.toLocaleString('en-NZ')}
-                  </p>
-                  <div className='flex priceChanges'>
-                    {Number(
-                      coin.price_change_percentage_1h_in_currency?.toFixed(1)
-                    ) >= 0 ? (
-                      <p
-                        style={{ color: '#3cd656' }}
-                        className='coinPercentageChange'
-                      >
-                        {coin.price_change_percentage_1h_in_currency?.toFixed(
-                          1
-                        )}
-                        %
-                      </p>
-                    ) : (
-                      <p
-                        style={{ color: '#ff2b2b' }}
-                        className='coinPercentageChange'
-                      >
-                        {coin?.price_change_percentage_1h_in_currency?.toFixed(
-                          1
-                        )}
-                        %
-                      </p>
-                    )}
-                    {Number(
-                      coin.price_change_percentage_24h_in_currency?.toFixed(1)
-                    ) >= 0 ? (
-                      <p
-                        style={{ color: '#3cd656' }}
-                        className='coinPercentageChange'
-                      >
-                        {coin.price_change_percentage_24h_in_currency?.toFixed(
-                          1
-                        )}
-                        %
-                      </p>
-                    ) : (
-                      <p
-                        style={{ color: '#ff2b2b' }}
-                        className='coinPercentageChange'
-                      >
-                        {coin.price_change_percentage_24h_in_currency?.toFixed(
-                          2
-                        )}
-                        %
-                      </p>
-                    )}
-                    {Number(
-                      coin.price_change_percentage_7d_in_currency?.toFixed(2)
-                    ) >= 0 ? (
-                      <p
-                        style={{ color: '#3cd656' }}
-                        className='coinPercentageChange'
-                      >
-                        {coin.price_change_percentage_7d_in_currency?.toFixed(
-                          2
-                        )}
-                        %
-                      </p>
-                    ) : (
-                      <p
-                        style={{ color: '#ff2b2b' }}
-                        className='coinPercentageChange'
-                      >
-                        {coin.price_change_percentage_7d_in_currency?.toFixed(
-                          1
-                        )}
-                        %
-                      </p>
-                    )}
-                  </div>
-                  <p className='coinMarketcap'>
-                    ${coin?.market_cap?.toLocaleString('en-NZ')}
-                  </p>
-                  <p className='coinVolume'>
-                    ${coin.total_volume?.toLocaleString('en-NZ')}
-                  </p>
-                </div>
-              </Link>
+              <CoinDataLayout coin={coin} index={index} />
             ))}
           <div className='pages'>
             <button className='pageButton' onClick={() => setPage(page - 1)}>

@@ -10,6 +10,15 @@
   cursor: pointer;
   transition: 0.1s ease-in-out;
 }
+
+#Light .chartDays > button {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
+#Light .chartDays > button:hover {
+  color: var(--text);
+  background-color: var(--secondaryAccent);
+}
 .chartDays > button:hover {
   background-color: var(--secondaryAccent);
 }

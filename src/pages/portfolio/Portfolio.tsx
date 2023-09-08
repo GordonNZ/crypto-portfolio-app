@@ -31,15 +31,12 @@ type Props = {
 
 const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
-  const [updatedHolding, setUpdatedHolding] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [sortBy, setSortBy] = useState('timestamp');
-
-  // const portfolioRef = query(
-  //   collection(db, 'users', userId, 'portfolio'),
-  //   orderBy(sortBy)
-  // );
+  const [updatedHolding, setUpdatedHolding] = useState<number>(0);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showEdit, setShowEdit] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<string>('timestamp');
+  const [coinPrice, setCoinPrice] = useState<number[]>([]);
+  const [totalSum, setTotalSum] = useState<number>(0);
 
   const getPortfolio = async () => {
     const portfolioRef = collection(db, 'users', userId, 'portfolio');
@@ -79,7 +76,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
       console.log(err);
     }
   };
-
+  //updating coin in firebase database portfolio
   const updateHolding = async (id: string) => {
     try {
       await updateDoc(doc(db, 'users', userId, 'portfolio', id), {
@@ -90,10 +87,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
       console.log(err);
     }
   };
-
-  const [coinPrice, setCoinPrice] = useState<number[]>([]);
-  const [totalSum, setTotalSum] = useState<number>(0);
-
+  //Updating value of coins in the portfolio
   const handlePriceUpdate = (price: number) => {
     if (!coinPrice.includes(price)) {
       setCoinPrice([...coinPrice, price]);

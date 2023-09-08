@@ -1,18 +1,25 @@
 import './Navbar.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Currency } from '../currency/Currency';
+import SwitchComp from '../switch/SwitchComp';
 
 type Props = {
   currency: string;
   handleSetCurrency: (currency: string) => void;
   user: string;
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+  theme: string;
 };
 
 const Navbar: React.FC<Props> = ({
   currency,
   handleSetCurrency,
   user,
+  checked,
+  onCheckedChange,
+  theme,
 }: Props) => {
   return (
     <nav>
@@ -37,6 +44,11 @@ const Navbar: React.FC<Props> = ({
             )}
           </div>
           <Currency currency={currency} handleSetCurrency={handleSetCurrency} />
+          <SwitchComp
+            onCheckedChange={onCheckedChange}
+            checked={checked}
+            theme={theme}
+          />
         </div>
       </div>
     </nav>
