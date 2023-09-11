@@ -16,6 +16,10 @@ interface ThemeContextValue {
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+const getWindowWidth = () => {
+  return window.innerWidth;
+};
+
 function App() {
   const storedCurrency = localStorage.getItem('currency');
   const [currency, setCurrency] = useState<any>(storedCurrency);
@@ -23,6 +27,7 @@ function App() {
   const [userId, setUserId] = useState<string>('');
   const [theme, setTheme] = useState<string>('Dark');
   const [checked, setChecked] = useState<boolean>(true);
+  const [screenWidth, setScreenWidth] = useState(getWindowWidth);
 
   //getting currency from local storage and setting currency
   const handleSetCurrency = (currency: string) => {
@@ -32,17 +37,23 @@ function App() {
     localStorage.setItem('currency', currency);
   }, [currency]);
 
-  //Get current user
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      setUser(auth?.currentUser?.email!);
-      setUserId(auth?.currentUser?.uid!);
-      console.log(userId);
-    } else {
-      setUser('');
-      setUserId('');
-    }
-  });
+  //Get current user on mount
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(auth?.currentUser?.email!);
+        setUserId(auth?.currentUser?.uid!);
+      } else {
+        setUser('');
+        setUserId('');
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []); // Empty dependency array to run once on mount
+
   //toggle light and dark theme
   const toggleTheme = () => {
     setTheme((curr) => (curr === 'Dark' ? 'Light' : 'Dark'));
@@ -53,6 +64,20 @@ function App() {
     toggleTheme();
   };
 
+  //update window width
+  useEffect(() => {
+    const updateWidth = () => {
+      setScreenWidth(getWindowWidth());
+    };
+
+    window.addEventListener('resize', updateWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, []);
+
+  // console.log(screenWidth);
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className='App' id={theme}>
@@ -65,7 +90,10 @@ function App() {
           theme={theme}
         />
         <Routes>
-          <Route path='/' element={<Home currency={currency} />} />
+          <Route
+            path='/'
+            element={<Home currency={currency} screenWidth={screenWidth} />}
+          />
           <Route
             path='/coin/:id'
             element={<CoinDetail currency={currency} />}

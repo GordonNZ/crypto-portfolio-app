@@ -34,9 +34,10 @@ interface TrendingCoins {
 
 interface Props {
   currency: string;
+  screenWidth: number;
 }
 
-const Home: React.FC<Props> = ({ currency }: Props) => {
+const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
@@ -167,20 +168,37 @@ const Home: React.FC<Props> = ({ currency }: Props) => {
               </div>
             </section>
           </header>
-          <div className='coinsHeader'>
-            <p>#</p>
-            <p>Ticker</p>
-            <p>Coin</p>
-            <p>Price</p>
-            <p>1h</p>
-            <p>24h</p>
-            <p>7d</p>
-            <p>Market Cap</p>
-            <p>24h Volume</p>
+          <div>
+            {screenWidth >= 1024 ? (
+              <div className='coinsHeader'>
+                <p>#</p>
+                <p>Ticker</p>
+                <p>Coin</p>
+                <p>Price</p>
+                <p>1h</p>
+                <p>24h</p>
+                <p>7d</p>
+                <p>Market Cap</p>
+                <p>24h Volume</p>
+              </div>
+            ) : (
+              <div className='coinsHeaderSmall '>
+                <p>#</p>
+                <p>Coin</p>
+                <p>Price</p>
+                <p>24h</p>
+                <p>Market Cap</p>
+              </div>
+            )}
           </div>
+          {/* Coin table */}
           {coinData &&
             coinData?.map((coin: CoinData, index: number) => (
-              <CoinDataLayout coin={coin} index={index} />
+              <CoinDataLayout
+                coin={coin}
+                index={index}
+                screenWidth={screenWidth}
+              />
             ))}
           <div className='pages'>
             <button className='pageButton' onClick={() => setPage(page - 1)}>

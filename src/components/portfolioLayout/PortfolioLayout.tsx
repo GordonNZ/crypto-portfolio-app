@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FetchCoinPrice from '../../components/fetchCoinPrice/FetchCoinPrice';
 import { Link } from 'react-router-dom';
+import { TrashIcon, Pencil2Icon } from '@radix-ui/react-icons';
 
 type Props = {
   coin: {
@@ -114,13 +115,13 @@ export const PortfolioLayout = ({
             }}
             className='portfolio-editBtn'
           >
-            Edit
+            <Pencil2Icon className='radixIcon' />
           </button>
           <button
             onClick={() => deleteCoin(coin.id)}
             className='portfolio-deleteBtn'
           >
-            Delete
+            <TrashIcon className='radixIcon' />
           </button>
         </td>
       ) : (

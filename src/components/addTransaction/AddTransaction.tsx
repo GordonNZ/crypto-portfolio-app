@@ -3,6 +3,7 @@ import './AddTransaction.css';
 import Search from '../search/Search';
 import { CSSTransition } from 'react-transition-group';
 import './Modal.css';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 interface Props {
   currency: string;
@@ -30,7 +31,7 @@ const AddTransaction: React.FC<Props> = ({
           <div className='addTxnContainer flex'>
             <h2>Add Transaction</h2>
             <button onClick={onClose} className='exitBtn'>
-              ✖
+              <Cross2Icon className='radixIcon' />
             </button>
           </div>
           <Search
