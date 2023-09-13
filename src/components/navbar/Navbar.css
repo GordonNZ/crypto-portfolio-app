@@ -70,3 +70,54 @@ nav {
 .currencySelect > p {
   margin-right: 0.25rem;
 }
+nav .nav-btn {
+  transform: scale(1.5);
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+}
+
+@media only screen and (max-width: 1024px) {
+  .nav {
+    margin: 1rem auto;
+  }
+  nav .nav-btn {
+    visibility: visible;
+    opacity: 1;
+  }
+  #Light nav .navbarLinks {
+    background-color: var(--bgLightSecond);
+  }
+  nav .navbarLinks {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: var(--bgLighter);
+    transition: 1s;
+    transform: translateY(-100vh);
+  }
+  nav .responsive_nav {
+    transform: none;
+  }
+  .navbarLinks {
+    flex-direction: column;
+    gap: 1.5rem;
+    font-size: 1.2rem;
+  }
+  .nav-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+}

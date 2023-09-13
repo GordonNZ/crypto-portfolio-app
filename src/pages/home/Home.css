@@ -278,6 +278,7 @@ td .coinLinks:hover {
 }
 @media (max-width: 768px) {
   .cryptoMarketContainer {
+    width: 95%;
     padding: 1.5rem 1rem;
   }
   .coinsHeaderSmall,
@@ -285,3 +286,4 @@ td .coinLinks:hover {
     padding: 1.3rem 0.5rem;
   }
 }
+/* 480px */

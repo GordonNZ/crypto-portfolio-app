@@ -182,7 +182,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
                 <p>24h Volume</p>
               </div>
             ) : (
-              <div className='coinsHeaderSmall '>
+              <div className='coinsHeaderSmall'>
                 <p>#</p>
                 <p>Coin</p>
                 <p>Price</p>
