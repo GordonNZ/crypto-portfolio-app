@@ -1,8 +1,9 @@
 import './Navbar.css';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Currency } from '../currency/Currency';
 import SwitchComp from '../switch/SwitchComp';
+import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
 
 type Props = {
   currency: string;
@@ -21,13 +22,19 @@ const Navbar: React.FC<Props> = ({
   onCheckedChange,
   theme,
 }: Props) => {
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const showNavbar = () => {
+    navRef.current?.classList.toggle('responsive_nav');
+  };
+
   return (
     <nav>
       <div className='nav'>
         <Link to='/' className='navbarTitle'>
           <h1>Another Crypto Website</h1>
         </Link>
-        <div className='navbarLinks'>
+        <div className='navbarLinks' ref={navRef}>
           {/* <Link to='/'>Home</Link> */}
           <Link to='/portfolio' className='portfolio'>
             Portfolio
@@ -49,7 +56,13 @@ const Navbar: React.FC<Props> = ({
             checked={checked}
             theme={theme}
           />
+          <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+            <Cross1Icon />
+          </button>
         </div>
+        <button className='nav-btn' onClick={showNavbar}>
+          <HamburgerMenuIcon />
+        </button>
       </div>
     </nav>
   );

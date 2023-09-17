@@ -116,3 +116,6 @@
   width: 1.6rem;
   margin-right: 0.4rem;
 }
+.radixIcon {
+  transform: scale(1.35);
+}
