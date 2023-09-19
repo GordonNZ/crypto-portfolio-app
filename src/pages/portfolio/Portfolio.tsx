@@ -131,8 +131,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
             <thead className='portfolio-table-head'>
               <tr>
                 <th>Coin</th>
-                <th>Current Price</th>
-                <th>24h Price Change</th>
+                <th>Price</th>
                 <th>Holdings</th>
                 <th>Value</th>
               </tr>

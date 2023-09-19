@@ -43,7 +43,7 @@ export const PortfolioLayout = ({
   };
 
   return (
-    <tr key={coin.id}>
+    <tr key={coin.id} className='portfolio-item'>
       <td>
         <Link to={`/coin/${coin.coin}`} className='coinLinks'>
           <div className='portfolio-coin'>
@@ -65,7 +65,7 @@ export const PortfolioLayout = ({
           holding={null}
         />
       </td>
-      <td>24 hour price</td>
+      {/* <td>24 hour price</td> */}
       <td>
         {edit ? (
           <input

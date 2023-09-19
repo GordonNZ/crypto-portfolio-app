@@ -10,7 +10,6 @@
   cursor: pointer;
   transition: 0.1s ease-in-out;
 }
-
 #Light .chartDays > button {
   background-color: var(--bgLightSecond);
   color: var(--bgMain);
@@ -25,4 +24,9 @@
 .chartContainer {
   display: flex;
   justify-content: space-between;
+}
+@media (max-width: 768px) {
+  .chartDays > button {
+    padding: 0.5rem 0.65rem;
+  }
 }

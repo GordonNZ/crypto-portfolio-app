@@ -53,15 +53,17 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
           <button className='backButton'>Back</button>
         </Link>
 
-        <div className='flex title'>
-          <img
-            src={coinId?.image?.large}
-            alt={coinId?.name}
-            className='coinImg'
-          />
-          <h1 className='coinName'>{coinId.name}</h1>
+        <div className='flex coinPageHeader'>
+          <div className='flex title'>
+            <img
+              src={coinId?.image?.large}
+              alt={coinId?.name}
+              className='coinImg'
+            />
+            <h1 className='coinName'>{coinId.name}</h1>
+          </div>
+          <p className='marketCap'>Market Rank: #{coinId.market_cap_rank}</p>
         </div>
-        <h4 className='marketCap'>Market Cap: #{coinId.market_cap_rank}</h4>
         <div className='flex link-desc'>
           <p className='desc'>{coinId?.description.en}</p>
           <div className='links'>
@@ -117,15 +119,6 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
               <p>${coinId?.market_data.price_change_24h}</p>
             </div>
             <div className='dataContainer'>
-              <p>Fully Diluted Value:</p>
-              <p>
-                $
-                {coinId?.market_data.fully_diluted_valuation[
-                  currency.toLowerCase()
-                ].toLocaleString('en-NZ')}
-              </p>
-            </div>
-            <div className='dataContainer'>
               <p>Market Cap:</p>
               <p>
                 $
@@ -134,6 +127,16 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
                 ].toLocaleString('en-NZ')}
               </p>
             </div>
+            <div className='dataContainer'>
+              <p>Fully Diluted Value:</p>
+              <p>
+                $
+                {coinId?.market_data.fully_diluted_valuation[
+                  currency.toLowerCase()
+                ].toLocaleString('en-NZ')}
+              </p>
+            </div>
+
             <div className='dataContainer'>
               <p>Total Supply:</p>
               <p>{coinId?.market_data.total_supply.toLocaleString('en-NZ')}</p>

@@ -43,10 +43,10 @@
 }
 .search-coinInfo {
   display: flex;
-  margin-top: 0.4rem;
   align-items: center;
-  opacity: 0.85;
   padding: 0.4rem;
+  margin-top: 0.4rem;
+  opacity: 0.85;
   border-bottom: 1px solid var(--bgLighter);
 }
 .search-coinInfo:hover {
@@ -54,25 +54,20 @@
   cursor: pointer;
   background-color: var(--bgLighter);
 }
+.search-coinInfo > p {
+  margin-right: 4rem;
+}
 .search-coinRank,
 .search-coinSymbol {
   opacity: 0.75;
 }
-.search-coinName,
-.search-coinSymbol {
-  margin-left: 0.6rem;
-}
 .search-coinName {
-  font-size: 1rem;
-  font-weight: 600;
-}
-.search-coinSymbol {
-  margin-right: 5rem;
+  margin-left: 0.5rem;
 }
 .search-coinPrice {
   font-weight: 600;
-  margin-right: 1rem;
 }
+
 .search-coinAmountContainer {
   display: flex;
   align-items: center;
@@ -121,8 +116,19 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+@media (max-width: 768px) {
+  .search-amountInput {
+    width: 80%;
+  }
+  .search-coinInfo .coinImg {
+    width: 1.75rem;
+  }
+  .search-coinInfo > p {
+    font-size: 0.9rem;
+    margin: 0 0.5rem;
+  }
 }

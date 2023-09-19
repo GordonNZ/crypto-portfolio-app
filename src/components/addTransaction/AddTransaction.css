@@ -2,9 +2,6 @@
   width: 60%;
   background-color: var(--bgMain);
   padding: 1rem 2rem;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
   margin: 4rem auto;
 }
 #Light .addTxn {
@@ -29,4 +26,10 @@
 }
 .exitBtn:hover {
   background-color: var(--bgMain);
+}
+@media (max-width: 768px) {
+  .addTxn {
+    width: 90%;
+    padding: 1rem 1rem;
+  }
 }

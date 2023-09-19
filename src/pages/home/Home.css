@@ -13,6 +13,7 @@
   background-color: var(--bgLightMain);
 }
 #Light .coinsHeader,
+#Light .coinsHeaderSmall,
 #Light .totalMarketInfo,
 #Light .trendingContainer {
   background-color: var(--bgLightSecond);
@@ -27,7 +28,7 @@
   color: var(--text);
 }
 .home {
-  height: 100%;
+  min-height: 100vh;
   padding-bottom: 1rem;
   color: var(--text);
 }
@@ -66,6 +67,7 @@ header p {
 .marketImg {
   width: 40%;
   margin: 0 0 0 auto;
+  filter: saturate(1.2);
 }
 .coinsHeader,
 .coinsHeaderSmall {
