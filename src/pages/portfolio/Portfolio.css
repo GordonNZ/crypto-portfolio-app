@@ -142,4 +142,13 @@
     width: 1.4rem;
     margin-right: 0.3rem;
   }
+  .portfolio-holdingInput {
+    width: 100%;
+    max-width: 6rem;
+    padding: 0.3rem 0.3rem;
+    font-size: 0.85rem;
+  }
+  .radixIcon {
+    transform: scale(1.1);
+  }
 }

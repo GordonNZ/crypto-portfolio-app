@@ -100,7 +100,13 @@ function App() {
           />
           <Route
             path='/portfolio'
-            element={<Portfolio currency={currency} userId={userId} />}
+            element={
+              <Portfolio
+                currency={currency}
+                userId={userId}
+                screenWidth={screenWidth}
+              />
+            }
           />
           <Route
             path='/signin'
