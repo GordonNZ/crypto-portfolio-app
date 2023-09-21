@@ -4,6 +4,7 @@ import './CoinDetail.css';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import MarketChart from '../../components/marketChart/MarketChart';
+import Loading from '../../components/loading/Loading';
 
 // interface CoinInfo {}
 interface Props {
@@ -41,7 +42,7 @@ const CoinDetail: React.FC<Props> = ({ currency }: Props) => {
   const coinId = data?.data;
   // console.log(coinId);
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   } else if (error) {
     console.error(error);
   }
