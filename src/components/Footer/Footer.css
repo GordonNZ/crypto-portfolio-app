@@ -1,0 +1,35 @@
+footer {
+  height: 10vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  background-color: var(--bgMain);
+  color: var(--text);
+}
+footer > p {
+  margin-bottom: 1rem;
+}
+#Light footer {
+  background-color: var(--bgLightSecond);
+  color: var(--bgMain);
+}
+.footerLinks > ul > li {
+  list-style: none;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+#Light .footerLinks a {
+  color: var(--bgMain);
+}
+#Light .footerLinks a:hover {
+  color: var(--secondaryAccent);
+}
+.footerLinks a {
+  text-decoration: none;
+  color: var(--text);
+  transition: 0.15s;
+}
+.footerLinks a:hover {
+  color: var(--secondaryAccent);
+}

@@ -129,7 +129,10 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
             <div className='flex topHeader'>
               <h1 className='headerH1'>Cryptocurrency Prices by Market Cap</h1>
             </div>
-            <p>Stay up to date in the ever changing world of Cryptocurrency!</p>
+            <p>
+              Stay up to date in the ever changing world of cryptocurrency and
+              track your crypto portfolio!
+            </p>
             <section className='flex marketInfo'>
               <div className='totalMarketInfo'>
                 <h4>Total Crypto Market Capitalization </h4>

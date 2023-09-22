@@ -7,6 +7,7 @@ import Portfolio from './pages/portfolio/Portfolio';
 import Navbar from './components/navbar/Navbar';
 import SignIn from './pages/signIn/SignIn';
 import { auth } from './config/firebase';
+import Footer from './components/Footer/Footer';
 
 // Define a type for the context value
 interface ThemeContextValue {
@@ -113,6 +114,7 @@ function App() {
             element={<SignIn user={user} setUser={setUser} />}
           />
         </Routes>
+        <Footer />
       </div>
     </ThemeContext.Provider>
   );
