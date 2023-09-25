@@ -11,7 +11,7 @@
   --secondaryAccent: #442fd7;
   --white: #ffffff;
   --text: #f7f5fa;
-  --bgLightMain: #e3e6f0;
+  --bgLightMain: #dedfe3;
   --bgLightSecond: #c4c9d8;
 }
 @font-face {
@@ -30,7 +30,7 @@
   background: radial-gradient(
     60vw at 22% 20px,
     rgb(139, 154, 183) -80%,
-    rgb(254, 254, 254) 200%
+    rgb(230, 230, 230) 200%
   );
 }
 #Dark {

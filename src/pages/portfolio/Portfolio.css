@@ -41,7 +41,7 @@
   padding: 1rem 3rem;
   border: none;
   border-radius: 0.5rem;
-  font-size: clamp(1rem, 1.25rem, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
   color: var(--text);
   background-color: var(--secondaryAccent);
   cursor: pointer;
@@ -50,24 +50,26 @@
 .portfolio-showEditBtn {
   margin: 0;
   padding: 0 0.6rem;
-  font-size: clamp(0.8rem, 0.9rem, 1.1rem);
+  font-size: clamp(0.8rem, 2vw, 1rem);
 }
 .portfolio-main > button:hover,
 .portfolio-showEditBtn:hover {
   background-color: var(--bgMain);
 }
 .portfolio-table {
-  width: 96%;
+  width: 100%;
   margin: 0.5rem auto;
-  border-collapse: separate;
   border-spacing: 0 1rem;
 }
 .portfolio-table-head > tr > th {
   width: 25%;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.2rem;
   border-bottom: 1px solid var(--bgMain);
   text-align: left;
-  opacity: 0.85;
+  opacity: 0.9;
+}
+.portfolio-item > * {
+  padding: 0 0.2rem;
 }
 .portfolio-deleteBtn,
 .portfolio-editBtn {
@@ -118,4 +120,35 @@
 }
 .radixIcon {
   transform: scale(1.35);
+}
+@media (max-width: 768px) {
+  .portfolio-main {
+    width: 95%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  .portfolio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .portfolio-showEditBtn {
+    padding: 0.75rem 1rem;
+    margin: 1rem 0 0;
+  }
+  .portfolio-item {
+    font-size: 0.85rem;
+  }
+  .portfolio-coinImg {
+    width: 1.4rem;
+    margin-right: 0.3rem;
+  }
+  .portfolio-holdingInput {
+    width: 100%;
+    max-width: 6rem;
+    padding: 0.3rem 0.3rem;
+    font-size: 0.85rem;
+  }
+  .radixIcon {
+    transform: scale(1.1);
+  }
 }

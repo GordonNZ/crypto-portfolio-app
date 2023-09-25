@@ -22,6 +22,10 @@ nav {
   color: var(--text);
   font-size: 1.2rem;
   text-decoration: none;
+  margin-right: 1rem;
+}
+h1 > .highlight {
+  color: var(--secondaryAccent);
 }
 .navbarLinks {
   display: flex;
@@ -76,16 +80,17 @@ nav .nav-btn {
   background: transparent;
   color: var(--text);
   cursor: pointer;
-  visibility: hidden;
+  display: none;
   opacity: 0;
 }
 
 @media only screen and (max-width: 1024px) {
   .nav {
-    margin: 1rem auto;
+    margin: 0 auto;
+    padding: 1rem 2rem;
   }
   nav .nav-btn {
-    visibility: visible;
+    display: block;
     opacity: 1;
   }
   #Light nav .navbarLinks {
@@ -93,31 +98,35 @@ nav .nav-btn {
   }
   nav .navbarLinks {
     position: fixed;
-    top: 0;
+    top: -110vh;
     left: 0;
     z-index: 2;
     height: 100%;
     width: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
+    font-size: 1.2rem;
     background-color: var(--bgLighter);
     transition: 1s;
-    transform: translateY(-100vh);
+  }
+  .navbarLinks a {
+    margin: 0;
   }
   nav .responsive_nav {
-    transform: none;
-  }
-  .navbarLinks {
-    flex-direction: column;
-    gap: 1.5rem;
-    font-size: 1.2rem;
+    transform: translateY(110vh);
   }
   .nav-close-btn {
     position: absolute;
     top: 2rem;
     right: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .nav {
+    padding: 1rem 0.2rem;
   }
 }

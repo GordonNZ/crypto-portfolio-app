@@ -27,9 +27,14 @@ type Coin = {
 type Props = {
   currency: string;
   userId: string;
+  screenWidth: number;
 };
 
-const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
+const Portfolio: React.FC<Props> = ({
+  currency,
+  userId,
+  screenWidth,
+}: Props) => {
   const [portfoliodb, setPortfoliodb] = useState<Coin[]>([]);
   const [updatedHolding, setUpdatedHolding] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -131,8 +136,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
             <thead className='portfolio-table-head'>
               <tr>
                 <th>Coin</th>
-                <th>Current Price</th>
-                <th>24h Price Change</th>
+                <th>Price</th>
                 <th>Holdings</th>
                 <th>Value</th>
               </tr>
@@ -149,6 +153,7 @@ const Portfolio: React.FC<Props> = ({ currency, userId }: Props) => {
                   updateHolding={updateHolding}
                   showEdit={showEdit}
                   handlePriceUpdate={handlePriceUpdate}
+                  screenWidth={screenWidth}
                 />
               ))}
             </tbody>

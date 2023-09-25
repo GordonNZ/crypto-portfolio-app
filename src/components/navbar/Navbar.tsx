@@ -32,37 +32,44 @@ const Navbar: React.FC<Props> = ({
     <nav>
       <div className='nav'>
         <Link to='/' className='navbarTitle'>
-          <h1>Another Crypto Website</h1>
+          <h1>
+            Another <span className='highlight'>Crypto</span> Website
+          </h1>
         </Link>
-        <div className='navbarLinks' ref={navRef}>
-          {/* <Link to='/'>Home</Link> */}
-          <Link to='/portfolio' className='portfolio'>
-            Portfolio
-          </Link>
-          <div>
-            {user ? (
-              <Link to='/signin' className='signin'>
-                {user}
-              </Link>
-            ) : (
-              <Link to='/signin' className='signin'>
-                Sign In
-              </Link>
-            )}
+        <div className='flex'>
+          <div className='navbarLinks' ref={navRef}>
+            {/* <Link to='/'>Home</Link> */}
+            <Link to='/portfolio' className='portfolio' onClick={showNavbar}>
+              Portfolio
+            </Link>
+            <div>
+              {user ? (
+                <Link to='/signin' className='signin' onClick={showNavbar}>
+                  {user}
+                </Link>
+              ) : (
+                <Link to='/signin' className='signin' onClick={showNavbar}>
+                  Sign In
+                </Link>
+              )}
+            </div>
+            <Currency
+              currency={currency}
+              handleSetCurrency={handleSetCurrency}
+            />
+            <SwitchComp
+              onCheckedChange={onCheckedChange}
+              checked={checked}
+              theme={theme}
+            />
+            <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+              <Cross1Icon />
+            </button>
           </div>
-          <Currency currency={currency} handleSetCurrency={handleSetCurrency} />
-          <SwitchComp
-            onCheckedChange={onCheckedChange}
-            checked={checked}
-            theme={theme}
-          />
-          <button className='nav-btn nav-close-btn' onClick={showNavbar}>
-            <Cross1Icon />
+          <button className='nav-btn' onClick={showNavbar}>
+            <HamburgerMenuIcon />
           </button>
         </div>
-        <button className='nav-btn' onClick={showNavbar}>
-          <HamburgerMenuIcon />
-        </button>
       </div>
     </nav>
   );

@@ -13,6 +13,7 @@
   background-color: var(--bgLightMain);
 }
 #Light .coinsHeader,
+#Light .coinsHeaderSmall,
 #Light .totalMarketInfo,
 #Light .trendingContainer {
   background-color: var(--bgLightSecond);
@@ -27,7 +28,7 @@
   color: var(--text);
 }
 .home {
-  height: 100%;
+  min-height: 100vh;
   padding-bottom: 1rem;
   color: var(--text);
 }
@@ -54,9 +55,9 @@ header {
   margin-bottom: 1rem;
 }
 header p {
-  opacity: 0.85;
+  opacity: 0.9;
 }
-/* FLEX CLASS */
+/* FLEX CLASS  */
 .flex {
   display: flex;
 }
@@ -65,7 +66,9 @@ header p {
 }
 .marketImg {
   width: 40%;
+  min-width: 12rem;
   margin: 0 0 0 auto;
+  filter: saturate(1.2);
 }
 .coinsHeader,
 .coinsHeaderSmall {
@@ -75,28 +78,31 @@ header p {
 }
 
 .coinsHeader p:first-child {
-  width: 3%;
+  width: 2%;
   margin-right: 1.2rem;
 }
 .coinsHeader p:nth-child(2) {
-  width: 8%;
+  width: 10%;
 }
 .coinsHeader p:nth-child(3) {
-  width: 22%;
-  margin: 0 0.8rem;
+  width: 18%;
 }
 .coinsHeader p:nth-child(4) {
-  width: 12%;
+  width: 10%;
 }
 .coinsHeader p:nth-child(5),
 .coinsHeader p:nth-child(6),
 .coinsHeader p:nth-child(7) {
-  width: 9%;
+  width: 8%;
 }
 .coinsHeader p:nth-child(8) {
-  width: 15%;
+  width: 16%;
+  margin-right: 1.2rem;
 }
-/* Small */
+.coinsHeader p:nth-child(9) {
+  width: 16%;
+}
+/* !!!! Small Table Header !!!! */
 .coinsHeaderSmall > p {
   margin: 0;
   padding: 0;
@@ -127,7 +133,7 @@ header p {
   background-color: hsl(226, 18%, 25%);
 }
 .coinRank {
-  width: 3%;
+  width: 2%;
   margin-right: 1.2rem;
   opacity: 0.8;
   font-size: 0.95rem;
@@ -141,19 +147,20 @@ header p {
   font-size: 0.8rem;
 }
 .coinTicker {
-  width: 8%;
+  width: 10%;
   text-transform: uppercase;
 }
 .coinImage {
   width: 1.5rem;
   height: 1.5rem;
-  margin: 0 0.8rem;
+  margin-right: 0.4rem;
 }
 .small .coinImage {
   width: 1rem;
   object-fit: contain;
   margin: 0;
 }
+/* For responsive */
 .coinImageTicker {
   width: 15%;
   flex-direction: column;
@@ -161,9 +168,10 @@ header p {
   align-items: left;
   text-transform: uppercase;
 }
-.coinName {
-  /* margin-right: 2rem; */
-  width: 20%;
+.coinImageNameContainer {
+  width: 18%;
+  display: flex;
+  align-items: center;
 }
 .small .coinPrice {
   width: 20%;
@@ -180,11 +188,11 @@ header p {
   margin: 0;
 }
 .priceChanges {
-  width: 26%;
-  justify-content: center;
+  width: 24%;
+  justify-content: flex-start;
 }
 .coinPercentageChange {
-  margin: auto;
+  width: 33.3%;
   font-weight: 600;
 }
 .small .coinMarketcap {
@@ -192,8 +200,8 @@ header p {
   margin: 0;
 }
 .coinMarketcap {
-  width: 15%;
-  margin-left: 1.5rem;
+  width: 16%;
+  margin-right: 1.2rem;
 }
 .coinVolume {
   width: auto;

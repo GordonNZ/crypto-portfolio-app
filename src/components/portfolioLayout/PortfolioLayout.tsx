@@ -18,6 +18,7 @@ type Props = {
   deleteCoin: (id: string) => void;
   showEdit: boolean;
   handlePriceUpdate: (price: number) => void;
+  screenWidth: number;
 };
 
 export const PortfolioLayout = ({
@@ -29,6 +30,7 @@ export const PortfolioLayout = ({
   deleteCoin,
   showEdit,
   handlePriceUpdate,
+  screenWidth,
 }: Props) => {
   const [edit, setEdit] = useState(false);
 
@@ -43,7 +45,7 @@ export const PortfolioLayout = ({
   };
 
   return (
-    <tr key={coin.id}>
+    <tr key={coin.id} className='portfolio-item'>
       <td>
         <Link to={`/coin/${coin.coin}`} className='coinLinks'>
           <div className='portfolio-coin'>
@@ -65,7 +67,7 @@ export const PortfolioLayout = ({
           holding={null}
         />
       </td>
-      <td>24 hour price</td>
+      {/* <td>24 hour price</td> */}
       <td>
         {edit ? (
           <input
@@ -92,16 +94,43 @@ export const PortfolioLayout = ({
           roundNumber(coin.holding)
         )}
       </td>
-      <td>
-        $
-        <FetchCoinPrice
-          coinName={coin.coin}
-          currency={currency}
-          holding={coin.holding}
-          onPriceUpdate={handlePriceUpdate}
-        />
-      </td>
-      {showEdit ? (
+
+      {screenWidth <= 768 && showEdit ? (
+        <td className={'portfolio-btns'}>
+          <button
+            onClick={() => {
+              if (updatedHolding === 0) {
+                setEdit(!edit);
+              } else {
+                updateHolding(coin.id);
+                setUpdatedHolding(0);
+                setEdit(!edit);
+              }
+            }}
+            className='portfolio-editBtn'
+          >
+            <Pencil2Icon className='radixIcon' />
+          </button>
+          <button
+            onClick={() => deleteCoin(coin.id)}
+            className='portfolio-deleteBtn'
+          >
+            <TrashIcon className='radixIcon' />
+          </button>
+        </td>
+      ) : (
+        <td>
+          $
+          <FetchCoinPrice
+            coinName={coin.coin}
+            currency={currency}
+            holding={coin.holding}
+            onPriceUpdate={handlePriceUpdate}
+          />
+        </td>
+      )}
+
+      {screenWidth > 768 && showEdit ? (
         <td className={'portfolio-btns'}>
           <button
             onClick={() => {

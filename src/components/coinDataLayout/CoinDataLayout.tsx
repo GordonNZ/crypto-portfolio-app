@@ -28,8 +28,10 @@ const CoinDataLayout = ({ coin, index, screenWidth }: Props) => {
         <div className='coins' key={index}>
           <p className='coinRank'>{coin?.market_cap_rank}. </p>
           <p className='coinTicker'>{coin.symbol}</p>
-          <img src={coin.image} alt={coin.name} className='coinImage' />
-          <p className='coinName'>{coin.name}</p>
+          <div className='coinImageNameContainer'>
+            <img src={coin.image} alt={coin.name} className='coinImage' />
+            <p className='coinName'>{coin.name}</p>
+          </div>
           <p className='coinPrice'>
             ${coin?.current_price?.toLocaleString('en-NZ')}
           </p>

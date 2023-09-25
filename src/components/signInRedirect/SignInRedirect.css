@@ -30,3 +30,13 @@
 .signInRe-modal {
   z-index: 2;
 }
+@media (max-width: 1024px) {
+  .signInRedirect-main {
+    width: 80vw;
+    left: 10%;
+    text-align: center;
+  }
+  .signInRedirect-main h1 {
+    font-size: 1.4rem;
+  }
+}
