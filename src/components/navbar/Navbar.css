@@ -24,6 +24,9 @@ nav {
   text-decoration: none;
   margin-right: 1rem;
 }
+h1 > .highlight {
+  color: var(--secondaryAccent);
+}
 .navbarLinks {
   display: flex;
   align-items: center;

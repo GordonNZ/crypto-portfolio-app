@@ -32,7 +32,9 @@ const Navbar: React.FC<Props> = ({
     <nav>
       <div className='nav'>
         <Link to='/' className='navbarTitle'>
-          <h1>Another Crypto Website</h1>
+          <h1>
+            Another <span className='highlight'>Crypto</span> Website
+          </h1>
         </Link>
         <div className='flex'>
           <div className='navbarLinks' ref={navRef}>
