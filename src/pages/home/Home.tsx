@@ -153,7 +153,11 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
                 <h4>Trending Coins</h4>
                 {trendingCoin.data?.data?.coins.map(
                   (coin: TrendingCoins, index: number) => (
-                    <Link to={`/coin/${coin.item.id}`} className='coinLinks'>
+                    <Link
+                      to={`/coin/${coin.item.id}`}
+                      key={index}
+                      className='coinLinks'
+                    >
                       <div key={index} className='trending'>
                         <div className='flex'>
                           <img
@@ -201,6 +205,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
                 coin={coin}
                 index={index}
                 screenWidth={screenWidth}
+                key={index}
               />
             ))}
           <div className='pages'>
