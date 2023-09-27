@@ -67,7 +67,7 @@ const Portfolio: React.FC<Props> = ({
   };
   useEffect(() => {
     if (userId.length !== 0) {
-      console.log(`user ID here: ${userId}`);
+      // console.log(`user ID here: ${userId}`);
       getPortfolio();
     }
   }, [sortBy, userId]);

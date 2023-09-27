@@ -61,7 +61,7 @@ const MarketChart: React.FC<Props> = ({ currency }: Props) => {
   useEffect(() => {
     setMarketPrices(market?.data?.prices.map((price: any) => price[1]));
     setMarketTime(market?.data?.prices.map((price: any) => price[0]));
-    console.log(marketPrices);
+    // console.log(marketPrices);
 
     // marketTime?.forEach((time: any) => {
     //   const date = new Date(time);
