@@ -3,9 +3,10 @@ import './Home.css';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { coinList, globalOptions } from '../../config/API_Options';
 import CoinDataLayout from '../../components/coinDataLayout/CoinDataLayout';
+import Loading from '../../components/loading/Loading';
 
 // interface for the data from the API
 interface CoinData {
@@ -41,6 +42,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
+  // const [coinData, setCoinData] = useState<CoinData>();
 
   // const { pageid } = useParams<{ pageid: string }>();
 
@@ -62,9 +64,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   };
 
   const coinListData = useQuery(['coinList'], () => axios.request(coinList));
-
   const totalCoins = coinListData?.data?.data;
-
   const marketPages = Math.ceil(totalCoins?.length / 100);
 
   const trendingCoin = useQuery(
@@ -74,16 +74,31 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   );
   // console.log(trendingCoin.data?.data?.coins);
 
-  const coins = useQuery(
-    ['coins', currency, page],
-    () => axios.request(options),
-    {
-      refetchInterval: 60000,
+  const [coinData, setCoinData] = useState<CoinData[]>([]);
+
+  const {
+    data: coins,
+    isLoading,
+    error,
+  } = useQuery(['coins', currency, page], () => axios.request(options), {
+    refetchInterval: 60000,
+  });
+
+  // const coinData = coins?.data;
+  // console.log(coinData);
+
+  useEffect(() => {
+    if (coins) {
+      setCoinData(coins?.data);
+      console.log(coinData);
     }
-  );
-  // console.log(coins?.data?.data);
-  const coinData = coins?.data?.data;
-  // console.log(coins?.data);
+    if (error) {
+      console.log(error);
+    }
+    if (isLoading) {
+      // console.log(`Loading ${isLoading}`);
+    }
+  }, [coins]);
 
   const global = useQuery(
     ['global', currency],
