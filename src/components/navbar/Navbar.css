@@ -71,6 +71,9 @@ h1 > .highlight {
   font-weight: 500;
   cursor: pointer;
 }
+.currencyOptions > option {
+  cursor: pointer;
+}
 .currencySelect > p {
   margin-right: 0.25rem;
 }
