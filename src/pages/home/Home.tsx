@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
 import { coinList, globalOptions } from '../../config/API_Options';
 import CoinDataLayout from '../../components/coinDataLayout/CoinDataLayout';
-import Loading from '../../components/loading/Loading';
 
 // interface for the data from the API
 interface CoinData {
