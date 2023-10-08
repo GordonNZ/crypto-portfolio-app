@@ -42,7 +42,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   const [totalmarketcap, setTotalmarketcap] = useState<number>(0);
   const [tradingVol, setTradingVol] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
-  // const [coinData, setCoinData] = useState<CoinData>();
+  const [coinData, setCoinData] = useState<CoinData[]>([]);
 
   // const { pageid } = useParams<{ pageid: string }>();
 
@@ -74,8 +74,6 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   );
   // console.log(trendingCoin.data?.data?.coins);
 
-  const [coinData, setCoinData] = useState<CoinData[]>([]);
-
   const {
     data: coins,
     isLoading,
@@ -93,12 +91,12 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
       console.log(coinData);
     }
     if (error) {
-      console.log(error);
+      console.log(`Found an error: ${error}`);
     }
     if (isLoading) {
       // console.log(`Loading ${isLoading}`);
     }
-  }, [coins]);
+  }, [coins, currency]);
 
   const global = useQuery(
     ['global', currency],
