@@ -35,6 +35,9 @@ function App() {
     setCurrency(currency);
   };
   useEffect(() => {
+    if (!storedCurrency) {
+      setCurrency('NZD');
+    }
     localStorage.setItem('currency', currency);
   }, [currency]);
 
