@@ -21,7 +21,7 @@ type Props = {
 };
 
 const CoinDataLayout = ({ coin, index, screenWidth }: Props) => {
-  // console.log(screenWidth);
+  // console.log(coin);
   return (
     <Link to={`/coin/${coin.id}`} className='coinLinks'>
       {screenWidth >= 1024 ? (
@@ -42,7 +42,7 @@ const CoinDataLayout = ({ coin, index, screenWidth }: Props) => {
                 {coin.price_change_percentage_1h_in_currency?.toFixed(1)}%
               </p>
             ) : (
-              <p style={{ color: '#ff2b2b' }} className='coinPercentageChange'>
+              <p style={{ color: '#FF5252' }} className='coinPercentageChange'>
                 {coin?.price_change_percentage_1h_in_currency?.toFixed(1)}%
               </p>
             )}
@@ -52,7 +52,7 @@ const CoinDataLayout = ({ coin, index, screenWidth }: Props) => {
                 {coin.price_change_percentage_24h_in_currency?.toFixed(1)}%
               </p>
             ) : (
-              <p style={{ color: '#ff2b2b' }} className='coinPercentageChange'>
+              <p style={{ color: '#FF5252' }} className='coinPercentageChange'>
                 {coin.price_change_percentage_24h_in_currency?.toFixed(2)}%
               </p>
             )}
@@ -62,7 +62,7 @@ const CoinDataLayout = ({ coin, index, screenWidth }: Props) => {
                 {coin.price_change_percentage_7d_in_currency?.toFixed(2)}%
               </p>
             ) : (
-              <p style={{ color: '#ff2b2b' }} className='coinPercentageChange'>
+              <p style={{ color: '#FF5252' }} className='coinPercentageChange'>
                 {coin.price_change_percentage_7d_in_currency?.toFixed(1)}%
               </p>
             )}
@@ -91,7 +91,7 @@ const CoinDataLayout = ({ coin, index, screenWidth }: Props) => {
                 {coin.price_change_percentage_24h_in_currency?.toFixed(1)}%
               </p>
             ) : (
-              <p style={{ color: '#ff2b2b' }} className='coinPercentageChange'>
+              <p style={{ color: '#FF5252' }} className='coinPercentageChange'>
                 {coin.price_change_percentage_24h_in_currency?.toFixed(2)}%
               </p>
             )}

@@ -73,6 +73,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   );
   // console.log(trendingCoin.data?.data?.coins);
 
+  //Using react tanstack query to get the api data
   const {
     data: coins,
     isLoading,
@@ -87,21 +88,21 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
   useEffect(() => {
     if (coins) {
       setCoinData(coins?.data);
-      console.log(coinData);
+      console.log(coins);
     }
     if (error) {
       console.log(`Found an error: ${error}`);
     }
-    if (isLoading) {
-      // console.log(`Loading ${isLoading}`);
-    }
-  }, [coins, currency]);
+    // if (isLoading) {
+    //   // console.log(`Loading ${isLoading}`);
+    // }
+  }, [coins, currency, error]);
 
   const global = useQuery(
     ['global', currency],
     () => axios.request(globalOptions),
     {
-      refetchInterval: 60000,
+      refetchInterval: 120000,
     }
   );
 
@@ -147,20 +148,23 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
             </p>
             <section className='flex marketInfo'>
               <div className='totalMarketInfo'>
-                <h4>Total Crypto Market Capitalization </h4>
+                <p className='marketInfoHeaders'>
+                  Total Crypto Market Capitalization
+                </p>
 
                 <p>${totalmarketcap?.toLocaleString('en-NZ')}</p>
 
-                <h4>24 hour Trading Volume</h4>
+                <p className='marketInfoHeaders'>24 hour Trading Volume</p>
                 <p>${tradingVol?.toLocaleString('en-NZ')}</p>
 
                 <img
                   src='/assets/image.svg'
                   alt='man with wheelbarrow full of bitcoin'
                   className='marketImg flex'
+                  rel='preload'
                 />
               </div>
-              {/* TRENDING CONTAINER */}
+              {/*!!!!!!!!!!! TRENDING CONTAINER !!!!!!!!!!!*/}
               <div className='trendingContainer'>
                 <h4>Trending Coins</h4>
                 {trendingCoin.data?.data?.coins.map(
@@ -210,7 +214,7 @@ const Home: React.FC<Props> = ({ currency, screenWidth }: Props) => {
               </div>
             )}
           </div>
-          {/* Coin table */}
+          {/*!!!!!!!!!!! COIN MARKET DATA TABLE DISPLAYED HERE !!!!!!!!!!! */}
           {coinData &&
             coinData?.map((coin: CoinData, index: number) => (
               <CoinDataLayout
