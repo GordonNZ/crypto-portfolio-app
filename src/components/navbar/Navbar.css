@@ -62,7 +62,7 @@ h1 > .highlight {
   background-color: var(--bgLightSecond);
 }
 .currencyOptions {
-  margin: 0 0 0 0.1rem;
+  margin: 0 0 0 0.5rem;
   padding: 0.4rem;
   border-radius: 0.5rem;
   border: none;
@@ -73,9 +73,6 @@ h1 > .highlight {
 }
 .currencyOptions > option {
   cursor: pointer;
-}
-.currencySelect > p {
-  margin-right: 0.25rem;
 }
 nav .nav-btn {
   transform: scale(1.5);
